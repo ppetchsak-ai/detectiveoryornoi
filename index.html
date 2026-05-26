@@ -53,6 +53,37 @@
     }
     @media(max-width:390px){.teams{grid-template-columns:repeat(2,1fr)}.team-panel{min-height:68px;padding:6px}.board{gap:3px}.cell{border-radius:10px}.cell-label{font-size:8px}.num{font-size:11px}.controls{grid-template-columns:70px 1fr}.dice,.roll-btn{height:60px}.dice{font-size:31px}.roll-btn{font-size:20px}}.board{gap:4px}.cell{border-radius:13px;padding:4px}.cell-label{font-size:9px}.num{font-size:12px}.controls{grid-template-columns:82px 1fr}.dice,.roll-btn{height:78px}.dice{font-size:38px}.teams{gap:6px}.team-panel{padding:8px 6px}.team-name{font-size:12px}.badge{min-width:21px;height:21px;font-size:12px}.clue-grid,.legend{grid-template-columns:1fr}}
   </style>
+<style id="three-page-display-fix">
+    /* แยกหน้าจอเป็น 3 หน้าแท้จริง: setup / game / win */
+    .screen:not(.active){
+      display:none!important;
+      visibility:hidden!important;
+      height:0!important;
+      min-height:0!important;
+      overflow:hidden!important;
+      margin:0!important;
+      padding:0!important;
+      pointer-events:none!important;
+    }
+    .screen.active{
+      display:block!important;
+      visibility:visible!important;
+      height:auto!important;
+      min-height:100svh!important;
+      overflow:visible!important;
+      pointer-events:auto!important;
+    }
+    .screen.hero.active{display:flex!important;align-items:center!important;justify-content:center!important;}
+    #game.active,#win.active{display:block!important;}
+    body.page-setup #game,body.page-setup #win,
+    body.page-game #setup,body.page-game #win,
+    body.page-win #setup,body.page-win #game{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important;}
+    @media(max-width:640px){
+      .screen.active{min-height:100svh!important;}
+      #game.active .app{padding-top:8px!important;}
+      #win.active{padding:16px 14px!important;}
+    }
+  </style>
 </head>
 <body>
   <section id="setup" class="screen active hero">
@@ -444,9 +475,17 @@
     const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
 
     function showScreen(id){
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      $(id).classList.add('active');
-      window.scrollTo({top:0,left:0,behavior:'instant'});
+      document.querySelectorAll('.screen').forEach(s=>{
+        s.classList.remove('active');
+        s.setAttribute('aria-hidden','true');
+      });
+      const target = $(id);
+      if(!target) return;
+      target.classList.add('active');
+      target.setAttribute('aria-hidden','false');
+      document.body.classList.remove('page-setup','page-game','page-win');
+      document.body.classList.add('page-'+id);
+      setTimeout(()=>window.scrollTo({top:0,left:0,behavior:'auto'}),0);
     }
     function renderNameFields(){
       const count = Math.min(4, Math.max(1, Number($("playerCount").value || 3)));
