@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ยอดนักสืบจิ๋ว อย.น้อย</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&family=Kanit:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;
+  --cr:#c0392b;--crb:#2d0a0a;--crl:#ff8a80;
+  --cy:#b8860b;--cyb:#2d2200;--cyl:#fff176;
+  --cg:#1a7a3a;--cgb:#0a2d15;--cgl:#b9f6ca;
+  --cb:#1565c0;--cbb:#0a1a2d;--cbl:#82b1ff;
+  --cm:#7b2d8b;--cmb:#1a0a2d;--cml:#ce93d8;
+  --p1:#e74c3c;--p1l:#ff8a80;--p2:#3498db;--p2l:#82b1ff;
+  --p3:#f1c40f;--p3l:#fff176;--p4:#2ecc71;--p4l:#b9f6ca;
+  --cyan:#00d2ff;--green:#2ecc71;--red:#e74c3c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── RESPONSIVE LAYOUT ── */
+.screen{display:none;min-height:100vh;flex-direction:column;align-items:center;padding:12px}
+.screen.active{display:flex}
+
+/* PC: side-by-side game layout */
+@media(min-width:768px){
+  #game{flex-direction:column;padding:0}
+  .game-inner{display:flex;flex-direction:row;width:100%;max-width:1100px;margin:0 auto;gap:0;align-items:flex-start}
+  .game-left{flex:0 0 480px;padding:12px 8px 12px 12px}
+  .game-right{flex:1;padding:12px 12px 12px 8px;position:sticky;top:56px}
+  .topbar{max-width:1100px;margin:0 auto;width:100%}
+  .srow-wrap{max-width:1100px;margin:0 auto;width:100%}
+}
+@media(max-width:767px){
+  .game-inner{flex-direction:column}
+  .game-left,.game-right{padding:0}
+}
+
+/* SETUP */
+#setup{justify-content:flex-start;gap:11px;padding-top:16px;background:radial-gradient(ellipse at 40% 10%,#0d2035,#0d1117)}
+.logo-spin{font-size:2.8rem;animation:sp 3s ease-in-out infinite alternate;display:block;text-align:center}
+@keyframes sp{from{transform:rotate(-15deg)scale(1)}to{transform:rotate(15deg)scale(1.1)}}
+.big-title{font-family:'Kanit',sans-serif;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:900;color:#fff;text-align:center;line-height:1.1}
+.big-title span{color:var(--cyan)}
+.scard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:13px;width:100%;max-width:460px}
+.scard h3{font-family:'Kanit',sans-serif;font-size:.88rem;color:var(--cyan);margin-bottom:9px}
+.prow{display:flex;gap:7px;justify-content:center;margin-bottom:4px}
+.pbtn{flex:1;max-width:75px;background:rgba(255,255,255,.06);border:2px solid var(--border);border-radius:9px;padding:9px 4px;color:var(--muted);font-family:'Kanit',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;text-align:center;transition:all .2s}
+.pbtn:hover,.pbtn.active{background:rgba(0,210,255,.15);border-color:var(--cyan);color:var(--cyan)}
+.trows{display:flex;flex-direction:column;gap:6px;margin-top:9px}
+.trow{display:flex;align-items:center;gap:7px}
+.tdot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.t1c{background:var(--p1)}.t2c{background:var(--p2)}.t3c{background:var(--p3);color:#111}.t4c{background:var(--p4);color:#111}
+.tinput{flex:1;background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:7px;padding:6px 9px;color:var(--text);font-family:'Sarabun',sans-serif;font-size:.88rem}
+.tinput:focus{outline:none;border-color:var(--cyan)}
+.tinput:disabled{opacity:.3}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;max-width:460px}
+.ccat{border-radius:9px;padding:8px 10px;display:flex;align-items:center;gap:7px}
+.ccat.r{background:var(--crb);border:2px solid var(--cr)}
+.ccat.y{background:var(--cyb);border:2px solid var(--cy)}
+.ccat.g{background:var(--cgb);border:2px solid var(--cg)}
+.ccat.b{background:var(--cbb);border:2px solid var(--cb)}
+.ccat-ic{font-size:1.3rem}
+.ccat-nm{font-family:'Kanit',sans-serif;font-size:.77rem;font-weight:700}
+.ccat-sb{font-size:.65rem;color:var(--muted)}
+.ccat.r .ccat-nm{color:var(--crl)}.ccat.y .ccat-nm{color:var(--cyl)}
+.ccat.g .ccat-nm{color:var(--cgl)}.ccat.b .ccat-nm{color:var(--cbl)}
+.vhint{font-size:.78rem;color:var(--muted);line-height:1.6;margin-top:5px}
+.rules{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:11px;padding:10px 12px;max-width:460px;width:100%;font-size:.8rem;color:var(--muted);line-height:1.85}
+.rules b{color:var(--text)}
+.btn-big{width:100%;max-width:460px;background:linear-gradient(135deg,var(--cyan),#0070a0);color:#fff;font-family:'Kanit',sans-serif;font-size:1.05rem;font-weight:900;border:none;border-radius:50px;padding:12px;cursor:pointer;box-shadow:0 5px 18px rgba(0,210,255,.3);transition:transform .15s;margin-bottom:6px}
+.btn-big:hover{transform:translateY(-2px)}
+
+/* TOPBAR */
+.topbar{background:var(--card);border-bottom:2px solid var(--border);width:100%;padding:7px 12px;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:50}
+.tpill{display:flex;align-items:center;gap:5px;flex:1;min-width:0}
+.tpdot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.tpnm{font-family:'Kanit',sans-serif;font-size:.85rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.srow-wrap{width:100%}
+.srow{display:flex;gap:4px;padding:5px 12px;width:100%;overflow-x:auto;flex-shrink:0}
+.schip{display:flex;align-items:center;gap:3px;border-radius:13px;padding:2px 8px;font-family:'Kanit',sans-serif;font-size:.7rem;font-weight:700;white-space:nowrap;border:2px solid transparent}
+.sc1{background:rgba(231,76,60,.12);border-color:var(--p1);color:var(--p1l)}
+.sc2{background:rgba(52,152,219,.12);border-color:var(--p2);color:var(--p2l)}
+.sc3{background:rgba(241,196,15,.12);border-color:var(--p3);color:var(--p3l)}
+.sc4{background:rgba(46,204,113,.12);border-color:var(--p4);color:var(--p4l)}
+.schip.cur{box-shadow:0 0 7px currentColor}
+
+/* BOARD */
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;width:100%}
+.cell{aspect-ratio:1;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;border:2px solid transparent;overflow:hidden;cursor:default}
+.cn{position:absolute;top:2px;left:3px;font-size:.54rem;opacity:.6;font-family:'Kanit',sans-serif;z-index:1}
+.ci{font-size:1.1rem;line-height:1;z-index:1}
+.cl{font-size:.43rem;opacity:.7;font-family:'Kanit',sans-serif;margin-top:1px;text-align:center;max-width:100%;z-index:1;line-height:1.1}
+.c-n{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+.c-win{background:rgba(46,204,113,.22);border-color:#2ecc71;animation:pw 1.5s ease infinite}
+@keyframes pw{0%,100%{box-shadow:0 0 0 0 rgba(46,204,113,.4)}50%{box-shadow:0 0 0 5px rgba(46,204,113,0)}}
+.c-sn{background:rgba(100,60,130,.35);border-color:rgba(155,89,182,.6)}
+.c-ld{background:rgba(0,180,220,.18);border-color:rgba(0,210,255,.5)}
+.c-mg{background:rgba(123,45,139,.3);border-color:rgba(206,147,216,.7);animation:mgp 2s ease-in-out infinite alternate}
+@keyframes mgp{0%{box-shadow:0 0 6px rgba(206,147,216,.4)}100%{box-shadow:0 0 12px rgba(206,147,216,.8)}}
+.c-r{background:rgba(180,30,30,.3);border-color:rgba(220,60,60,.7)}
+.c-y{background:rgba(180,140,0,.28);border-color:rgba(230,180,0,.7)}
+.c-g{background:rgba(20,140,60,.28);border-color:rgba(40,200,90,.7)}
+.c-b{background:rgba(20,80,180,.28);border-color:rgba(50,120,220,.7)}
+.toks{position:absolute;bottom:2px;right:2px;display:flex;gap:1px;flex-wrap:wrap;justify-content:flex-end;z-index:2}
+.tok{width:10px;height:10px;border-radius:50%;border:1px solid rgba(0,0,0,.3)}
+.tk1{background:var(--p1)}.tk2{background:var(--p2)}.tk3{background:var(--p3)}.tk4{background:var(--p4)}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:3px;padding:3px 8px;justify-content:center}
+.li{display:flex;align-items:center;gap:2px;font-size:.63rem;color:var(--muted)}
+.ld2{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+
+/* CONTROLS */
+.ctrl{padding:6px 12px 14px;display:flex;flex-direction:column;gap:7px}
+.stmsg{text-align:center;font-size:.86rem;color:var(--muted);min-height:20px}
+.drow{display:flex;align-items:center;justify-content:center;gap:12px}
+.dice{width:56px;height:56px;background:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.85rem;cursor:pointer;border:3px solid var(--cyan);user-select:none;transition:transform .1s;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.dice:active{transform:scale(.88) rotate(12deg)}
+.dice.rolling{animation:dr .5s ease}
+@keyframes dr{0%,100%{transform:rotate(0)}30%{transform:rotate(-25deg)scale(.9)}70%{transform:rotate(25deg)scale(1.1)}}
+.broll{background:linear-gradient(135deg,var(--green),#1e8449);color:#fff;font-family:'Kanit',sans-serif;font-size:.95rem;font-weight:900;border:none;border-radius:40px;padding:10px 24px;cursor:pointer;box-shadow:0 4px 12px rgba(46,204,113,.3);transition:transform .15s}
+.broll:hover{transform:translateY(-2px)}
+.broll:disabled{opacity:.4;cursor:not-allowed}
+
+/* CLUE PANEL (PC right side / mobile below board) */
+.clue-panel{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:12px}
+@media(min-width:768px){.clue-panel{min-width:260px}}
+@media(max-width:767px){.clue-panel{margin:8px 8px 0}}
+.clue-panel h3{font-family:'Kanit',sans-serif;font-size:.88rem;color:var(--cml);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.villain-target{background:var(--cmb);border:2px solid var(--cm);border-radius:10px;padding:10px;text-align:center;margin-bottom:10px}
+.vt-label{font-size:.7rem;color:var(--muted);margin-bottom:4px}
+.vt-name{font-family:'Kanit',sans-serif;font-size:.95rem;font-weight:900;color:#fff}
+.vt-icon{font-size:1.8rem;margin-bottom:4px}
+.clues-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.clue-slot{background:rgba(255,255,255,.04);border:2px solid var(--border);border-radius:9px;padding:8px;text-align:center;position:relative;min-height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.clue-slot.locked{border-style:dashed;border-color:rgba(155,89,182,.4)}
+.clue-slot.unlocked{background:rgba(123,45,139,.12);border-color:var(--cm);border-style:solid}
+.clue-slot-num{position:absolute;top:3px;left:6px;font-size:.6rem;color:var(--muted);font-family:'Kanit',sans-serif}
+.clue-slot-icon{font-size:1.5rem;margin-bottom:3px}
+.clue-slot-name{font-size:.68rem;color:var(--muted);line-height:1.3}
+.clue-slot.unlocked .clue-slot-name{color:var(--cml)}
+.clue-slot.locked .clue-slot-icon{opacity:.3}
+
+/* TEAM CLUES SWITCHER */
+.team-tabs{display:flex;gap:4px;margin-bottom:8px;overflow-x:auto}
+.ttab{border-radius:10px;padding:4px 10px;font-family:'Kanit',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;border:2px solid transparent;background:rgba(255,255,255,.06);color:var(--muted);white-space:nowrap;transition:all .2s}
+.ttab.active{color:#fff;border-color:currentColor}
+
+/* OVERLAYS */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:200;align-items:center;justify-content:center;padding:12px;overflow-y:auto}
+.ov.active{display:flex}
+.modal{background:var(--card);border-radius:17px;padding:15px 14px;max-width:460px;width:100%;border:2px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.7);animation:pop .3s cubic-bezier(.175,.885,.32,1.275);max-height:92vh;overflow-y:auto}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* CLUE REVEAL POPUP */
+.clue-reveal-modal{text-align:center}
+.cr-icon{font-size:3.5rem;margin-bottom:8px;animation:pop .4s cubic-bezier(.175,.885,.32,1.275)}
+.cr-title{font-family:'Kanit',sans-serif;font-size:1.1rem;font-weight:900;color:var(--cml);margin-bottom:4px}
+.cr-name{font-size:.9rem;color:var(--text);margin-bottom:10px;line-height:1.5}
+.cr-num{background:var(--cmb);border:2px solid var(--cm);border-radius:8px;display:inline-block;padding:3px 12px;font-family:'Kanit',sans-serif;font-size:.8rem;color:var(--cml);margin-bottom:12px}
+
+/* QUESTION */
+.qhdr{border-radius:9px;padding:8px 11px;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.qhdr.r{background:var(--crb);border:2px solid var(--cr)}
+.qhdr.y{background:var(--cyb);border:2px solid var(--cy)}
+.qhdr.g{background:var(--cgb);border:2px solid var(--cg)}
+.qhdr.b{background:var(--cbb);border:2px solid var(--cb)}
+.qhdr.mg{background:var(--cmb);border:2px solid var(--cm)}
+.qhic{font-size:1.5rem}
+.qhnm{font-family:'Kanit',sans-serif;font-size:.82rem;font-weight:900}
+.qhdr.r .qhnm{color:var(--crl)}.qhdr.y .qhnm{color:var(--cyl)}
+.qhdr.g .qhnm{color:var(--cgl)}.qhdr.b .qhnm{color:var(--cbl)}
+.qhdr.mg .qhnm{color:var(--cml)}
+.qhtm{font-size:.72rem;color:var(--muted)}
+.qlock{background:rgba(155,89,182,.1);border:1px dashed rgba(155,89,182,.35);border-radius:9px;padding:7px;text-align:center;margin-bottom:8px}
+.qlocklbl{font-size:.7rem;color:var(--muted);display:block;margin-top:2px}
+.qscen{padding:7px 10px;border-radius:0 8px 8px 0;border-left:3px solid;font-size:.82rem;color:#b8d4de;margin-bottom:8px;line-height:1.6}
+.qscen.r{border-color:var(--cr)}.qscen.y{border-color:var(--cy)}
+.qscen.g{border-color:var(--cg)}.qscen.b{border-color:var(--cb)}
+.qscen.mg{border-color:var(--cm)}
+.qtxt{font-size:.93rem;font-weight:700;line-height:1.5;margin-bottom:10px;color:#fff}
+.choices{display:flex;flex-direction:column;gap:5px}
+.ch{background:rgba(255,255,255,.06);border:2px solid var(--border);border-radius:9px;padding:8px 11px;color:var(--text);font-family:'Sarabun',sans-serif;font-size:.86rem;cursor:pointer;text-align:left;transition:all .2s;width:100%}
+.ch:hover{background:rgba(255,255,255,.1)}
+.ch.correct{background:rgba(46,204,113,.2)!important;border-color:#2ecc71!important;color:#2ecc71!important}
+.ch.wrong{background:rgba(231,76,60,.18)!important;border-color:#e74c3c!important;color:#e74c3c!important}
+.rsec{display:none;margin-top:9px}.rsec.active{display:block}
+.ric{font-size:1.8rem;text-align:center;margin-bottom:3px}
+.rgot{background:rgba(155,89,182,.15);border:1px solid rgba(155,89,182,.4);border-radius:7px;padding:6px;text-align:center;margin-bottom:6px;font-size:.8rem;color:var(--cml)}
+.rtxt{text-align:center;font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.rtxt strong{color:#fff}
+.bnext{width:100%;background:linear-gradient(135deg,var(--cyan),#0070a0);color:#fff;font-family:'Kanit',sans-serif;font-size:.9rem;font-weight:900;border:none;border-radius:40px;padding:10px;cursor:pointer;margin-top:3px}
+
+/* EVENT */
+.evmod{text-align:center}
+.evbig{font-size:2.6rem;margin-bottom:5px}
+.evtit{font-family:'Kanit',sans-serif;font-size:1.05rem;font-weight:900;margin-bottom:5px}
+.ev-up{color:var(--cyan)}.ev-dn{color:var(--red)}
+.evdet{font-size:.84rem;color:var(--muted);line-height:1.7;margin-bottom:10px}
+
+/* ACCUSATION */
+.astep{display:none}.astep.active{display:block}
+.stit{font-family:'Kanit',sans-serif;font-size:.98rem;font-weight:900;color:var(--cyan);margin-bottom:4px;text-align:center}
+.ssub{font-size:.78rem;color:var(--muted);text-align:center;margin-bottom:9px;line-height:1.5}
+.evgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:9px}
+.evcard{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:9px;padding:8px;text-align:center}
+.evcard .eic{font-size:1.3rem}
+.evcard .enm{font-size:.68rem;color:var(--muted);margin-top:2px;line-height:1.3}
+.evcard.empty{opacity:.3}
+.vthdr{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.vtdot{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.vtnm{font-family:'Kanit',sans-serif;font-size:.92rem;font-weight:700}
+.vtst{font-size:.75rem;color:var(--muted);margin-left:auto}
+.vilchs{display:flex;flex-direction:column;gap:6px;margin-bottom:9px}
+.vbtn{background:rgba(255,255,255,.06);border:2px solid var(--border);border-radius:9px;padding:8px 11px;color:var(--text);font-family:'Sarabun',sans-serif;font-size:.86rem;cursor:pointer;text-align:left;display:flex;align-items:center;gap:7px;transition:all .2s;width:100%}
+.vbtn:hover{background:rgba(231,76,60,.1);border-color:var(--red)}
+.vbtn.sel{background:rgba(0,210,255,.12);border-color:var(--cyan);color:var(--cyan)}
+.vbtn.correct{background:rgba(46,204,113,.2)!important;border-color:#2ecc71!important;color:#2ecc71!important}
+.vbtn.wrong{background:rgba(231,76,60,.2)!important;border-color:#e74c3c!important;color:#e74c3c!important}
+.vic{font-size:1.2rem}
+.rtbl{width:100%;border-collapse:collapse;margin-bottom:9px;font-size:.8rem}
+.rtbl th{background:rgba(255,255,255,.06);padding:5px 6px;font-family:'Kanit',sans-serif;font-size:.73rem;color:var(--muted);text-align:left}
+.rtbl td{padding:5px 6px;border-top:1px solid var(--border)}
+.ra{color:#2ecc71;font-weight:700}.wa{color:#e74c3c}
+
+/* WIN */
+#win{background:radial-gradient(ellipse at 50% 20%,#0a2e1a,#0d1117);justify-content:center;gap:11px;text-align:center}
+.trophy{font-size:3.8rem;animation:tb 1s ease-in-out infinite alternate}
+@keyframes tb{from{transform:scale(1)rotate(-5deg)}to{transform:scale(1.1)rotate(5deg)}}
+.wintit{font-family:'Kanit',sans-serif;font-size:1.8rem;font-weight:900;color:#f1c40f;text-shadow:0 0 18px rgba(241,196,15,.5)}
+.rvbox{background:rgba(231,76,60,.1);border:2px solid var(--red);border-radius:12px;padding:11px;max-width:360px;width:100%}
+.rvbox h3{font-family:'Kanit',sans-serif;color:var(--red);font-size:.88rem;margin-bottom:6px}
+.rvic{font-size:1.8rem;margin-bottom:3px}
+.rvnm{font-family:'Kanit',sans-serif;font-size:.98rem;font-weight:900}
+.rvwy{font-size:.78rem;color:var(--muted);line-height:1.5;margin-top:4px}
+.sfbox{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;max-width:360px;width:100%;font-size:.8rem}
+.sfbox h3{font-family:'Kanit',sans-serif;font-size:.85rem;color:var(--cyan);margin-bottom:6px}
+.sfr{display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border)}
+.sfr:last-child{border-bottom:none}
+.sfw{color:#f1c40f;font-family:'Kanit',sans-serif;font-weight:700}
+.brst{background:linear-gradient(135deg,#f1c40f,#d4a017);color:#111;font-family:'Kanit',sans-serif;font-size:.98rem;font-weight:900;border:none;border-radius:50px;padding:11px 25px;cursor:pointer}
+canvas.confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:500}
+</style>
+</head>
+<body>
+<div id="setup" class="screen active">
+  <span class="logo-spin">🔍</span>
+  <h1 class="big-title">ยอดนักสืบจิ๋ว<br><span>อย.น้อย</span></h1>
+  <div class="scard">
+    <h3>👥 จำนวนผู้เล่น</h3>
+    <div class="prow">
+      <button class="pbtn" onclick="setCount(2)">2 ทีม</button>
+      <button class="pbtn active" onclick="setCount(3)">3 ทีม</button>
+      <button class="pbtn" onclick="setCount(4)">4 ทีม</button>
+    </div>
+    <div class="trows" id="trows"></div>
+  </div>
+  <div class="cat-grid">
+    <div class="ccat r"><span class="ccat-ic">🏷️</span><div><div class="ccat-nm">อ่านฉลาก</div><div class="ccat-sb">ตรวจ อย. วันหมดอายุ</div></div></div>
+    <div class="ccat y"><span class="ccat-ic">🍬</span><div><div class="ccat-nm">เลือกกินอาหาร/ขนม</div><div class="ccat-sb">ความปลอดภัยในการกิน</div></div></div>
+    <div class="ccat g"><span class="ccat-ic">🥦</span><div><div class="ccat-nm">เลือกผัก/ผลไม้</div><div class="ccat-sb">ล้าง สด สะอาด</div></div></div>
+    <div class="ccat b"><span class="ccat-ic">🏪</span><div><div class="ccat-nm">เลือกร้านอาหาร</div><div class="ccat-sb">สังเกตความสะอาด</div></div></div>
+  </div>
+  <div class="scard" style="max-width:460px">
+    <h3>🦹 ตัวร้าย (สุ่มซ่อน)</h3>
+    <div class="vhint">สุ่ม 1 ใน 5: 🟫ขนมปังขึ้นรา 🥛นมบูด 🍞ขนมปังหมดอายุ 🍬ลูกอมสีสดใส 🍢ลูกชิ้นแมลงวัน<br>เก็บคำใบ้ 🔍 ระหว่างทาง แล้วทายตอนเส้นชัย!</div>
+  </div>
+  <div class="rules">
+    <b>📋 วิธีเล่น</b><br>
+    🎲 ทอยลูกเต๋าสลับทีม → เดินบนกระดาน<br>
+    🔍 เหยียบช่องแว่นขยาย → ตอบคำถาม → ได้<b style="color:var(--cml)">คำใบ้ลับ</b><br>
+    🏷️<b style="color:var(--crl)">แดง</b>=ฉลาก 🍬<b style="color:var(--cyl)">เหลือง</b>=อาหาร 🥦<b style="color:var(--cgl)">เขียว</b>=ผัก 🏪<b style="color:var(--cbl)">น้ำเงิน</b>=ร้าน<br>
+    🏁 ช่อง 25 → เปิดคำใบ้ → ทุกทีมโหวตหาตัวร้าย!
+  </div>
+  <button class="btn-big" onclick="startGame()">🔍 เริ่มสืบคดี!</button>
+</div>
+
+<div id="game" class="screen">
+  <div class="topbar" id="topbar">
+    <div class="tpill"><div class="tpdot" id="tpDot"></div><span class="tpnm" id="tpName">-</span></div>
+    <span style="font-size:.75rem;color:var(--muted)" id="turnCount"></span>
+  </div>
+  <div class="srow-wrap"><div class="srow" id="srow"></div></div>
+  <div class="game-inner">
+    <div class="game-left">
+      <div class="board" id="board" style="padding:6px 0 0"></div>
+      <div class="legend" style="margin-top:4px">
+        <div class="li"><div class="ld2" style="background:var(--cm);opacity:.9"></div>🔍คำใบ้</div>
+        <div class="li"><div class="ld2" style="background:#c0392b"></div>🏷️ฉลาก</div>
+        <div class="li"><div class="ld2" style="background:#b8860b"></div>🍬อาหาร</div>
+        <div class="li"><div class="ld2" style="background:#1a7a3a"></div>🥦ผัก</div>
+        <div class="li"><div class="ld2" style="background:#1565c0"></div>🏪ร้าน</div>
+        <div class="li"><div class="ld2" style="background:#00d2ff;opacity:.7"></div>🪜บันได</div>
+        <div class="li"><div class="ld2" style="background:#9b59b6;opacity:.7"></div>🐍งู</div>
+      </div>
+      <div class="ctrl">
+        <div class="stmsg" id="stMsg"></div>
+        <div class="drow">
+          <div class="dice" id="diceEl" onclick="doRoll()">🎲</div>
+          <button class="broll" id="rollBtn" onclick="doRoll()">🎲 ทอยลูกเต๋า</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-right">
+      <div class="clue-panel">
+        <h3>🔍 กระเป๋าคำใบ้</h3>
+        <div class="team-tabs" id="teamTabs"></div>
+        <div id="clueDisplay"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="win" class="screen">
+  <canvas class="confetti" id="confCvs"></canvas>
+  <div class="trophy">🏆</div>
+  <div class="wintit">คดีคลี่คลาย!</div>
+  <div id="winMsg" style="font-size:.88rem;color:var(--muted);max-width:400px;text-align:center"></div>
+  <div class="rvbox"><h3>🦹 ตัวร้ายที่แท้จริงคือ...</h3><div class="rvic" id="rvIc"></div><div class="rvnm" id="rvNm"></div><div class="rvwy" id="rvWy"></div></div>
+  <div class="sfbox" id="sfBox"></div>
+  <button class="brst" onclick="resetAll()">🔄 เล่นใหม่</button>
+</div>
+
+<div class="ov" id="qOv">
+  <div class="modal">
+    <div class="qhdr" id="qHdr"><span class="qhic" id="qHic"></span><div><div class="qhnm" id="qHnm"></div><div class="qhtm" id="qHtm"></div></div></div>
+    <div class="qlock"><span id="qClic">🔍</span><span class="qlocklbl" id="qClbl">ตอบถูกเพื่อเปิดเผยคำใบ้ลับ</span></div>
+    <div class="qscen" id="qScen"></div>
+    <div class="qtxt" id="qTxt"></div>
+    <div class="choices" id="qChs"></div>
+    <div class="rsec" id="rSec">
+      <div class="ric" id="rIc"></div>
+      <div class="rgot" id="rGot"></div>
+      <div class="rtxt" id="rTxt"></div>
+      <button class="bnext" onclick="closeQ()">ต่อไป →</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="clueRevOv">
+  <div class="modal clue-reveal-modal">
+    <div class="cr-icon" id="crIc"></div>
+    <div class="cr-title">ได้รับคำใบ้!</div>
+    <div class="cr-num" id="crNum"></div>
+    <div class="cr-name" id="crNm"></div>
+    <button class="bnext" onclick="closeClueRev()">เก็บคำใบ้ไว้ก่อน 🔒</button>
+  </div>
+</div>
+
+<div class="ov" id="evOv">
+  <div class="modal evmod">
+    <div class="evbig" id="evIc"></div>
+    <div class="evtit" id="evTit"></div>
+    <div class="evdet" id="evDet"></div>
+    <button class="bnext" onclick="closeEv()">ต่อไป →</button>
+  </div>
+</div>
+
+<div class="ov" id="acOv">
+  <div class="modal">
+    <div class="astep" id="stClues">
+      <div class="stit">🔍 เปิดคำใบ้ทั้งหมด!</div>
+      <div class="ssub" id="cluesSub"></div>
+      <div class="evgrid" id="clueGrid"></div>
+      <div class="ssub" style="color:var(--text);font-size:.83rem;margin-bottom:8px">ทุกทีมต้องเลือกก่อนเปิดเฉลย!</div>
+      <button class="bnext" onclick="startVoting()">เริ่มโหวต →</button>
+    </div>
+    <div class="astep" id="stVote">
+      <div class="stit">🗳️ เลือกอาหารต้นเหตุ</div>
+      <div class="vthdr"><div class="vtdot" id="vtDot"></div><div class="vtnm" id="vtNm"></div><div class="vtst" id="vtSt"></div></div>
+      <div class="ssub">เลือก 1 คำตอบ แล้วส่งให้ทีมถัดไป</div>
+      <div class="vilchs" id="vilChs"></div>
+      <button class="bnext" id="bCfVote" onclick="confirmVote()" disabled>✅ ยืนยัน</button>
+    </div>
+    <div class="astep" id="stReveal">
+      <div class="stit">🎯 เปิดเฉลย!</div>
+      <div class="ssub">ตัวร้ายที่แท้จริงคือ...</div>
+      <div style="text-align:center;font-size:2.6rem;margin:7px 0" id="revBig"></div>
+      <div style="text-align:center;font-family:'Kanit',sans-serif;font-size:1rem;font-weight:900;color:#fff;margin-bottom:5px" id="revNm"></div>
+      <div style="font-size:.78rem;color:var(--muted);text-align:center;line-height:1.5;margin-bottom:11px" id="revWy"></div>
+      <table class="rtbl"><thead><tr><th>ทีม</th><th>คำตอบ</th><th>คำใบ้</th><th>ผล</th></tr></thead><tbody id="resTb"></tbody></table>
+      <button class="bnext" onclick="goWin()">ดูผลสรุป 🏆</button>
+    </div>
+  </div>
+</div>
+<script>
+// ── VILLAIN CLUES ──
+const VILLAIN_CLUES={
+  v1:{icon:'🟫',name:'ขนมปังขึ้นรา',clues:[
+    {icon:'🦠',name:'พบเชื้อราสีเขียว'},
+    {icon:'🏪',name:'ซื้อจากร้านค้า'},
+    {icon:'⏳',name:'เก็บไว้นานหลายวัน'},
+    {icon:'🚫',name:'ไม่มีฉลาก อย.'},
+  ]},
+  v2:{icon:'🥛',name:'นมบูด',clues:[
+    {icon:'📅',name:'วันหมดอายุผ่านแล้ว'},
+    {icon:'📦',name:'กล่องบวมผิดปกติ'},
+    {icon:'😮',name:'รสชาติเปรี้ยว'},
+    {icon:'💧',name:'ของเหลวเปลี่ยนสี'},
+  ]},
+  v3:{icon:'🍞',name:'ขนมปังหมดอายุ',clues:[
+    {icon:'🗓️',name:'วันหมดอายุ 12/03/2026'},
+    {icon:'🌾',name:'ส่วนผสมหลัก: แป้ง'},
+    {icon:'🏪',name:'ซื้อจากร้านค้า'},
+    {icon:'👃',name:'กลิ่นผิดปกติ'},
+  ]},
+  v4:{icon:'🍬',name:'ลูกอมสีสดใส',clues:[
+    {icon:'🍭',name:'รสหวานมาก'},
+    {icon:'🍚',name:'ภาพน้ำตาลทราย'},
+    {icon:'🌈',name:'มีสีรุ้งหลายสี'},
+    {icon:'🍡',name:'มีไม้แท่งเสียบ'},
+  ]},
+  v5:{icon:'🍢',name:'ลูกชิ้นแมลงวันตอม',clues:[
+    {icon:'🦠',name:'พบแบคทีเรียบนผิว'},
+    {icon:'🐛',name:'มีหนอนแมลงวัน'},
+    {icon:'🍳',name:'ทอดด้วยน้ำมันเก่า'},
+    {icon:'🍢',name:'มีไม้เสียบลูกชิ้น'},
+  ]},
+};
+
+const CATS={
+  r:{id:'r',name:'อ่านฉลาก',icon:'🏷️',cls:'r',cc:'c-r'},
+  y:{id:'y',name:'เลือกกินอาหาร/ขนม',icon:'🍬',cls:'y',cc:'c-y'},
+  g:{id:'g',name:'เลือกผัก/ผลไม้',icon:'🥦',cls:'g',cc:'c-g'},
+  b:{id:'b',name:'เลือกร้านอาหาร',icon:'🏪',cls:'b',cc:'c-b'},
+  mg:{id:'mg',name:'แว่นขยาย (คำใบ้)',icon:'🔍',cls:'mg',cc:'c-mg'},
+};
+
+const QP={
+  r:[
+    {sc:'🏷️ น้องหยิบขนมมา เห็นเลข 13 หลักบนห่อ',tx:'เลข 13 หลักบนขนมหมายความว่าอะไร?',ok:'ผ่านการตรวจสอบความปลอดภัยจาก อย. แล้ว',ng:['คือราคาสินค้า','คือบาร์โค้ดธรรมดา','คือน้ำหนักสินค้า'],ex:'เลข อย. 13 หลัก = ผลิตภัณฑ์ผ่าน สำนักงานคณะกรรมการอาหารและยา ต้องมีก่อนกินทุกครั้ง!'},
+    {sc:'🗓️ เห็น "BBE 15/06/67" บนฉลากขนมปัง',tx:'"BBE" บนฉลากคืออะไร?',ok:'วันหมดอายุ ห้ามกินหลังวันนี้',ng:['วันผลิต','วันส่งออก','รหัสโรงงาน'],ex:'BBE/EXP/หมดอายุ = วันสุดท้ายที่อาหารยังปลอดภัย ต้องดูก่อนซื้อ/กินทุกครั้ง!'},
+    {sc:'🔍 ขนมถุงฉลากตัวหนังสือเลือน อ่านไม่ออก',tx:'ควรทำอย่างไรกับขนมนั้น?',ok:'ไม่ซื้อ เพราะตรวจสอบข้อมูลความปลอดภัยไม่ได้',ng:['ซื้อได้ถ้าสีสวย','ซื้อได้ถ้าราคาถูก','ลองชิมก่อน'],ex:'ถ้าอ่านฉลากไม่ออก เราไม่รู้วันหมดอายุและส่วนผสม อย่าซื้อจะปลอดภัยกว่า!'},
+    {sc:'📦 กล่องนมมีเลข อย. แต่วันหมดอายุเมื่อวาน',tx:'ควรดื่มนมกล่องนั้นไหม?',ok:'ไม่ดื่ม เพราะหมดอายุแล้วแม้มีเลข อย.',ng:['ดื่มได้เพราะมีเลข อย.','ดื่มได้ถ้าแช่เย็น','ดมก่อนถ้าไม่เหม็นดื่มได้'],ex:'เลข อย. บอกว่าผ่านมาตรฐาน แต่ถ้าหมดอายุแล้วก็ไม่ปลอดภัย ต้องดูทั้งสองอย่าง!'},
+    {sc:'🛍️ ซื้อของฝากตลาดนัด ไม่มีฉลากเลย',tx:'อาหารที่ไม่มีฉลากมีความเสี่ยงอย่างไร?',ok:'ไม่รู้ส่วนผสม วันหมดอายุ และไม่ผ่านการตรวจสอบ',ng:['ปลอดภัยเพราะทำเอง','อร่อยกว่าของในห้าง','ราคาถูกกว่าเป็นของดี'],ex:'อาหารไม่มีฉลากไม่ผ่าน อย. ไม่รู้ส่วนผสม อาจมีสารอันตรายโดยไม่รู้ตัว!'},
+    {sc:'🧪 ฉลากน้ำดื่มระบุ "น้ำ, สารกันบูด, สีผสมอาหาร"',tx:'น้ำดื่มปลอดภัยที่สุดควรมีส่วนผสมอะไร?',ok:'น้ำบริสุทธิ์เพียงอย่างเดียว ไม่มีสารเคมีเพิ่ม',ng:['น้ำ + สีผสมอาหาร','น้ำ + สารกันบูด','น้ำ + สารให้ความหวาน'],ex:'น้ำดื่มที่ดีควรมีแค่น้ำบริสุทธิ์ สารเคมีเพิ่มในน้ำดื่มอาจมีผลต่อร่างกายในระยะยาว!'},
+  ],
+  y:[
+    {sc:'🍰 เค้กสีสดใสขายหน้าโรงเรียน ไม่มีเลข อย.',tx:'ทำไมไม่ควรซื้อเค้กนั้น?',ok:'สีที่ใช้แต่งอาจไม่ผ่านมาตรฐาน อาจเป็นอันตราย',ng:['สีสดใสเกินทำให้ตาเจ็บ','เค้กสีสดหวานเกินไป','เพราะไม่มีชื่อร้าน'],ex:'สีสังเคราะห์บางชนิดห้ามใช้ในอาหาร ถ้าไม่มีเลข อย. ไม่รู้ว่าใช้สีอะไร อาจแพ้หรือท้องเสีย!'},
+    {sc:'🍱 อาหารกล่องทิ้งนอกตู้เย็น 4 ชั่วโมงแล้ว',tx:'ทิ้งในอุณหภูมิห้องเกินกี่ชั่วโมง ถือว่าไม่ปลอดภัย?',ok:'เกิน 2 ชั่วโมง เชื้อโรคเพิ่มขึ้นในระดับอันตราย',ng:['เกิน 6 ชั่วโมง','เกิน 12 ชั่วโมง','ไม่มีกำหนดถ้าไม่มีกลิ่น'],ex:'กฎ 2 ชั่วโมง: อาหารในอุณหภูมิห้องเกิน 2 ชม. เชื้อโรคเพิ่มเร็วมาก อันตรายต่อร่างกาย!'},
+    {sc:'🍞 ขนมปังในกล่องขึ้นราที่มุมนึง',tx:'ควรทำอย่างไรกับขนมปังนั้น?',ok:'ทิ้งทั้งแผ่น ราส่งสารพิษแพร่อยู่ทั่วแม้ไม่เห็น',ng:['ตัดส่วนที่ขึ้นราออกแล้วกินส่วนที่เหลือ','ล้างน้ำแล้วกินได้','อุ่นไมโครเวฟฆ่าราได้'],ex:'ราบนขนมปังผลิตสารพิษ Mycotoxin แพร่ซึมเข้าเนื้อแม้ตัดราออก ต้องทิ้งทั้งชิ้น!'},
+    {sc:'🍬 ลูกอมสีแดงสดขายข้างถนน ราคา 1 บาท',tx:'สิ่งที่ต้องตรวจก่อนซื้อลูกอมคืออะไร?',ok:'เลข อย. และวันหมดอายุบนบรรจุภัณฑ์',ng:['ลองชิมก่อน','ดูว่าสีสวยไหม','ถามเพื่อนว่าอร่อยไหม'],ex:'แม้ราคาถูก ลูกอมก็ต้องมีเลข อย. ถ้าไม่มีแสดงว่าไม่ผ่านการตรวจสอบ!'},
+    {sc:'🥤 น้ำผลไม้กล่องในตู้เย็น กล่องบวมเล็กน้อย',tx:'กล่องเครื่องดื่มบวมควรทำอย่างไร?',ok:'ทิ้งทันที กล่องบวม = มีแก๊สจากเชื้อโรคข้างใน',ng:['เปิดออกแล้วดื่มได้','แช่เย็นต่อก่อน','ดมก่อนถ้าไม่เหม็นดื่มได้'],ex:'กล่องบวม = เชื้อแบคทีเรียข้างในทำให้เกิดแก๊ส อันตรายมาก ต้องทิ้งทันทีไม่ต้องลอง!'},
+    {sc:'🍗 ไก่ทอดวางกลางแดด มีแมลงวันตอม',tx:'ควรซื้อไก่ทอดนั้นไหม?',ok:'ไม่ซื้อ เพราะแมลงวันพาเชื้อโรค และวางนานเกินไป',ng:['ซื้อได้ถ้าเปิดแมลงวันออก','ซื้อได้ถ้าอุ่นใหม่','ซื้อได้เพราะปรุงสุกแล้ว'],ex:'แมลงวันพาเชื้อโรคพันชนิด + อาหารกลางแดดเกิน 2 ชม. = อันตรายสูง ไม่ควรซื้อ!'},
+  ],
+  g:[
+    {sc:'🥦 แม่ซื้อผักมาจากตลาด ก่อนหั่นควรทำอะไรก่อน?',tx:'ขั้นตอนที่ถูกต้องก่อนกินหรือปรุงผักสดคืออะไร?',ok:'ล้างด้วยน้ำสะอาดไหลผ่านอย่างน้อย 30 วินาที',ng:['แช่น้ำเกลือแล้วกินเลย','ล้างแค่ครั้งเดียวเร็วๆ','ไม่ต้องล้างถ้าซื้อซูเปอร์มาร์เก็ต'],ex:'ผักสดอาจมียาฆ่าแมลงและเชื้อโรค ต้องล้างน้ำสะอาดไหลผ่านอย่างน้อย 30 วิ ทุกครั้ง!'},
+    {sc:'🍎 แอปเปิ้ลที่ร้านผิวมันวาวผิดปกติ',tx:'ผลไม้ผิวมันวาวผิดปกติอาจมีสาเหตุจากอะไร?',ok:'อาจเคลือบสารเคมีรักษาสภาพ ต้องล้างให้สะอาด',ng:['แสดงว่าสดและมีคุณภาพสูง','แสดงว่าไม่มียาฆ่าแมลง','ธรรมชาติของผลไม้คุณภาพดี'],ex:'ผลไม้บางชนิดเคลือบสารรักษาสภาพ ต้องล้างและถูให้ทั่วด้วยน้ำสะอาดก่อนกินทุกครั้ง!'},
+    {sc:'🍌 กล้วยที่บ้านมีจุดดำเกิดขึ้นบนผิว',tx:'กล้วยมีจุดดำบนผิวแบบนี้ยังกินได้ไหม?',ok:'กินได้ เป็นกระบวนการสุกตามธรรมชาติ ยิ่งหวาน',ng:['กินไม่ได้ เพราะขึ้นรา','กินไม่ได้ เพราะมียาฆ่าแมลง','กินได้แต่ต้องตัดจุดดำออกก่อน'],ex:'จุดดำบนกล้วย = น้ำตาลที่เพิ่มขึ้นระหว่างการสุก ยิ่งมีจุดดำยิ่งหวาน กินได้ตามปกติ!'},
+    {sc:'🥬 ผักสลัดถุงฉลากว่า "ล้างสะอาดพร้อมกิน"',tx:'ควรทำอย่างไรกับผักสลัดถุงนั้น?',ok:'ล้างน้ำอีกครั้งก่อนกิน เพื่อความปลอดภัยเพิ่มเติม',ng:['กินเลยได้เพราะฉลากบอกว่าล้างแล้ว','แช่น้ำร้อนก่อนกิน','ใส่น้ำส้มสายชูแช่ 1 ชม.'],ex:'แม้ฉลากบอกว่าล้างแล้ว ล้างซ้ำอีกครั้งจะปลอดภัยกว่า เพราะอาจปนเปื้อนระหว่างขนส่ง!'},
+    {sc:'🌽 ข้าวโพดต้มวางกลางแจ้ง มีแมลงวันตอม',tx:'ควรซื้อข้าวโพดต้มนั้นไหม?',ok:'ไม่ซื้อ แมลงวันนำเชื้อโรคมาตอมบนอาหารแล้ว',ng:['ซื้อได้ถ้าเป่าแมลงวันออก','ซื้อได้เพราะต้มสุกแล้ว','ซื้อได้แล้วอุ่นใหม่'],ex:'อาหารที่แมลงวันตอมแล้วไม่ปลอดภัย ไม่ว่าจะปรุงสุกหรือไม่ เพราะเชื้อโรคถ่ายทอดมาแล้ว!'},
+    {sc:'🍊 ส้มเปลือกมีรอยช้ำดำ',tx:'ส้มที่เปลือกมีรอยช้ำควรทำอย่างไร?',ok:'ปอกเปลือกออก ตรวจดูข้างใน ถ้าเนื้อยังดีกินได้',ng:['ทิ้งทั้งลูกเพราะอันตราย','กินทั้งเปลือกได้เลย','แช่น้ำเกลือแล้วกินทั้งลูก'],ex:'รอยช้ำที่เปลือกส้มมักมาจากการขนส่ง ปอกเปลือกออก ถ้าเนื้อข้างในสีปกติกินได้!'},
+  ],
+  b:[
+    {sc:'🍽️ ร้านอาหารหน้าร้านสกปรก พื้นเปียก มีแมลงวัน',tx:'สัญญาณว่าร้านอาหารไม่ถูกสุขลักษณะคืออะไร?',ok:'พื้นสกปรก มีแมลงวัน อุปกรณ์ไม่สะอาด',ng:['ร้านเล็กแสดงว่าไม่ดี','ราคาถูกแสดงว่าไม่สะอาด','เจ้าของไม่ยิ้มแย้ม'],ex:'ร้านอาหารที่ดีต้องสะอาด พื้นแห้ง ไม่มีแมลง อุปกรณ์สะอาด ถ้าไม่ผ่านข้อนี้เสี่ยงอาหารเป็นพิษ!'},
+    {sc:'🧑‍🍳 พ่อครัวไม่ล้างมือหลังจับเนื้อดิบ แล้วหั่นผักต่อเลย',tx:'พ่อครัวควรทำอะไรหลังจับเนื้อดิบ?',ok:'ล้างมือด้วยสบู่และน้ำสะอาดทันที',ng:['เช็ดมือด้วยผ้าได้เลย','ใส่ถุงมือทับได้เลย','รอให้มือแห้งก่อน'],ex:'เนื้อดิบมีเชื้อโรค ต้องล้างมือด้วยสบู่ทันทีก่อนจับอาหารอื่น ป้องกันการปนเปื้อนข้าม!'},
+    {sc:'🥄 ช้อนส้อมในร้านมีคราบสีน้ำตาลติดอยู่',tx:'ควรทำอย่างไรเมื่อพบอุปกรณ์กินข้าวสกปรก?',ok:'ขอเปลี่ยนชุดใหม่จากร้าน หรือเลือกร้านอื่น',ng:['ใช้ได้เพราะอาหารร้อนฆ่าเชื้อ','เช็ดด้วยกระดาษทิชชูแล้วใช้','ใช้มือกินแทน'],ex:'อุปกรณ์กินข้าวสกปรกมีเชื้อโรค สิทธิ์ของเราคือขอเปลี่ยนหรือเดินออกจากร้านนั้นได้เลย!'},
+    {sc:'🧊 น้ำแข็งที่ร้านมีสีขุ่นเล็กน้อย',tx:'น้ำแข็งที่ปลอดภัยสำหรับกินควรมีลักษณะอย่างไร?',ok:'ใส ไม่มีสี ไม่มีกลิ่น ผลิตจากน้ำดื่มสะอาด',ng:['สีขุ่นคือน้ำแร่ธรรมชาติ ปลอดภัย','น้ำแข็งทุกชนิดปลอดภัยเพราะแช่แข็ง','ดมก่อนถ้าไม่เหม็น'],ex:'น้ำแข็งที่ดีต้องใสไม่มีสี ไม่มีกลิ่น น้ำแข็งขุ่นอาจทำจากน้ำไม่สะอาด มีเชื้อโรคได้!'},
+    {sc:'🍜 ร้านก๋วยเตี๋ยวใส่หมูดิบลงน้ำซุปเย็น',tx:'หมูในก๋วยเตี๋ยวปลอดภัยเมื่ออุณหภูมิถึงกี่องศา?',ok:'75 องศาเซลเซียสขึ้นไป เชื้อโรคจึงถูกทำลาย',ng:['60 องศา เพราะร้อนแล้ว','ไม่ต้องถึงอุณหภูมิใดก็ได้','100 องศาเท่านั้น'],ex:'เนื้อสัตว์ทุกชนิดต้องปรุงสุกที่ 75°C+ เชื้อโรคเช่น Salmonella จึงถูกทำลาย!'},
+    {sc:'🏪 ร้านมีป้าย "ผ่านมาตรฐาน อย." ที่ประตู',tx:'ป้าย อย. หน้าร้านอาหารหมายความว่าอะไร?',ok:'ร้านผ่านการตรวจสอบสุขลักษณะจากหน่วยงานรัฐ',ng:['อาหารอร่อยกว่าร้านอื่น','ราคาถูกกว่าร้านทั่วไป','เจ้าของจ่ายค่าธรรมเนียมแล้ว'],ex:'ป้าย อย. = ร้านผ่านการตรวจสอบมาตรฐานความสะอาดจากเจ้าหน้าที่!'},
+  ],
+  mg:[
+    {sc:'🔍 นักสืบพบร่องรอยบนห่อขนม',tx:'เมื่อเปิดขนมแล้วพบกลิ่นผิดปกติ ควรทำอย่างไร?',ok:'หยุดกินทันที และทิ้งขนมนั้น',ng:['กินต่อถ้าสีปกติ','อุ่นไมโครเวฟก่อน','เติมเกลือเพื่อฆ่าเชื้อ'],ex:'กลิ่นผิดปกติในอาหารเป็นสัญญาณเตือน อย่าเสี่ยงกิน ให้ทิ้งและแจ้งผู้ใหญ่ทันที!'},
+    {sc:'🦠 นักสืบพบเชื้อโรคในอาหาร',tx:'เชื้อโรคในอาหารสามารถมองเห็นด้วยตาเปล่าได้ไหม?',ok:'ไม่ได้ เชื้อโรคเล็กมาก ต้องใช้กล้องจุลทรรศน์',ng:['เห็นได้ถ้าอาหารเปลี่ยนสี','เห็นได้ถ้าอาหารมีกลิ่น','เห็นได้ทุกชนิด'],ex:'เชื้อโรคเล็กมากจนมองไม่เห็น นั่นคือเหตุผลที่เราต้องระวังตลอดเวลา ไม่ใช่แค่ดูด้วยตา!'},
+    {sc:'🕵️ นักสืบกำลังสืบสวนที่ร้านขายขนม',tx:'สัญญาณใดบ่งบอกว่าขนมอาจไม่ปลอดภัย?',ok:'ไม่มีเลข อย. หมดอายุแล้ว หรือบรรจุภัณฑ์ชำรุด',ng:['ราคาถูกมาก','ขายในร้านเล็ก','ไม่มีโฆษณา'],ex:'ตรวจ 3 อย่างเสมอ: เลข อย. / วันหมดอายุ / บรรจุภัณฑ์ไม่ชำรุด ถ้าขาดข้อใดข้อหนึ่งอย่าซื้อ!'},
+    {sc:'📋 นักสืบจดบันทึกหลักฐาน',tx:'ถ้าเพื่อนปวดท้องหลังกินอาหาร ควรทำอะไรก่อน?',ok:'แจ้งครู/ผู้ใหญ่ทันที และพาไปพบพยาบาล',ng:['ให้กินยาแก้ปวดท้องเอง','รอดูก่อนสักชั่วโมง','ให้ดื่มน้ำหวานเยอะๆ'],ex:'อาหารเป็นพิษในเด็กเป็นเรื่องเร่งด่วน ต้องแจ้งผู้ใหญ่ทันที ไม่ควรกินยาเองโดยไม่ปรึกษาแพทย์!'},
+  ],
+};
+
+// ── CELLS (25+แว่นขยาย) ──
+const CELLS=[
+  {n:1,t:'n',cat:null,icon:'🚀',lbl:'เริ่ม'},
+  {n:2,t:'cat',cat:'r',icon:'🏷️',lbl:'อ่านฉลาก'},
+  {n:3,t:'ld',cat:null,icon:'🪜',lbl:'บันได→7'},
+  {n:4,t:'mg',cat:'mg',icon:'🔍',lbl:'คำใบ้ 1'},
+  {n:5,t:'cat',cat:'y',icon:'🍬',lbl:'ขนมหวาน'},
+  {n:6,t:'n',cat:null,icon:'📋',lbl:'บันทึก'},
+  {n:7,t:'cat',cat:'b',icon:'🏪',lbl:'ร้านอาหาร'},
+  {n:8,t:'mg',cat:'mg',icon:'🔍',lbl:'คำใบ้ 2'},
+  {n:9,t:'cat',cat:'r',icon:'🏷️',lbl:'ตรวจฉลาก'},
+  {n:10,t:'cat',cat:'y',icon:'🍱',lbl:'อาหารกล่อง'},
+  {n:11,t:'cat',cat:'b',icon:'🍜',lbl:'ก๋วยเตี๋ยว'},
+  {n:12,t:'mg',cat:'mg',icon:'🔍',lbl:'คำใบ้ 3'},
+  {n:13,t:'ld',cat:null,icon:'🪜',lbl:'บันได→18'},
+  {n:14,t:'n',cat:null,icon:'🕵️',lbl:'สืบสวน'},
+  {n:15,t:'sn',cat:null,icon:'🐍',lbl:'งู→10'},
+  {n:16,t:'n',cat:null,icon:'🔎',lbl:'ตรวจสอบ'},
+  {n:17,t:'cat',cat:'y',icon:'🍞',lbl:'ขนมปัง?'},
+  {n:18,t:'mg',cat:'mg',icon:'🔍',lbl:'คำใบ้ 4'},
+  {n:19,t:'cat',cat:'g',icon:'🌽',lbl:'ข้าวโพด'},
+  {n:20,t:'sn',cat:null,icon:'🐍',lbl:'งู→14'},
+  {n:21,t:'cat',cat:'r',icon:'🏷️',lbl:'วันหมดอายุ'},
+  {n:22,t:'ld',cat:null,icon:'🪜',lbl:'บันได→25'},
+  {n:23,t:'cat',cat:'b',icon:'🧊',lbl:'น้ำแข็ง?'},
+  {n:24,t:'cat',cat:'g',icon:'🥬',lbl:'ผักสลัด'},
+  {n:25,t:'win',cat:null,icon:'🏆',lbl:'เส้นชัย'},
+];
+const LD={3:7,13:18,22:25},SN={15:10,20:14};
+
+const VL_LIST=['v1','v2','v3','v4','v5'];
+const TD=[
+  {tok:'🔴',tcls:'tk1',scls:'sc1',color:'var(--p1)',light:'var(--p1l)',dc:'t1c',def:'ทีมแดง'},
+  {tok:'🔵',tcls:'tk2',scls:'sc2',color:'var(--p2)',light:'var(--p2l)',dc:'t2c',def:'ทีมน้ำเงิน'},
+  {tok:'🟡',tcls:'tk3',scls:'sc3',color:'var(--p3)',light:'var(--p3l)',dc:'t3c',def:'ทีมเหลือง'},
+  {tok:'🟢',tcls:'tk4',scls:'sc4',color:'var(--p4)',light:'var(--p4l)',dc:'t4c',def:'ทีมเขียว'},
+];
+let SC=3,G={},_viewTeam=0;
+const UQ={r:[],y:[],g:[],b:[],mg:[]};
+
+function setCount(n){SC=n;document.querySelectorAll('.pbtn').forEach((b,i)=>b.classList.toggle('active',i===n-2));buildRows();}
+function buildRows(){
+  const rows=document.getElementById('trows');rows.innerHTML='';
+  TD.forEach((td,i)=>{const on=i<SC;rows.innerHTML+=`<div class="trow"><div class="tdot ${td.dc}">${td.tok}</div><input class="tinput" id="tn${i}" value="${td.def}"${on?'':' disabled'}></div>`;});
+}
+function getQ(cat){
+  const pool=QP[cat];if(UQ[cat].length>=pool.length)UQ[cat]=[];
+  const av=pool.filter((_,i)=>!UQ[cat].includes(i));
+  const idx=pool.indexOf(av[Math.floor(Math.random()*av.length)]);UQ[cat].push(idx);
+  const q=pool[idx];const pos=Math.floor(Math.random()*4);
+  const ch=[...q.ng];ch.splice(pos,0,q.ok);
+  return{sc:q.sc,tx:q.tx,ch,ci:pos,ex:q.ex};
+}
+function initState(){
+  Object.keys(UQ).forEach(k=>UQ[k]=[]);
+  const vid=VL_LIST[Math.floor(Math.random()*VL_LIST.length)];
+  const v=VILLAIN_CLUES[vid];
+  const nms=TD.map((_,i)=>document.getElementById('tn'+i)?.value||TD[i].def);
+  G={
+    teams:TD.slice(0,SC).map((td,i)=>({...td,id:i,name:nms[i],pos:0,clues:[],visited:{},score:0})),
+    turn:0,villain:{id:vid,...v},rolling:false,busy:false,
+    winnerTid:-1,votes:{},voteOrder:[],voteIdx:0,clueIdx:0,
+  };
+  _viewTeam=0;
+}
+const DISP=[25,24,23,22,21,20,19,18,17,16,11,12,13,14,15,10,9,8,7,6,1,2,3,4,5];
+function ccls(c){
+  if(c.t==='win')return 'c-win';if(c.t==='sn')return 'c-sn';if(c.t==='ld')return 'c-ld';
+  if(c.t==='mg')return 'c-mg';if(c.t==='cat')return CATS[c.cat].cc;return 'c-n';
+}
+function renderBoard(){
+  const bd=document.getElementById('board');bd.innerHTML='';
+  DISP.forEach(n=>{
+    const c=CELLS.find(x=>x.n===n);const d=document.createElement('div');
+    d.id='cell-'+n;d.className='cell '+(c?ccls(c):'c-n');
+    const tks=G.teams.filter(t=>t.pos===n).map(t=>`<div class="tok ${t.tcls}"></div>`).join('');
+    d.innerHTML=`<span class="cn">${n}</span><span class="ci">${c?c.icon:'?'}</span><span class="cl">${c?c.lbl:''}</span>${tks?`<div class="toks">${tks}</div>`:''}`;
+    bd.appendChild(d);
+  });
+}
+function renderHUD(){
+  const t=G.teams[G.turn];
+  document.getElementById('tpDot').style.background=t.color;
+  document.getElementById('tpDot').textContent=t.tok;
+  document.getElementById('tpName').textContent=t.name+' กำลังเล่น';
+  document.getElementById('turnCount').textContent=`คิวที่ ${G.turn+1}/${G.teams.length}`;
+  const row=document.getElementById('srow');row.innerHTML='';
+  G.teams.forEach((tm,i)=>{const c=document.createElement('div');c.className='schip '+tm.scls+(i===G.turn?' cur':'');c.innerHTML=`${tm.tok} ${tm.name} 🔍×${tm.clues.length}`;row.appendChild(c);});
+  renderCluePanel();
+}
+function renderCluePanel(){
+  const tabs=document.getElementById('teamTabs');tabs.innerHTML='';
+  G.teams.forEach((tm,i)=>{
+    const t=document.createElement('div');t.className='ttab'+(i===_viewTeam?' active':'');
+    t.style.color=tm.light;if(i===_viewTeam)t.style.borderColor=tm.light;
+    t.textContent=`${tm.tok} ${tm.name}`;t.onclick=()=>{_viewTeam=i;renderCluePanel();};tabs.appendChild(t);
+  });
+  const tm=G.teams[_viewTeam];const v=G.villain;
+  const disp=document.getElementById('clueDisplay');
+  disp.innerHTML=`<div class="villain-target"><div class="vt-label">🎯 หาตัวร้ายที่ทำให้ปวดท้อง!</div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px">${Object.values(VILLAIN_CLUES).map(x=>`<span style="font-size:1.4rem" title="${x.name}">${x.icon}</span>`).join('')}</div></div>
+  <div style="font-size:.72rem;color:var(--muted);margin-bottom:6px;text-align:center">🔒 หลักฐานลับที่เก็บได้ (${tm.clues.length}/4) — เปิดที่เส้นชัย</div>
+  <div class="clues-grid">
+    ${[0,1,2,3].map(i=>{
+      const cl=tm.clues[i];
+      return `<div class="clue-slot ${cl?'unlocked':'locked'}">
+        <span class="clue-slot-num">หลักฐาน ${i+1}</span>
+        <div class="clue-slot-icon">${cl?'🔒':'🔒'}</div>
+        <div class="clue-slot-name">${cl?'ได้แล้ว! (ซ่อนไว้)':'ยังไม่ได้'}</div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+function setSt(m){document.getElementById('stMsg').textContent=m;}
+function doRoll(){
+  if(G.rolling||G.busy)return;G.rolling=true;document.getElementById('rollBtn').disabled=true;
+  const el=document.getElementById('diceEl');el.classList.add('rolling');
+  const f=['⚀','⚁','⚂','⚃','⚄','⚅'];let cnt=0;
+  const iv=setInterval(()=>{el.textContent=f[Math.floor(Math.random()*6)];
+    if(++cnt>=10){clearInterval(iv);el.classList.remove('rolling');
+      const r=Math.floor(Math.random()*6)+1;el.textContent=f[r-1];move(G.turn,r);}
+  },70);
+}
+function move(tid,steps){
+  const tm=G.teams[tid];const dest=Math.min(tm.pos+steps,25);
+  anim(tm,dest,()=>land(tid,dest));
+}
+function anim(tm,dest,cb){if(tm.pos>=dest){cb();return;}tm.pos++;renderBoard();setTimeout(()=>anim(tm,dest,cb),110);}
+function land(tid,n){
+  const tm=G.teams[tid];const c=CELLS.find(x=>x.n===n);if(!c){endTurn();return;}
+  if(n===25){G.busy=true;G.winnerTid=tid;setTimeout(openAcc,400);return;}
+  if(c.t==='ld'&&LD[n]){const dest=LD[n];showEv('ld',n,dest,()=>{anim(tm,dest,()=>{tm.pos=dest;renderBoard();renderHUD();if(dest===25){G.busy=true;G.winnerTid=tid;setTimeout(openAcc,400);}else{chkClue(tid,dest);}});});return;}
+  if(c.t==='sn'&&SN[n]){const dest=SN[n];showEv('sn',n,dest,()=>{let cur=tm.pos;const dn=()=>{if(cur<=dest){tm.pos=dest;renderBoard();renderHUD();endTurn();return;}cur--;tm.pos=cur;renderBoard();setTimeout(dn,100);};dn();});return;}
+  chkClue(tid,n);
+}
+function chkClue(tid,n){
+  const tm=G.teams[tid];const c=CELLS.find(x=>x.n===n);
+  if(!c||!['cat','mg'].includes(c.t)){setSt(`${tm.name} อยู่ที่ช่อง ${n}`);endTurn();return;}
+  if(tm.visited[n]){setSt(`${tm.name} เคยเหยียบแล้ว ✅`);endTurn();return;}
+  showQ(tid,c);
+}
+function endTurn(){G.rolling=false;G.busy=false;G.turn=(G.turn+1)%G.teams.length;renderHUD();setSt(`ถึงคิว ${G.teams[G.turn].name}! กดทอยลูกเต๋า`);document.getElementById('rollBtn').disabled=false;}
+
+let _cq=null,_ct=-1,_cc=null;
+function showQ(tid,cf){
+  G.busy=true;_ct=tid;_cc=cf;const tm=G.teams[tid];const cat=CATS[cf.cat];_cq=getQ(cf.cat);
+  const hdr=document.getElementById('qHdr');hdr.className='qhdr '+cat.cls;
+  document.getElementById('qHic').textContent=cat.icon;
+  document.getElementById('qHnm').textContent=cat.name;
+  document.getElementById('qHtm').textContent=`${tm.tok} ${tm.name}`;
+  // show clue slot info for magnifier cells
+  if(cf.t==='mg'){
+    const nextIdx=tm.clues.length;
+    document.getElementById('qClic').textContent='🔍';
+    document.getElementById('qClbl').textContent=`ตอบถูก → ได้หลักฐานลับ ${nextIdx+1}/4 (เปิดตอนเส้นชัย)`;
+  }else{
+    document.getElementById('qClic').textContent='💡';
+    document.getElementById('qClbl').textContent='ตอบถูกเพื่อเพิ่มคะแนนและความรู้';
+  }
+  const sc=document.getElementById('qScen');sc.className='qscen '+cat.cls;sc.textContent=_cq.sc;
+  document.getElementById('qTxt').textContent=_cq.tx;
+  document.getElementById('rSec').classList.remove('active');
+  const cl=document.getElementById('qChs');cl.innerHTML='';
+  const lb=['ก','ข','ค','ง'];
+  _cq.ch.forEach((ch,i)=>{const btn=document.createElement('button');btn.className='ch';btn.textContent=`${lb[i]}. ${ch}`;btn.onclick=()=>ansQ(i);cl.appendChild(btn);});
+  document.getElementById('qOv').classList.add('active');
+}
+function ansQ(idx){
+  const btns=document.querySelectorAll('#qChs .ch');
+  btns.forEach((b,i)=>{if(i===_cq.ci)b.classList.add('correct');else if(i===idx&&idx!==_cq.ci)b.classList.add('wrong');b.onclick=null;});
+  const ok=idx===_cq.ci;const tm=G.teams[_ct];
+  document.getElementById('rIc').textContent=ok?'🎉':'😮';
+  if(ok){
+    tm.visited[_cc.n]=true;tm.score+=10;
+    if(_cc.t==='mg'&&tm.clues.length<4){
+      const cl=G.villain.clues[tm.clues.length];tm.clues.push(cl);
+      document.getElementById('rGot').style.display='block';
+      document.getElementById('rGot').innerHTML=`🔒 ได้หลักฐาน ${tm.clues.length}/4 แล้ว! (เปิดตอนเส้นชัย)`;
+      document.getElementById('rTxt').innerHTML=`<strong>${_cq.ex}</strong>`;
+    }else{
+      document.getElementById('rGot').style.display='block';
+      document.getElementById('rGot').innerHTML=`✅ ตอบถูก! +10 แต้ม`;
+      document.getElementById('rTxt').innerHTML=`<strong>${_cq.ex}</strong>`;
+    }
+  }else{
+    document.getElementById('rGot').style.display='none';
+    document.getElementById('rTxt').innerHTML=`ยังไม่ถูกนะ 💡<br><strong>${_cq.ex}</strong>`;
+  }
+  document.getElementById('rSec').classList.add('active');renderHUD();
+}
+function closeQ(){
+  document.getElementById('qOv').classList.remove('active');
+  G.busy=false;endTurn();
+}
+let _crCb=null;
+function showClueRev(p){
+  document.getElementById('crIc').textContent=p.icon;
+  document.getElementById('crNum').textContent=`คำใบ้ที่ ${p.num} / 4 ของ ${p.team.tok} ${p.team.name}`;
+  document.getElementById('crNm').innerHTML=`<b style="font-size:1.1rem;color:#fff">${p.name}</b><br><span style="font-size:.78rem;color:var(--muted)">เก็บคำใบ้นี้ไว้ใช้ทายตัวร้ายตอนเส้นชัย!</span>`;
+  document.getElementById('clueRevOv').classList.add('active');
+}
+function closeClueRev(){document.getElementById('clueRevOv').classList.remove('active');G.busy=false;endTurn();}
+
+let _evcb=null;
+function showEv(type,from,to,cb){
+  _evcb=cb;
+  if(type==='ld'){document.getElementById('evIc').textContent='🪜';document.getElementById('evTit').className='evtit ev-up';document.getElementById('evTit').textContent='เจอบันได! ขึ้นไปเลย!';document.getElementById('evDet').innerHTML=`ช่อง <b>${from}</b> → ช่อง <b>${to}</b>!<br><br>${lmsg(from)}`;}
+  else{document.getElementById('evIc').textContent='🐍';document.getElementById('evTit').className='evtit ev-dn';document.getElementById('evTit').textContent='โดนงูกัด! ไหลลงมา!';document.getElementById('evDet').innerHTML=`ช่อง <b>${from}</b> → ช่อง <b>${to}</b>!<br><br>${smsg(from)}`;}
+  document.getElementById('evOv').classList.add('active');
+}
+function closeEv(){document.getElementById('evOv').classList.remove('active');if(_evcb){const f=_evcb;_evcb=null;f();}}
+function lmsg(c){const m={3:'🌟 รู้จักตรวจฉลาก อย. ให้เพื่อน!',13:'💪 ล้างผักผลไม้ก่อนกินเสมอ!',22:'🏆 ป้องกันเพื่อนกินอาหารหมดอายุ!'};return m[c]||'🌟 ความรู้อาหารปลอดภัยดีมาก!';}
+function smsg(c){const m={15:'😰 กินอาหารค้างคืน ท้องเสีย ต้องระวัง!',20:'😰 ไปร้านสกปรก ปวดท้อง ต้องสังเกตให้ดี!'};return m[c]||'😰 ระวังเรื่องความสะอาดของอาหารด้วยนะ!';}
+
+function openAcc(){
+  // build clue reveal for winner team
+  const w=G.teams[G.winnerTid];
+  document.getElementById('cluesSub').innerHTML=`${w.tok} <b>${w.name}</b> ถึงเส้นชัย!<br>เปิดหลักฐานที่เก็บมาได้เลย`;
+  const grid=document.getElementById('clueGrid');grid.innerHTML='';
+  for(let i=0;i<4;i++){
+    const ev=w.clues[i];
+    const card=document.createElement('div');
+    card.className='evcard'+(ev?'':' empty');
+    card.innerHTML=ev
+      ? `<div class="eic">${ev.icon}</div><div class="enm" style="color:#ce93d8;font-weight:700">${ev.name}</div>`
+      : `<div class="eic" style="opacity:.4">❓</div><div class="enm">ยังไม่ได้เก็บ</div>`;
+    grid.appendChild(card);
+  }
+  // also show other teams' clue counts
+  const otherInfo=document.createElement('div');
+  otherInfo.style.cssText='font-size:.72rem;color:var(--muted);margin-top:8px;text-align:center;line-height:1.8';
+  otherInfo.innerHTML='<b style="color:var(--text)">หลักฐานของทีมอื่น:</b><br>'+
+    G.teams.filter(t=>t.id!==w.id).map(t=>`${t.tok} ${t.name}: 🔒×${t.clues.length}`).join(' &nbsp; ');
+  grid.parentNode.insertBefore(otherInfo, grid.nextSibling);
+  showAS('stClues');document.getElementById('acOv').classList.add('active');
+}
+function startVoting(){
+  G.voteOrder=[...G.teams.map(t=>t.id).filter(i=>i!==G.winnerTid),G.winnerTid];
+  G.voteIdx=0;G.votes={};showVFor(G.voteOrder[0]);showAS('stVote');
+}
+function showVFor(tid){
+  const tm=G.teams[tid];
+  document.getElementById('vtDot').style.background=tm.color;document.getElementById('vtDot').textContent=tm.tok;
+  document.getElementById('vtNm').textContent=tm.name;
+  document.getElementById('vtSt').textContent=`(${G.voteIdx+1}/${G.voteOrder.length})`;
+  const sh=Object.values(VILLAIN_CLUES).sort(()=>Math.random()-.5);
+  const cont=document.getElementById('vilChs');cont.innerHTML='';
+  sh.forEach(v=>{const btn=document.createElement('button');btn.className='vbtn';btn.dataset.vid=v.id||Object.keys(VILLAIN_CLUES).find(k=>VILLAIN_CLUES[k]===v);btn.innerHTML=`<span class="vic">${v.icon}</span><span>${v.name}</span>`;btn.onclick=()=>selV(btn,btn.dataset.vid);cont.appendChild(btn);});
+  document.getElementById('bCfVote').disabled=true;
+}
+let _sv=null;
+function selV(btn,vid){document.querySelectorAll('.vbtn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');_sv=vid;document.getElementById('bCfVote').disabled=false;}
+function confirmVote(){G.votes[G.voteOrder[G.voteIdx]]=_sv;_sv=null;G.voteIdx++;if(G.voteIdx<G.voteOrder.length)showVFor(G.voteOrder[G.voteIdx]);else showReveal();}
+function showReveal(){
+  const v=G.villain;
+  document.getElementById('revBig').textContent=v.icon;document.getElementById('revNm').textContent=v.name;document.getElementById('revWy').textContent=v.why||'';
+  const tb=document.getElementById('resTb');tb.innerHTML='';
+  G.teams.forEach(tm=>{const vid=G.votes[tm.id];const ch=Object.values(VILLAIN_CLUES).find(x=>x.name===(VILLAIN_CLUES[vid]||{}).name||x===VILLAIN_CLUES[vid]);const ok=vid===v.id;if(ok)tm.score+=30;
+    const vname=VILLAIN_CLUES[vid]?VILLAIN_CLUES[vid].icon+' '+VILLAIN_CLUES[vid].name:'—';
+    const tr=document.createElement('tr');tr.innerHTML=`<td>${tm.tok} ${tm.name}</td><td class="${ok?'ra':'wa'}">${vname}</td><td style="font-size:.7rem">${tm.clues.map(e=>e.icon).join('')||'—'}</td><td class="${ok?'ra':'wa'}">${ok?'✅':'❌'}</td>`;tb.appendChild(tr);});
+  showAS('stReveal');
+}
+function goWin(){
+  document.getElementById('acOv').classList.remove('active');
+  const v=G.villain;
+  document.getElementById('winMsg').innerHTML=G.teams.map(t=>`<span style="color:${t.light}">${t.tok} ${t.name}: ${t.score} แต้ม ${G.votes[t.id]===v.id?'✅':''}</span>`).join(' | ');
+  document.getElementById('rvIc').textContent=v.icon;document.getElementById('rvNm').textContent=v.name;document.getElementById('rvWy').textContent=v.why||'';
+  const sorted=[...G.teams].sort((a,b)=>b.score-a.score);
+  document.getElementById('sfBox').innerHTML=`<h3>🏅 คะแนนสุดท้าย</h3>`+sorted.map((t,i)=>`<div class="sfr"><span>${['🥇','🥈','🥉',''][i]} ${t.tok} ${t.name}</span><span class="${i===0?'sfw':''}">${t.score} แต้ม</span></div>`).join('');
+  showSc('win');conf();
+}
+function showAS(id){document.querySelectorAll('.astep').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function showSc(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function startGame(){initState();showSc('game');renderBoard();renderHUD();setSt(`เริ่มเลย! ถึงคิว ${G.teams[0].name}`);document.getElementById('rollBtn').disabled=false;}
+function resetAll(){showSc('setup');}
+function conf(){
+  const c=document.getElementById('confCvs');if(!c)return;const ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;
+  const p=Array.from({length:100},()=>({x:Math.random()*c.width,y:Math.random()*-c.height,w:Math.random()*10+4,h:Math.random()*6+3,cl:`hsl(${Math.random()*360},80%,65%)`,r:Math.random()*6,vy:Math.random()*3+2,vx:(Math.random()-.5)*2}));
+  let fr;const draw=()=>{ctx.clearRect(0,0,c.width,c.height);p.forEach(q=>{ctx.save();ctx.translate(q.x,q.y);ctx.rotate(q.r);ctx.fillStyle=q.cl;ctx.fillRect(-q.w/2,-q.h/2,q.w,q.h);ctx.restore();q.y+=q.vy;q.x+=q.vx;q.r+=.05;if(q.y>c.height){q.y=-20;q.x=Math.random()*c.width;}});fr=requestAnimationFrame(draw);};
+  draw();setTimeout(()=>cancelAnimationFrame(fr),6000);
+}
+setCount(3);
+
+</script>
+</body>
+</html>
