@@ -17,7 +17,7 @@
       background:radial-gradient(circle at 20% 10%,rgba(35,213,255,.22),transparent 30%),radial-gradient(circle at 80% 20%,rgba(180,92,255,.20),transparent 28%),radial-gradient(circle at 50% 90%,rgba(56,239,125,.13),transparent 28%),var(--bg);
     }
     button,input,select{font:inherit} button{cursor:pointer;border:none} button:disabled{cursor:not-allowed;opacity:.55;filter:grayscale(.35)}
-    .screen{display:none}.screen.active{display:block}
+    .screen{display:none!important}.screen.active{display:block!important}.screen.hero.active{display:flex!important}
     .app{width:min(100%,920px);min-height:100dvh;margin:0 auto;padding:14px 12px calc(18px + env(safe-area-inset-bottom));position:relative}
     .hero{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:18px 12px}
     .setup-card,.win-card{width:min(100%,560px);padding:22px;border-radius:30px;background:linear-gradient(145deg,rgba(22,33,62,.94),rgba(15,52,96,.82));border:1px solid rgba(35,213,255,.32);box-shadow:0 24px 80px rgba(0,0,0,.45),0 0 32px rgba(35,213,255,.22)}
@@ -361,6 +361,54 @@
         wrong:["อาหารอร่อยกว่าร้านอื่น","ราคาถูกกว่าร้านทั่วไป","เจ้าของจ่ายค่าธรรมเนียมแล้ว"],
         explain:"ป้ายมาตรฐานสื่อว่าร้านผ่านเกณฑ์ด้านสุขลักษณะ แต่ผู้บริโภคยังควรสังเกตความสะอาดด้วย"
       }
+
+      // ------------------------------------------------------------
+      // ชุดคำถามเดิมจากไฟล์เกม v11 — นำกลับมาเพิ่มในคลังคำถาม
+      // หมายเหตุ: เติม OLD_ หน้า id เพื่อไม่ให้ชนกับคำถามชุดใหม่ 24 ข้อ
+      // ------------------------------------------------------------
+      // 🧩 คำถามเดิมที่นำกลับมา — หมวดอ่านฉลาก 9 ข้อ
+      {id:"OLD_L1", group:"label", scenario:"ร้านหน้าโรงเรียนมีขนมหลายชนิด", text:"ก่อนซื้ออาหารบรรจุซอง ควรตรวจอะไรก่อน?", correct:"ฉลาก วันหมดอายุ และข้อมูลผู้ผลิต", wrong:["สีซองสวยที่สุด","ของแถมเยอะที่สุด","เพื่อนบอกว่าอร่อย"], explain:"อาหารบรรจุซองควรมีฉลากชัดเจน วันหมดอายุ และข้อมูลที่ตรวจสอบได้"},
+      {id:"OLD_L2", group:"label", scenario:"นักเรียนเห็นคำว่า ควรบริโภคก่อน บนซองขนม", text:"ข้อความนี้บอกอะไร?", correct:"วันที่ควรกินก่อนเพื่อความปลอดภัยและคุณภาพ", wrong:["วันที่ผลิตโรงงาน","ชื่อร้านขายขนม","ราคาอาหาร"], explain:"วันหมดอายุหรือควรบริโภคก่อนเป็นข้อมูลสำคัญก่อนเลือกกิน"},
+      {id:"OLD_L3", group:"label", scenario:"เจอขนมซองไม่มีภาษาไทยและไม่มีชื่อผู้ผลิต", text:"ควรทำอย่างไร?", correct:"ไม่ซื้อและแจ้งผู้ใหญ่", wrong:["ซื้อเพราะดูแปลกใหม่","ชิมก่อนแล้วค่อยตัดสินใจ","ซื้อถ้าราคาถูก"], explain:"อาหารที่ไม่มีฉลากหรือแหล่งผลิตไม่ชัดเจนตรวจสอบความปลอดภัยได้ยาก"},
+      {id:"OLD_L4", group:"label", scenario:"บนฉลากมีส่วนประกอบอาหาร", text:"ทำไมต้องอ่านส่วนประกอบ?", correct:"เพื่อรู้ว่าใส่อะไร และหลีกเลี่ยงสิ่งที่แพ้", wrong:["เพื่อดูสีของซอง","เพื่อดูว่าใครซื้อบ้าง","เพื่อดูว่ากินกี่คำ"], explain:"ส่วนประกอบช่วยให้รู้วัตถุดิบ สารปรุงแต่ง และสิ่งที่อาจแพ้"},
+      {id:"OLD_L5", group:"label", scenario:"ถุงขนมมีเลข อย. แต่หมดอายุแล้ว", text:"ควรกินไหม?", correct:"ไม่ควรกิน", wrong:["กินได้เพราะมีเลข อย.","กินได้ถ้าซองยังสวย","นำไปตากแดดก่อนกิน"], explain:"มีเลข อย. ไม่ได้แปลว่ากินได้ตลอด ต้องดูวันหมดอายุด้วย"},
+      {id:"OLD_L6", group:"label", scenario:"ฉลากวันหมดอายุเลือนจนอ่านไม่ได้", text:"ควรเลือกอย่างไร?", correct:"ไม่ซื้อถ้าตรวจสอบไม่ได้", wrong:["เดาว่ายังไม่หมดอายุ","ซื้อถ้าคนขายบอกว่าดี","ซื้อเพราะลดราคา"], explain:"ถ้าตรวจสอบวันหมดอายุไม่ได้ ควรหลีกเลี่ยง"},
+      {id:"OLD_L7", group:"label", scenario:"บนซองเครื่องดื่มมีคำว่า เก็บในที่เย็น", text:"หลังเปิดแล้วควรทำอย่างไร?", correct:"ทำตามคำแนะนำบนฉลาก", wrong:["วางกลางแดด","เปิดฝาทิ้งไว้","เทรวมกับขวดอื่น"], explain:"คำแนะนำการเก็บรักษาช่วยให้อาหารปลอดภัยและไม่เสียเร็ว"},
+      {id:"OLD_L8", group:"label", scenario:"เด็กแพ้นมกำลังเลือกขนม", text:"ควรดูส่วนใดบนฉลาก?", correct:"ส่วนประกอบและข้อมูลสารก่อภูมิแพ้", wrong:["สีของโลโก้","รูปการ์ตูน","ขนาดตัวอักษรราคา"], explain:"คนแพ้อาหารควรอ่านส่วนประกอบและคำเตือนสารก่อภูมิแพ้ทุกครั้ง"},
+      {id:"OLD_L9", group:"label", scenario:"ซื้ออาหารกระป๋อง", text:"กระป๋องแบบใดไม่ควรเลือก?", correct:"กระป๋องบวม บุบ รั่ว หรือเป็นสนิม", wrong:["กระป๋องมีฉลากครบ","กระป๋องสะอาด","กระป๋องยังไม่หมดอายุ"], explain:"กระป๋องบวม บุบ รั่ว หรือสนิม อาจปนเปื้อนหรือเสียได้"},
+
+      // 🧩 คำถามเดิมที่นำกลับมา — หมวดเลือกกินอาหาร/ขนม 9 ข้อ
+      {id:"OLD_S1", group:"snack", scenario:"มีลูกอมสีสดมากแต่ไม่มีฉลาก", text:"ควรตัดสินใจอย่างไร?", correct:"หลีกเลี่ยงและแจ้งผู้ใหญ่", wrong:["ซื้อเพราะสีสวย","กินก่อนแล้วค่อยดู","ซื้อถ้าราคาถูก"], explain:"อาหารไม่มีฉลากทำให้ตรวจสอบแหล่งผลิต ส่วนประกอบ และวันหมดอายุไม่ได้"},
+      {id:"OLD_S2", group:"snack", scenario:"เจอนมกล่องบวมและมีกลิ่นแปลก", text:"ควรทำอย่างไร?", correct:"ไม่ดื่มและแจ้งครูหรือผู้ใหญ่", wrong:["เขย่าแล้วดื่ม","ชิมนิดเดียว","แบ่งให้เพื่อนลอง"], explain:"ภาชนะบวม กลิ่นผิดปกติ หรือสีเปลี่ยน เป็นสัญญาณว่าอาหารอาจเสีย"},
+      {id:"OLD_S3", group:"snack", scenario:"อาหารวางขายกลางแดดนานหลายชั่วโมง", text:"อาหารลักษณะนี้เสี่ยงอะไร?", correct:"เชื้อโรคเจริญเติบโตและทำให้ป่วย", wrong:["ทำให้อาหารหวานขึ้น","ทำให้อาหารมีประโยชน์มากขึ้น","ไม่มีความเสี่ยง"], explain:"อาหารที่เก็บไม่เหมาะสมอาจมีเชื้อโรคเพิ่มขึ้น โดยเฉพาะอาหารพร้อมกิน"},
+      {id:"OLD_S4", group:"snack", scenario:"ขนมปังมีจุดสีเขียวดำ", text:"สิ่งที่ควรทำคืออะไร?", correct:"ไม่กินทั้งแผ่นและทิ้งอย่างเหมาะสม", wrong:["ตัดส่วนที่มีราออกแล้วกินต่อ","ปิ้งให้ร้อนแล้วกิน","เก็บไว้ให้เพื่อน"], explain:"อาหารขึ้นราไม่ควรกิน เพราะเชื้อราอาจกระจายเกินจุดที่เห็น"},
+      {id:"OLD_S5", group:"snack", scenario:"อาหารมีกลิ่นเปรี้ยวผิดปกติ", text:"ควรทำอย่างไร?", correct:"หยุดกินและแจ้งผู้ใหญ่", wrong:["เติมเครื่องปรุงกลบกลิ่น","กินเร็ว ๆ ให้หมด","แบ่งให้เพื่อนลอง"], explain:"กลิ่น สี รส หรือเนื้อสัมผัสผิดปกติเป็นสัญญาณเตือนอาหารเสีย"},
+      {id:"OLD_S6", group:"snack", scenario:"เพื่อนชวนกินขนมซองที่เปิดทิ้งไว้หลายวัน", text:"ควรตอบอย่างไร?", correct:"ไม่กิน เพราะอาจปนเปื้อนหรือเสีย", wrong:["กินได้ถ้าหิว","เป่าแล้วกินได้","เทรวมกับขนมใหม่"], explain:"อาหารที่เปิดทิ้งไว้นานอาจชื้น เสีย หรือมีสิ่งปนเปื้อน"},
+      {id:"OLD_S7", group:"snack", scenario:"มีน้ำหวานสีจัดมากในขวดไม่มีฉลาก", text:"ควรซื้อไหม?", correct:"ไม่ควรซื้อเพราะตรวจสอบไม่ได้", wrong:["ซื้อถ้าสีสวย","ซื้อถ้าคนขายบอกว่าหวาน","ซื้อถ้าถูกที่สุด"], explain:"เครื่องดื่มไม่มีฉลากหรือแหล่งผลิตไม่ชัดเจนมีความเสี่ยง"},
+      {id:"OLD_S8", group:"snack", scenario:"เด็กอยากกินอาหารทอดซ้ำ ๆ ทุกวัน", text:"ควรแนะนำอย่างไร?", correct:"กินพอดี และเลือกอาหารหลากหลาย", wrong:["กินให้มากที่สุด","กินแทนข้าวทุกมื้อ","กินเฉพาะของทอดเท่านั้น"], explain:"ควรเลือกกินอาหารหลากหลาย ไม่หวาน มัน เค็ม มากเกินไป"},
+      {id:"OLD_S9", group:"snack", scenario:"พบอาหารที่มีแมลงตกอยู่ในถุง", text:"ควรทำอย่างไร?", correct:"ไม่กินและแจ้งผู้ใหญ่", wrong:["หยิบแมลงออกแล้วกินต่อ","แบ่งเพื่อน","เขย่าถุงแล้วกิน"], explain:"สิ่งแปลกปลอมในอาหารเป็นสัญญาณว่าอาหารไม่ปลอดภัย"},
+
+      // 🧩 คำถามเดิมที่นำกลับมา — หมวดเลือกผัก/ผลไม้ 9 ข้อ
+      {id:"OLD_V1", group:"veg", scenario:"กำลังเลือกผักที่ตลาด", text:"ผักแบบใดน่ากินและปลอดภัยกว่า?", correct:"ผักสด ไม่เน่า ไม่มีคราบสกปรกมาก", wrong:["ผักเหี่ยวและมีกลิ่น","ผักมีเมือก","ผักมีแมลงตายติดอยู่"], explain:"ควรเลือกผักสด สะอาด และไม่มีสัญญาณเน่าเสีย"},
+      {id:"OLD_V2", group:"veg", scenario:"ก่อนกินแตงกวาสด", text:"ควรทำอะไรก่อน?", correct:"ล้างด้วยน้ำสะอาดให้ทั่ว", wrong:["กินได้เลย","เช็ดกับเสื้อ","เป่าแรง ๆ ก็พอ"], explain:"ผักสดควรล้างให้สะอาดก่อนกินเพื่อลดดิน ฝุ่น และสิ่งปนเปื้อน"},
+      {id:"OLD_V3", group:"veg", scenario:"เห็นผักมีรอยเน่าและกลิ่นเหม็น", text:"ควรทำอย่างไร?", correct:"ไม่เลือกผักนั้น", wrong:["ซื้อเพราะราคาถูก","ตัดกลิ่นด้วยน้ำปลา","ให้เพื่อนกินก่อน"], explain:"ผักเน่าเสียอาจมีเชื้อโรคและทำให้อาหารปนเปื้อนได้"},
+      {id:"OLD_V4", group:"veg", scenario:"ผลไม้ปอกแล้ววางเปิดโล่ง มีแมลงวันตอม", text:"ควรกินไหม?", correct:"ไม่ควรกิน", wrong:["กินได้ถ้าหวาน","ปัดแมลงวันแล้วกิน","กินเฉพาะส่วนที่ไม่โดนตอม"], explain:"อาหารที่มีแมลงวันตอมเสี่ยงปนเปื้อนเชื้อโรค"},
+      {id:"OLD_V5", group:"veg", scenario:"ผักสดวางปะปนกับเนื้อดิบ", text:"เสี่ยงเรื่องอะไร?", correct:"ปนเปื้อนเชื้อโรคจากเนื้อดิบ", wrong:["ทำให้ผักหวานขึ้น","ทำให้สีผักสวยขึ้น","ไม่มีความเสี่ยง"], explain:"ควรแยกผักสดจากเนื้อดิบเพื่อป้องกันการปนเปื้อนข้าม"},
+      {id:"OLD_V6", group:"veg", scenario:"เด็กเห็นผลไม้มีรอยช้ำและน้ำเยิ้ม", text:"ควรเลือกไหม?", correct:"ไม่ควรเลือก", wrong:["ควรเพราะนิ่ม","ควรเพราะหวานแน่","ควรกินทันทีโดยไม่ล้าง"], explain:"ผลไม้ช้ำ น้ำเยิ้ม หรือมีกลิ่นผิดปกติอาจเริ่มเสีย"},
+      {id:"OLD_V7", group:"veg", scenario:"ซื้อผักมาแล้วจะเก็บในตู้เย็น", text:"ควรทำอย่างไรให้ปลอดภัย?", correct:"แยกเก็บจากเนื้อดิบและอาหารสกปรก", wrong:["วางรวมกับเนื้อดิบ","เปิดถุงทิ้งไว้บนพื้น","ใส่รวมกับขยะ"], explain:"การเก็บแยกช่วยลดการปนเปื้อนและทำให้ผักสดนานขึ้น"},
+      {id:"OLD_V8", group:"veg", scenario:"เด็กจะกินมะเขือเทศสด", text:"ควรล้างตอนไหน?", correct:"ล้างก่อนกินหรือก่อนหั่น", wrong:["ล้างหลังจากกินแล้ว","ไม่ต้องล้างถ้าสีแดง","ล้างเฉพาะถ้าครูเห็น"], explain:"ควรล้างผักผลไม้ก่อนกินหรือก่อนหั่นเพื่อลดสิ่งสกปรก"},
+      {id:"OLD_V9", group:"veg", scenario:"พบผักมีกลิ่นสารเคมีแรงผิดปกติ", text:"ควรทำอย่างไร?", correct:"หลีกเลี่ยงและแจ้งผู้ใหญ่", wrong:["กินทันที","ดมต่อให้นานขึ้น","ซื้อเพราะดูสด"], explain:"กลิ่นสารเคมีแรงผิดปกติเป็นสัญญาณเตือน ควรหลีกเลี่ยง"},
+
+      // 🧩 คำถามเดิมที่นำกลับมา — หมวดเลือกร้านอาหาร 9 ข้อ
+      {id:"OLD_H1", group:"shop", scenario:"เลือกร้านอาหารกลางวัน", text:"ร้านแบบใดน่าเลือก?", correct:"ร้านสะอาด อาหารปิดมิดชิด ผู้ขายแต่งกายสะอาด", wrong:["ร้านมีแมลงวันเยอะ","ร้านวางอาหารบนพื้น","ร้านไม่มีที่ล้างมือ"], explain:"ร้านอาหารที่ดีควรสะอาด ป้องกันแมลง และดูแลสุขอนามัยผู้ขาย"},
+      {id:"OLD_H2", group:"shop", scenario:"ร้านขายลูกชิ้นมีแมลงวันตอมหลายตัว", text:"ควรซื้อไหม?", correct:"ไม่ควรซื้อ", wrong:["ซื้อถ้าลูกชิ้นร้อน","ซื้อถ้าราคาถูก","ซื้อแล้วปัดแมลงวันออก"], explain:"แมลงวันอาจนำเชื้อโรคมาปนเปื้อนอาหาร"},
+      {id:"OLD_H3", group:"shop", scenario:"ผู้ขายใช้มือเปล่าหยิบอาหารพร้อมกิน", text:"ควรทำอย่างไรให้ถูกสุขลักษณะ?", correct:"ใช้ที่คีบ ถุงมือสะอาด หรืออุปกรณ์หยิบอาหาร", wrong:["ใช้มือเปล่าได้เสมอ","เป่ามือก่อนหยิบ","เช็ดมือกับเสื้อ"], explain:"อาหารพร้อมกินควรหยิบด้วยอุปกรณ์สะอาดเพื่อลดการปนเปื้อน"},
+      {id:"OLD_H4", group:"shop", scenario:"ร้านวางอาหารสุกใกล้เนื้อดิบ", text:"เสี่ยงอะไร?", correct:"เชื้อโรคจากเนื้อดิบปนเปื้อนอาหารสุก", wrong:["อาหารสุกจะหวานขึ้น","เนื้อดิบช่วยให้อาหารเย็น","ไม่มีผลอะไร"], explain:"ควรแยกอาหารดิบและอาหารสุกเสมอ"},
+      {id:"OLD_H5", group:"shop", scenario:"ร้านอาหารเปิดฝาทิ้งไว้ตลอดวัน", text:"ปัญหาคืออะไร?", correct:"ฝุ่นและแมลงอาจปนเปื้อนอาหาร", wrong:["ทำให้อาหารราคาถูก","ทำให้อาหารสีสดขึ้น","ไม่มีปัญหา"], explain:"อาหารควรปิดมิดชิดและเก็บในสภาพเหมาะสม"},
+      {id:"OLD_H6", group:"shop", scenario:"ร้านมีที่ล้างมือหรือเจลล้างมือให้ผู้ขาย", text:"สิ่งนี้ดีอย่างไร?", correct:"ช่วยลดการปนเปื้อนเชื้อโรค", wrong:["ทำให้อาหารหวานขึ้น","ทำให้ร้านสีสวย","ทำให้อาหารเผ็ดน้อยลง"], explain:"สุขอนามัยของผู้ขายเป็นส่วนสำคัญของอาหารปลอดภัย"},
+      {id:"OLD_H7", group:"shop", scenario:"น้ำแข็งร้านค้าถูกตักด้วยแก้วที่ลูกค้าใช้ดื่ม", text:"ควรทำอย่างไร?", correct:"ควรใช้ที่ตักน้ำแข็งสะอาดแยกเฉพาะ", wrong:["ใช้แก้วอะไรก็ได้","ใช้มือหยิบเร็วกว่า","วางที่ตักบนพื้น"], explain:"น้ำแข็งกินได้ต้องป้องกันการปนเปื้อนเหมือนอาหาร"},
+      {id:"OLD_H8", group:"shop", scenario:"ร้านทอดอาหารใช้น้ำมันสีดำคล้ำและมีกลิ่นเหม็น", text:"ควรเลือกไหม?", correct:"ไม่ควรเลือก", wrong:["ควรเพราะกรอบกว่า","กินได้ถ้าร้อน","กินได้ถ้าจิ้มซอส"], explain:"น้ำมันเสื่อมสภาพอาจมีสารที่ไม่ดีต่อสุขภาพและทำให้อาหารไม่น่ากิน"},
+      {id:"OLD_H9", group:"shop", scenario:"เด็กหลายคนปวดท้องหลังซื้ออาหารร้านเดียวกัน", text:"ควรทำอย่างไร?", correct:"แจ้งครูหรือผู้ใหญ่และบันทึกอาหารที่สงสัย", wrong:["เก็บเป็นความลับ","กินซ้ำเพื่อพิสูจน์","ทิ้งหลักฐานทั้งหมด"], explain:"ควรรีบแจ้งผู้ใหญ่และเก็บข้อมูลอาหารที่สงสัย เพื่อช่วยป้องกันคนอื่นป่วย"}
     ];
 
     const board = {
@@ -465,8 +513,36 @@
     function answerQ(idx){ const {tid,cell,q}=G.currentQ; const team=G.teams[tid]; const correct=idx===q.correctIdx; Array.from($("qChoices").children).forEach(b=>b.disabled=true); if(correct){ team.visited[cell.n]=true; const isClueSpot = cell.type === "clue"; let clueMsg = "ช่องนี้เป็นคำถามฝึกทักษะ ยังไม่ได้หลักฐานลับ"; if(isClueSpot && team.clues.length<4){ team.clues.push(G.villain.clues[team.clues.length]); clueMsg = `🔒 เก็บหลักฐานลับแล้ว ${team.clues.length}/4`; } else if(isClueSpot){ clueMsg = "🔒 หลักฐานครบ 4 ชิ้นแล้ว"; } team.score+=10; $("qFeedback").innerHTML=`<div class="info-card">✅ ตอบถูก! +10 คะแนน<br>${clueMsg}<br><br><b>เรียนรู้:</b> ${q.explain}</div><div class="modal-actions"><button class="primary" id="qContinue">ต่อไป</button></div>`; } else { $("qFeedback").innerHTML=`<div class="info-card" style="background:rgba(255,77,109,.13);border-color:rgba(255,77,109,.38)">❌ ยังไม่ถูก ไม่ได้คำใบ้ในช่องนี้<br>คำตอบที่ถูกคือ <b>${q.choices[q.correctIdx]}</b><br><br><b>เรียนรู้:</b> ${q.explain}</div><div class="modal-actions"><button class="primary" id="qContinue">ต่อไป</button></div>`; } renderHUD(); $("qContinue").onclick=()=>{ $("qModal").classList.remove("show"); G.currentQ=null; endTurn(); }; }
     function showEvent(kind,text,next){ G.busy=true; $("eventHead").textContent=kind==="ladder"?"🪜 เจอบันได":"🕳️ ตกหลุม"; $("eventText").textContent=text; $("eventModal").classList.add("show"); renderHUD(); setTimeout(()=>{ $("eventModal").classList.remove("show"); next(); },900); }
     function endTurn(){ G.rolling=false; G.busy=false; G.turn=(G.turn+1)%G.teams.length; G.turnCount++; renderHUD(); setStatus(`ถึงคิว ${G.teams[G.turn].tok} ${G.teams[G.turn].name}!`); }
-    function openAccusation(){ G.busy=true; G.voteOrder=G.teams.length===1 ? [G.winnerId] : G.teams.map(t=>t.id).filter(id=>id!==G.winnerId).concat([G.winnerId]); G.voteIdx=0; G.votes={}; G.selectedVote=null; stepClues(); }
-    function stepClues(){ const winner=G.teams[G.winnerId]; const cluesHtml=[0,1,2,3].map(i=>`<div class="clue ${winner.clues[i]?'':'empty'}"><b>หลักฐาน ${i+1}</b><br>${winner.clues[i]||'ไม่มีหลักฐานในช่องนี้'}</div>`).join(''); $("accuseHead").textContent=`🔍 ${winner.name} ถึงช่อง 25`; $("accuseBody").innerHTML=`<p>เปิดคำใบ้ทั้งหมดของทีมที่ถึงเส้นชัยก่อน แล้วให้ทุกทีมโหวตหาตัวร้าย</p><div class="clue-grid">${cluesHtml}</div><div class="modal-actions"><button class="primary" id="startVoteBtn">เริ่มโหวต</button></div>`; $("accuseModal").classList.add("show"); $("startVoteBtn").onclick=stepVote; }
+    function giveAutoWinClue(winnerId){
+      const team = G.teams[winnerId];
+      if(!team || !G.villain || team.clues.length >= 4) return false;
+      const nextClue = G.villain.clues[team.clues.length];
+      if(!nextClue) return false;
+      team.clues.push(nextClue);
+      team.score += 10;
+      team.autoWinClue = true;
+      renderHUD();
+      return true;
+    }
+
+    function openAccusation(){
+      G.busy=true;
+      G.autoWinClueGiven = giveAutoWinClue(G.winnerId);
+      G.voteOrder=G.teams.length===1 ? [G.winnerId] : G.teams.map(t=>t.id).filter(id=>id!==G.winnerId).concat([G.winnerId]);
+      G.voteIdx=0;
+      G.votes={};
+      G.selectedVote=null;
+      stepClues();
+    }
+    function stepClues(){
+      const winner=G.teams[G.winnerId];
+      const cluesHtml=[0,1,2,3].map(i=>`<div class="clue ${winner.clues[i]?'':'empty'}"><b>หลักฐาน ${i+1}</b><br>${winner.clues[i]||'ไม่มีหลักฐานในช่องนี้'}</div>`).join('');
+      $("accuseHead").textContent=`🔍 ${winner.name} ถึงช่อง 25`;
+      const bonusMsg = G.autoWinClueGiven ? `<div class="info-card">🎁 โบนัสเส้นชัย: ได้คำใบ้เพิ่มอัตโนมัติ 1 ใบ และ +10 คะแนน</div>` : ``;
+      $("accuseBody").innerHTML=`${bonusMsg}<p>เปิดคำใบ้ทั้งหมดของผู้เล่น/ทีมที่ถึงเส้นชัยก่อน แล้วให้ทุกทีมโหวตหาตัวร้าย</p><div class="clue-grid">${cluesHtml}</div><div class="modal-actions"><button class="primary" id="startVoteBtn">เริ่มโหวต</button></div>`;
+      $("accuseModal").classList.add("show");
+      $("startVoteBtn").onclick=stepVote;
+    }
     function stepVote(){ const tid=G.voteOrder[G.voteIdx]; const team=G.teams[tid]; G.selectedVote=null; const options=shuffle(villainPool); $("accuseHead").textContent=`🗳️ โหวตตัวร้าย: ${team.tok} ${team.name}`; $("accuseBody").innerHTML=`<p>เลือกต้นเหตุที่คิดว่าทำให้เด็กปวดท้องจากหลักฐาน ผู้เล่น/ทีมที่ถึงเส้นชัยจะโหวตสุดท้ายเสมอ</p><div class="choices" id="voteChoices"></div><div class="modal-actions"><button class="primary" id="confirmVoteBtn" disabled>ยืนยันคำตอบ</button></div>`; const wrap=$("voteChoices"); options.forEach(v=>{ const b=document.createElement("button"); b.className="choice"; b.textContent=`${v.emoji} ${v.name}`; b.onclick=()=>{ G.selectedVote=v.id; Array.from(wrap.children).forEach(x=>x.classList.remove("selected")); b.classList.add("selected"); $("confirmVoteBtn").disabled=false; }; wrap.appendChild(b); }); $("confirmVoteBtn").onclick=()=>{ G.votes[tid]=G.selectedVote; G.voteIdx++; if(G.voteIdx>=G.voteOrder.length)showReveal(); else stepVote(); }; }
     function villainName(id){ const v=villainPool.find(x=>x.id===id); return v?`${v.emoji} ${v.name}`:"-"; }
     function showReveal(){
