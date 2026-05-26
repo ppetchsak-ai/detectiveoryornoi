@@ -38,7 +38,20 @@
     .board-wrap{background:rgba(0,0,0,.18);padding:8px;border-radius:24px;border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow);max-width:620px;margin:0 auto}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;aspect-ratio:1/1;position:relative}.cell{border-radius:16px;padding:5px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;min-width:0;border:2px solid rgba(255,255,255,.18);transition:.18s transform ease,.18s filter ease}.cell::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent 45%);pointer-events:none}.cell.n{background:linear-gradient(145deg,rgba(107,114,128,.72),rgba(31,41,55,.9));box-shadow:0 0 10px rgba(156,163,175,.36)}.cell.label{background:linear-gradient(145deg,rgba(239,68,68,.86),rgba(127,29,29,.9));box-shadow:0 0 13px rgba(255,77,109,.65)}.cell.snack{background:linear-gradient(145deg,rgba(250,204,21,.9),rgba(180,83,9,.92));box-shadow:0 0 13px rgba(255,209,102,.75)}.cell.veg{background:linear-gradient(145deg,rgba(34,197,94,.86),rgba(22,101,52,.92));box-shadow:0 0 13px rgba(56,239,125,.70)}.cell.shop{background:linear-gradient(145deg,rgba(14,165,233,.86),rgba(30,64,175,.92));box-shadow:0 0 13px rgba(69,163,255,.72)}.cell.clue{background:linear-gradient(145deg,rgba(34,211,238,.92),rgba(14,116,144,.96));box-shadow:0 0 20px rgba(35,213,255,.9), inset 0 0 16px rgba(255,255,255,.18)}.cell.pit{background:linear-gradient(145deg,rgba(31,41,55,.95),rgba(88,28,135,.95));box-shadow:0 0 15px rgba(180,92,255,.8)}.cell.sn{background:linear-gradient(145deg,rgba(168,85,247,.88),rgba(76,29,149,.9));box-shadow:0 0 13px rgba(180,92,255,.75)}.cell.ld{background:linear-gradient(145deg,rgba(6,182,212,.82),rgba(8,47,73,.92));box-shadow:0 0 13px rgba(35,213,255,.7)}.cell.win{background:linear-gradient(145deg,rgba(22,163,74,.92),rgba(20,83,45,.95));box-shadow:0 0 22px rgba(56,239,125,.9),inset 0 0 18px rgba(255,255,255,.25);animation:pulseWin 1.25s infinite alternate}@keyframes pulseWin{from{filter:brightness(1)}to{filter:brightness(1.25)}}.cell.current{transform:scale(1.06);z-index:4;filter:saturate(1.28)}.num{font-weight:1000;font-size:13px;text-shadow:0 1px 3px rgba(0,0,0,.5)}.emoji{font-size:clamp(20px,6vw,32px);text-align:center;line-height:1}.cell-label{font-weight:900;font-size:10px;line-height:1.08;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tokens{position:absolute;left:4px;right:4px;bottom:4px;display:flex;gap:2px;justify-content:center;z-index:5}.token{width:16px;height:16px;border-radius:999px;border:2px solid #fff;box-shadow:0 2px 7px rgba(0,0,0,.55);font-size:9px;line-height:12px;text-align:center;font-weight:900}
     .controls{margin:12px auto 0;display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:center;max-width:620px}.dice{height:88px;border-radius:22px;background:#fff;color:#111827;display:grid;place-items:center;font-size:44px;font-weight:1000;box-shadow:0 12px 30px rgba(0,0,0,.32),0 0 18px rgba(255,255,255,.45);transition:.25s transform ease}.dice.rolling{transform:rotate(12deg) scale(1.05)}.roll-btn{height:88px;border-radius:24px;background:linear-gradient(135deg,#11998e,#38ef7d);color:#07240f;font-size:clamp(22px,6vw,30px);font-weight:1000;box-shadow:0 0 24px rgba(56,239,125,.55),0 14px 28px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.22)}.status{margin:12px auto 0;max-width:620px;padding:12px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);min-height:62px;color:#eaf6ff;font-size:14px;line-height:1.45}
     .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.66);display:none;align-items:center;justify-content:center;padding:16px;z-index:50;backdrop-filter:blur(7px)}.modal-backdrop.show{display:flex}.modal{width:min(100%,540px);max-height:92dvh;overflow:auto;background:linear-gradient(145deg,#172554,#111827);border:1px solid rgba(35,213,255,.32);border-radius:28px;box-shadow:0 25px 70px rgba(0,0,0,.55),0 0 30px rgba(35,213,255,.18);padding:18px}.modal h2{margin:0 0 8px;color:#7eeaff;font-size:24px;text-shadow:0 0 12px rgba(35,213,255,.7)}.modal p{color:#e7eefc;line-height:1.55}.choices{display:grid;gap:9px;margin-top:12px}.choice{padding:13px;border-radius:17px;text-align:left;color:white;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);font-weight:850;line-height:1.35}.choice.selected{outline:2px solid var(--yellow);background:rgba(255,209,102,.2)}.info-card{margin-top:10px;padding:12px;border-radius:18px;background:rgba(255,209,102,.13);border:1px solid rgba(255,209,102,.35);color:#fff7d6;line-height:1.5}.modal-actions{display:flex;gap:9px;margin-top:14px;justify-content:flex-end;flex-wrap:wrap}.primary,.secondary{padding:11px 14px;border-radius:15px;font-weight:950}.primary{background:linear-gradient(135deg,#23d5ff,#45a3ff);color:#03121b}.secondary{background:rgba(255,255,255,.12);color:white;border:1px solid rgba(255,255,255,.16)}.clue-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.clue{min-height:86px;border-radius:18px;padding:12px;background:rgba(35,213,255,.12);border:1px solid rgba(35,213,255,.28);line-height:1.45}.clue.empty{opacity:.45;background:rgba(255,255,255,.08)}table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:10px;font-size:13px}th{text-align:left;color:#aeefff;font-size:12px;padding:0 8px}td{background:rgba(255,255,255,.08);padding:10px 8px;vertical-align:top;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}td:first-child{border-radius:12px 0 0 12px;border-left:1px solid rgba(255,255,255,.1);font-weight:900}td:last-child{border-radius:0 12px 12px 0;border-right:1px solid rgba(255,255,255,.1);font-weight:1000;text-align:center}.rank-list{display:grid;gap:10px;margin-top:16px}.rank-card{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:10px;padding:14px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}.medal{font-size:30px;text-align:center}.rank-name{font-size:18px;font-weight:1000}.rank-sub{font-size:13px;color:var(--muted)}.rank-score{font-size:22px;font-weight:1000;color:var(--yellow)}
-    @media(max-width:390px){.app{padding-left:9px;padding-right:9px}.board{gap:4px}.cell{border-radius:13px;padding:4px}.cell-label{font-size:9px}.num{font-size:12px}.controls{grid-template-columns:82px 1fr}.dice,.roll-btn{height:78px}.dice{font-size:38px}.teams{gap:6px}.team-panel{padding:8px 6px}.team-name{font-size:12px}.badge{min-width:21px;height:21px;font-size:12px}.clue-grid,.legend{grid-template-columns:1fr}}
+    @media(max-width:640px){
+      .app{padding:8px 8px calc(14px + env(safe-area-inset-bottom));}
+      .topbar{align-items:stretch;margin-bottom:8px}
+      .brand{padding:9px 10px;border-radius:16px}
+      .brand h1{font-size:22px}.brand p{font-size:11px}
+      .scorebox{min-width:86px;padding:8px;border-radius:15px}.scorebox .stars{font-size:16px}.scorebox .turn-mini{font-size:11px}
+      .turn-card{padding:9px;border-radius:16px;margin-bottom:8px;grid-template-columns:1fr auto}.team-dot{width:32px;height:32px}.turn-title{font-size:15px}.turn-sub{font-size:11px}.mini-btn{padding:8px 10px;font-size:12px}
+      .teams{grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:8px}.team-panel{min-height:74px;padding:7px 8px;border-radius:15px}.team-name{font-size:12px}.team-pos,.team-ev{font-size:10px;margin-top:2px}.evidence-mini{gap:2px;margin-top:4px}.badge{min-width:18px;height:18px;font-size:10px}
+      .board-wrap{padding:6px;border-radius:18px;max-width:100%}.board{gap:4px}.cell{border-radius:12px;padding:4px}.cell-label{font-size:8.5px}.num{font-size:12px}.emoji{font-size:clamp(18px,6vw,27px)}
+      .controls{grid-template-columns:78px 1fr;gap:8px;margin-top:8px}.dice,.roll-btn{height:66px;border-radius:18px}.dice{font-size:34px}.roll-btn{font-size:22px}
+      .status{margin-top:8px;border-radius:16px;min-height:50px;font-size:13px;padding:10px}
+      .clue-grid,.legend{grid-template-columns:1fr}
+    }
+    @media(max-width:390px){.teams{grid-template-columns:repeat(2,1fr)}.team-panel{min-height:68px;padding:6px}.board{gap:3px}.cell{border-radius:10px}.cell-label{font-size:8px}.num{font-size:11px}.controls{grid-template-columns:70px 1fr}.dice,.roll-btn{height:60px}.dice{font-size:31px}.roll-btn{font-size:20px}}.board{gap:4px}.cell{border-radius:13px;padding:4px}.cell-label{font-size:9px}.num{font-size:12px}.controls{grid-template-columns:82px 1fr}.dice,.roll-btn{height:78px}.dice{font-size:38px}.teams{gap:6px}.team-panel{padding:8px 6px}.team-name{font-size:12px}.badge{min-width:21px;height:21px;font-size:12px}.clue-grid,.legend{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -47,12 +60,12 @@
       <h1 class="game-title">ยอดนักสืบจิ๋ว อย.น้อย</h1>
       <p class="subtitle">เกมบันไดงูสืบคดีอาหารไม่ปลอดภัย<br>เลือกจำนวนผู้เล่น เก็บหลักฐานลับ แล้วทายต้นเหตุที่ช่อง 25</p>
       <div class="setup-grid">
-        <div><label>จำนวนผู้เล่น / ทีม</label><select id="playerCount"><option value="2">2 ทีม</option><option value="3" selected>3 ทีม</option><option value="4">4 ทีม</option><option value="5">5 ทีม</option><option value="6">6 ทีม</option></select></div>
+        <div><label>จำนวนผู้เล่น / ทีม 1–4 คน</label><select id="playerCount"><option value="1">1 คน</option><option value="2">2 คน</option><option value="3" selected>3 คน</option><option value="4">4 คน</option></select></div>
         <div id="nameFields"></div>
       </div>
       <button class="big-btn" id="startGameBtn">เริ่มสืบคดี 🔍</button>
       <div class="legend"><div class="lg-red">แดง: อ่านฉลาก 🔎</div><div class="lg-yellow">เหลือง: เลือกอาหาร/ขนม 🔎</div><div class="lg-green">เขียว: เลือกผัก 🔎</div><div class="lg-blue">น้ำเงิน: เลือกร้านอาหาร 🔎</div></div>
-      <div class="small-note">คำถามถูกสุ่มจาก 4 หมวด ตัวร้ายสุ่ม 1 ใน 5 และซ่อนไว้จนกว่าทุกทีมจะโหวตเสร็จ / จุด 🔎 มีเพียง 5 จุด กระจายช่วงต้น-กลาง-ท้าย เฉลี่ยเจอราว 1–2 จุดต่อเกม</div>
+      <div class="small-note">คำถามถูกสุ่มจาก 4 หมวด ตัวร้ายสุ่ม 1 ใน 5 และซ่อนไว้จนกว่าทุกทีมจะโหวตเสร็จ / จุด 🔎 มีเพียง 5 จุด กระจายเท่า ๆ กันช่วงต้น-กลาง-ท้าย: 4, 9, 14, 19, 24</div>
     </div>
   </section>
 
@@ -79,8 +92,10 @@
     let G = null;
     let usedQIds = [];
     const teamTemplates = [
-      {tok:"🔴", cls:"team-red", name:"ทีมแดง", color:"red"}, {tok:"🔵", cls:"team-blue", name:"ทีมสีน้ำเงิน", color:"blue"}, {tok:"🟡", cls:"team-yellow", name:"ทีมสีเหลือง", color:"yellow"},
-      {tok:"🟢", cls:"team-green", name:"ทีมสีเขียว", color:"green"}, {tok:"🟣", cls:"team-purple", name:"ทีมสีม่วง", color:"purple"}, {tok:"🌸", cls:"team-pink", name:"ทีมสีชมพู", color:"pink"}
+      {tok:"🔴", cls:"team-red", name:"ผู้เล่น 1", color:"red"},
+      {tok:"🔵", cls:"team-blue", name:"ผู้เล่น 2", color:"blue"},
+      {tok:"🟡", cls:"team-yellow", name:"ผู้เล่น 3", color:"yellow"},
+      {tok:"🟢", cls:"team-green", name:"ผู้เล่น 4", color:"green"}
     ];
 
     const villainPool = [
@@ -189,49 +204,49 @@
       1:{n:1,type:"n",emoji:"🔍",label:"เริ่ม"},
       2:{n:2,type:"label",emoji:"🏷️",label:"อ่านฉลาก"},
       3:{n:3,type:"ld",emoji:"🪜",label:"บันได 7",to:7},
-      4:{n:4,type:"snack",emoji:"🍬",label:"เลือกขนม"},
+      4:{n:4,type:"clue",group:"snack",emoji:"🔎",label:"คำใบ้"},
       5:{n:5,type:"veg",emoji:"🥦",label:"เลือกผัก"},
-      6:{n:6,type:"clue",group:"shop",emoji:"🔎",label:"คำใบ้"},
+      6:{n:6,type:"shop",emoji:"🏪",label:"เลือกร้าน"},
       7:{n:7,type:"label",emoji:"📅",label:"วันหมดอายุ"},
       8:{n:8,type:"snack",emoji:"🧃",label:"เครื่องดื่ม"},
-      9:{n:9,type:"veg",emoji:"🥒",label:"ผักสด"},
+      9:{n:9,type:"clue",group:"veg",emoji:"🔎",label:"คำใบ้"},
       10:{n:10,type:"n",emoji:"🕵️",label:"พัก"},
       11:{n:11,type:"shop",emoji:"🍽️",label:"ร้านสะอาด"},
-      12:{n:12,type:"clue",group:"label",emoji:"🔎",label:"คำใบ้"},
+      12:{n:12,type:"label",emoji:"🏷️",label:"ดูฉลาก"},
       13:{n:13,type:"ld",emoji:"🪜",label:"บันได 18",to:18},
-      14:{n:14,type:"snack",emoji:"🍭",label:"ขนมหวาน"},
+      14:{n:14,type:"clue",group:"snack",emoji:"🔎",label:"คำใบ้"},
       15:{n:15,type:"pit",emoji:"🕳️",label:"หลุม 10",to:10},
       16:{n:16,type:"veg",emoji:"🍅",label:"ล้างผัก"},
-      17:{n:17,type:"clue",group:"veg",emoji:"🔎",label:"คำใบ้"},
+      17:{n:17,type:"shop",emoji:"🏪",label:"เลือกร้าน"},
       18:{n:18,type:"label",emoji:"📦",label:"บรรจุภัณฑ์"},
-      19:{n:19,type:"snack",emoji:"🍞",label:"ขนมปัง"},
+      19:{n:19,type:"clue",group:"shop",emoji:"🔎",label:"คำใบ้"},
       20:{n:20,type:"pit",emoji:"🕳️",label:"หลุม 14",to:14},
-      21:{n:21,type:"clue",group:"shop",emoji:"🔎",label:"คำใบ้"},
+      21:{n:21,type:"veg",emoji:"🥬",label:"เลือกผัก"},
       22:{n:22,type:"ld",emoji:"🪜",label:"บันได 25",to:25},
-      23:{n:23,type:"shop",emoji:"🏪",label:"เลือกร้าน"},
+      23:{n:23,type:"shop",emoji:"🍽️",label:"ร้านอาหาร"},
       24:{n:24,type:"clue",group:"label",emoji:"🔎",label:"คำใบ้"},
       25:{n:25,type:"win",emoji:"🏁",label:"เฉลย"}
     };
     const boardOrder = [25,24,23,22,21,20,19,18,17,16,11,12,13,14,15,10,9,8,7,6,1,2,3,4,5];
-    const questionTypes = ["label","snack","veg","shop","clue"]; const clueSpotNums = [6,12,17,21,24];
+    const questionTypes = ["label","snack","veg","shop","clue"]; const clueSpotNums = [4,9,14,19,24];
     const groupNames = {label:"อ่านฉลาก", snack:"เลือกกินอาหาร/ขนม", veg:"เลือกผัก", shop:"เลือกร้านอาหาร"};
     const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
 
     function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); $(id).classList.add('active'); }
     function renderNameFields(){
-      const count = Number($("playerCount").value || 3);
+      const count = Math.min(4, Math.max(1, Number($("playerCount").value || 3)));
       const box = $("nameFields"); box.innerHTML = "";
       for(let i=0;i<count;i++){
         const t = teamTemplates[i];
         const div = document.createElement("div");
-        div.innerHTML = `<label>${t.tok} ชื่อทีมที่ ${i+1}</label><input id="teamName${i}" value="${t.name}" />`;
+        div.innerHTML = `<label>${t.tok} ชื่อผู้เล่น/ทีมที่ ${i+1}</label><input id="teamName${i}" value="${t.name}" />`;
         box.appendChild(div);
       }
     }
     $("playerCount").addEventListener("change", renderNameFields); renderNameFields();
 
     function initState(){
-      const count = Number($("playerCount").value || 3);
+      const count = Math.min(4, Math.max(1, Number($("playerCount").value || 3)));
       const teams = [];
       for(let i=0;i<count;i++){
         const temp = teamTemplates[i];
@@ -277,12 +292,15 @@
     function answerQ(idx){ const {tid,cell,q}=G.currentQ; const team=G.teams[tid]; const correct=idx===q.correctIdx; Array.from($("qChoices").children).forEach(b=>b.disabled=true); if(correct){ team.visited[cell.n]=true; const isClueSpot = cell.type === "clue"; let clueMsg = "ช่องนี้เป็นคำถามฝึกทักษะ ยังไม่ได้หลักฐานลับ"; if(isClueSpot && team.clues.length<4){ team.clues.push(G.villain.clues[team.clues.length]); clueMsg = `🔒 เก็บหลักฐานลับแล้ว ${team.clues.length}/4`; } else if(isClueSpot){ clueMsg = "🔒 หลักฐานครบ 4 ชิ้นแล้ว"; } team.score+=10; $("qFeedback").innerHTML=`<div class="info-card">✅ ตอบถูก! +10 คะแนน<br>${clueMsg}<br><br><b>เรียนรู้:</b> ${q.explain}</div><div class="modal-actions"><button class="primary" id="qContinue">ต่อไป</button></div>`; } else { $("qFeedback").innerHTML=`<div class="info-card" style="background:rgba(255,77,109,.13);border-color:rgba(255,77,109,.38)">❌ ยังไม่ถูก ไม่ได้คำใบ้ในช่องนี้<br>คำตอบที่ถูกคือ <b>${q.choices[q.correctIdx]}</b><br><br><b>เรียนรู้:</b> ${q.explain}</div><div class="modal-actions"><button class="primary" id="qContinue">ต่อไป</button></div>`; } renderHUD(); $("qContinue").onclick=()=>{ $("qModal").classList.remove("show"); G.currentQ=null; endTurn(); }; }
     function showEvent(kind,text,next){ G.busy=true; $("eventHead").textContent=kind==="ladder"?"🪜 เจอบันได":"🕳️ ตกหลุม"; $("eventText").textContent=text; $("eventModal").classList.add("show"); renderHUD(); setTimeout(()=>{ $("eventModal").classList.remove("show"); next(); },900); }
     function endTurn(){ G.rolling=false; G.busy=false; G.turn=(G.turn+1)%G.teams.length; G.turnCount++; renderHUD(); setStatus(`ถึงคิว ${G.teams[G.turn].tok} ${G.teams[G.turn].name}!`); }
-    function openAccusation(){ G.busy=true; G.voteOrder=G.teams.map(t=>t.id).filter(id=>id!==G.winnerId).concat([G.winnerId]); G.voteIdx=0; G.votes={}; G.selectedVote=null; stepClues(); }
+    function openAccusation(){ G.busy=true; G.voteOrder=G.teams.length===1 ? [G.winnerId] : G.teams.map(t=>t.id).filter(id=>id!==G.winnerId).concat([G.winnerId]); G.voteIdx=0; G.votes={}; G.selectedVote=null; stepClues(); }
     function stepClues(){ const winner=G.teams[G.winnerId]; const cluesHtml=[0,1,2,3].map(i=>`<div class="clue ${winner.clues[i]?'':'empty'}"><b>หลักฐาน ${i+1}</b><br>${winner.clues[i]||'ไม่มีหลักฐานในช่องนี้'}</div>`).join(''); $("accuseHead").textContent=`🔍 ${winner.name} ถึงช่อง 25`; $("accuseBody").innerHTML=`<p>เปิดคำใบ้ทั้งหมดของทีมที่ถึงเส้นชัยก่อน แล้วให้ทุกทีมโหวตหาตัวร้าย</p><div class="clue-grid">${cluesHtml}</div><div class="modal-actions"><button class="primary" id="startVoteBtn">เริ่มโหวต</button></div>`; $("accuseModal").classList.add("show"); $("startVoteBtn").onclick=stepVote; }
-    function stepVote(){ const tid=G.voteOrder[G.voteIdx]; const team=G.teams[tid]; G.selectedVote=null; const options=shuffle(villainPool); $("accuseHead").textContent=`🗳️ โหวตตัวร้าย: ${team.tok} ${team.name}`; $("accuseBody").innerHTML=`<p>เลือกต้นเหตุที่คิดว่าทำให้เด็กปวดท้องจากหลักฐาน ทีมที่ถึงเส้นชัยจะโหวตสุดท้ายเสมอ</p><div class="choices" id="voteChoices"></div><div class="modal-actions"><button class="primary" id="confirmVoteBtn" disabled>ยืนยันคำตอบ</button></div>`; const wrap=$("voteChoices"); options.forEach(v=>{ const b=document.createElement("button"); b.className="choice"; b.textContent=`${v.emoji} ${v.name}`; b.onclick=()=>{ G.selectedVote=v.id; Array.from(wrap.children).forEach(x=>x.classList.remove("selected")); b.classList.add("selected"); $("confirmVoteBtn").disabled=false; }; wrap.appendChild(b); }); $("confirmVoteBtn").onclick=()=>{ G.votes[tid]=G.selectedVote; G.voteIdx++; if(G.voteIdx>=G.voteOrder.length)showReveal(); else stepVote(); }; }
+    function stepVote(){ const tid=G.voteOrder[G.voteIdx]; const team=G.teams[tid]; G.selectedVote=null; const options=shuffle(villainPool); $("accuseHead").textContent=`🗳️ โหวตตัวร้าย: ${team.tok} ${team.name}`; $("accuseBody").innerHTML=`<p>เลือกต้นเหตุที่คิดว่าทำให้เด็กปวดท้องจากหลักฐาน ผู้เล่น/ทีมที่ถึงเส้นชัยจะโหวตสุดท้ายเสมอ</p><div class="choices" id="voteChoices"></div><div class="modal-actions"><button class="primary" id="confirmVoteBtn" disabled>ยืนยันคำตอบ</button></div>`; const wrap=$("voteChoices"); options.forEach(v=>{ const b=document.createElement("button"); b.className="choice"; b.textContent=`${v.emoji} ${v.name}`; b.onclick=()=>{ G.selectedVote=v.id; Array.from(wrap.children).forEach(x=>x.classList.remove("selected")); b.classList.add("selected"); $("confirmVoteBtn").disabled=false; }; wrap.appendChild(b); }); $("confirmVoteBtn").onclick=()=>{ G.votes[tid]=G.selectedVote; G.voteIdx++; if(G.voteIdx>=G.voteOrder.length)showReveal(); else stepVote(); }; }
     function villainName(id){ const v=villainPool.find(x=>x.id===id); return v?`${v.emoji} ${v.name}`:"-"; }
-    function showReveal(){ G.teams.forEach(t=>{ if(G.votes[t.id]===G.villain.id)t.score+=30; }); const rows=G.teams.map(t=>{ const ok=G.votes[t.id]===G.villain.id; return `<tr><td>${t.tok} ${t.name}</td><td>${villainName(G.votes[t.id])}</td><td>${t.clues.length}/4</td><td>${ok?'✅ +30':'❌'}</td></tr>`; }).join(''); $("accuseHead").textContent="🎯 เปิดเฉลยตัวร้าย"; $("accuseBody").innerHTML=`<div class="info-card">ตัวร้ายจริงคือ <b>${G.villain.emoji} ${G.villain.name}</b><br>${G.villain.explain}</div><table><thead><tr><th>ทีม</th><th>คำตอบที่เลือก</th><th>คำใบ้</th><th>ผล</th></tr></thead><tbody>${rows}</tbody></table><div class="modal-actions"><button class="primary" id="goWinBtn">ดูผลสรุป</button></div>`; renderHUD(); $("goWinBtn").onclick=goWin; }
-    function goWin(){ $("accuseModal").classList.remove("show"); G.busy=false; G.rolling=false; const ranked=[...G.teams].sort((a,b)=>b.score-a.score); $("winSubtitle").textContent=`เฉลย: ${G.villain.emoji} ${G.villain.name}`; $("rankList").innerHTML=ranked.map((t,i)=>`<div class="rank-card"><div class="medal">${["🥇","🥈","🥉","🏅","🎖️","⭐"][i]||"⭐"}</div><div><div class="rank-name">${t.tok} ${t.name}</div><div class="rank-sub">หลักฐาน ${t.clues.length}/4 | ช่องสุดท้าย ${t.pos}</div></div><div class="rank-score">${t.score}</div></div>`).join(''); showScreen("win"); }
+    function showReveal(){
+      G.teams.forEach(t=>{ if(G.votes[t.id]===G.villain.id)t.score+=30; });
+      const topScore = Math.max(...G.teams.map(t=>t.score));
+      const rows=G.teams.map(t=>{ const ok=G.votes[t.id]===G.villain.id; const isWinner = ok && t.score===topScore; return `<tr><td>${t.tok} ${t.name}</td><td>${villainName(G.votes[t.id])}</td><td>${t.clues.length}/4</td><td>${ok?'✅ +30':'❌'} ${isWinner?'🏆':''}</td></tr>`; }).join(''); $("accuseHead").textContent="🎯 เปิดเฉลยตัวร้าย"; $("accuseBody").innerHTML=`<div class="info-card">ตัวร้ายจริงคือ <b>${G.villain.emoji} ${G.villain.name}</b><br>${G.villain.explain}</div><table><thead><tr><th>ทีม</th><th>คำตอบที่เลือก</th><th>คำใบ้</th><th>ผล</th></tr></thead><tbody>${rows}</tbody></table><div class="modal-actions"><button class="primary" id="goWinBtn">ดูผลสรุป</button></div>`; renderHUD(); $("goWinBtn").onclick=goWin; }
+    function goWin(){ $("accuseModal").classList.remove("show"); G.busy=false; G.rolling=false; const ranked=[...G.teams].sort((a,b)=>b.score-a.score); const correctWinners=ranked.filter(t=>G.votes[t.id]===G.villain.id && t.score===ranked[0].score); $("winSubtitle").textContent=`เฉลย: ${G.villain.emoji} ${G.villain.name} | ผู้ชนะคือคนที่ทายถูกและมีคะแนนสูงสุด${correctWinners.length? ' : '+correctWinners.map(t=>t.name).join(', ') : ''}`; $("rankList").innerHTML=ranked.map((t,i)=>`<div class="rank-card"><div class="medal">${["🥇","🥈","🥉","🏅","🎖️","⭐"][i]||"⭐"}</div><div><div class="rank-name">${t.tok} ${t.name}</div><div class="rank-sub">หลักฐาน ${t.clues.length}/4 | ช่องสุดท้าย ${t.pos}</div></div><div class="rank-score">${t.score}</div></div>`).join(''); showScreen("win"); }
 
     $("startGameBtn").addEventListener("click",startGame); $("rollBtn").addEventListener("click",rollDice); $("resetBtn").addEventListener("click",()=>showScreen("setup")); $("playAgainBtn").addEventListener("click",()=>showScreen("setup"));
   </script>
