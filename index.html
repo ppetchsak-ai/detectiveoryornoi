@@ -10,109 +10,347 @@
       --yellow:#ffd166; --purple:#b45cff; --blue:#45a3ff; --text:#f7fbff; --muted:#b9c7e6;
       --gray:#6b7280; --shadow:0 18px 50px rgba(0,0,0,.35); --radius:22px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html{height:100%;overflow:hidden}
     body{
-      margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);overflow-x:hidden;
-      background:radial-gradient(circle at 20% 10%,rgba(35,213,255,.22),transparent 30%),radial-gradient(circle at 80% 20%,rgba(180,92,255,.20),transparent 28%),radial-gradient(circle at 50% 90%,rgba(56,239,125,.13),transparent 28%),var(--bg);
+      margin:0;height:100%;overflow:hidden;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:radial-gradient(circle at 20% 10%,rgba(35,213,255,.22),transparent 30%),
+                 radial-gradient(circle at 80% 20%,rgba(180,92,255,.20),transparent 28%),
+                 radial-gradient(circle at 50% 90%,rgba(56,239,125,.13),transparent 28%),
+                 var(--bg);
     }
-    button,input,select{font:inherit} button{cursor:pointer;border:none} button:disabled{cursor:not-allowed;opacity:.55;filter:grayscale(.35)}
-    .screen{display:none!important}.screen.active{display:block!important}.screen.hero.active{display:flex!important}
-    .app{width:min(100%,920px);min-height:100dvh;margin:0 auto;padding:14px 12px calc(18px + env(safe-area-inset-bottom));position:relative}
-    .hero{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:18px 12px}
-    .setup-card,.win-card{width:min(100%,560px);padding:22px;border-radius:30px;background:linear-gradient(145deg,rgba(22,33,62,.94),rgba(15,52,96,.82));border:1px solid rgba(35,213,255,.32);box-shadow:0 24px 80px rgba(0,0,0,.45),0 0 32px rgba(35,213,255,.22)}
-    .game-title{margin:0;color:#7eeaff;font-size:clamp(34px,10vw,52px);line-height:1.02;text-align:center;text-shadow:0 0 18px rgba(35,213,255,.85)}
-    .subtitle{margin:10px 0 18px;text-align:center;color:#dcecff;line-height:1.5}
-    .setup-grid{display:grid;gap:12px;margin:16px 0}.setup-grid label{font-weight:900;color:#eaf6ff;font-size:15px}
-    .setup-grid input,.setup-grid select{width:100%;padding:14px 15px;border-radius:18px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:white;outline:none;margin-top:6px}.setup-grid option{color:#111827}
-    .big-btn{width:100%;min-height:64px;border-radius:22px;font-size:clamp(22px,6vw,30px);font-weight:1000;background:linear-gradient(135deg,#11998e,#38ef7d);color:#07240f;box-shadow:0 0 24px rgba(56,239,125,.55),0 14px 28px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.22)}
-    .small-note{font-size:13px;color:var(--muted);line-height:1.45;margin-top:12px;text-align:center}
-    .legend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.legend div{padding:9px;border-radius:14px;font-weight:900;font-size:12px;text-align:center}.lg-red{background:#ef4444}.lg-yellow{background:#d97706}.lg-green{background:#15803d}.lg-blue{background:#0369a1}
+    button,input,select{font:inherit}
+    button{cursor:pointer;border:none}
+    button:disabled{cursor:not-allowed;opacity:.55;filter:grayscale(.35)}
 
-    .topbar{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-bottom:12px}.brand{flex:1;padding:12px 14px;border:1px solid rgba(35,213,255,.35);border-radius:20px;background:linear-gradient(135deg,rgba(15,52,96,.9),rgba(22,33,62,.78));box-shadow:0 0 24px rgba(35,213,255,.22)}
-    .brand h1{margin:0;font-size:clamp(22px,5.8vw,34px);line-height:1.04;color:#7eeaff;text-shadow:0 0 15px rgba(35,213,255,.85);letter-spacing:.2px}.brand p{margin:4px 0 0;color:var(--muted);font-size:13px}
-    .scorebox{min-width:112px;padding:10px 12px;border-radius:18px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);text-align:center;box-shadow:0 0 20px rgba(35,213,255,.18)}.scorebox .stars{font-weight:900;font-size:20px;color:var(--yellow)}.scorebox .turn-mini{font-size:13px;color:#dcecff;margin-top:4px}
-    .turn-card{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px}.team-now{display:flex;gap:10px;align-items:center}.team-dot{width:38px;height:38px;border-radius:999px;display:grid;place-items:center;font-weight:1000;color:white;box-shadow:0 0 18px currentColor}.team-red{background:linear-gradient(135deg,#ff416c,#ff4b2b)}.team-blue{background:linear-gradient(135deg,#2193b0,#6dd5ed)}.team-yellow{background:linear-gradient(135deg,#f7971e,#ffd200);color:#2b2100}.team-green{background:linear-gradient(135deg,#11998e,#38ef7d);color:#052e16}.team-purple{background:linear-gradient(135deg,#8e2de2,#4a00e0)}.team-pink{background:linear-gradient(135deg,#ff758c,#ff7eb3)}
-    .turn-title{font-weight:900;font-size:18px}.turn-sub{font-size:13px;color:var(--muted);margin-top:2px}.mini-btn{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.11);color:var(--text);border:1px solid rgba(255,255,255,.12)}
-    .teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(102px,1fr));gap:8px;margin-bottom:12px}.team-panel{border-radius:18px;padding:10px 9px;min-height:96px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);position:relative;overflow:hidden}.team-panel.active{outline:2px solid var(--cyan);box-shadow:0 0 24px rgba(35,213,255,.35)}.team-name{font-weight:900;font-size:14px;display:flex;align-items:center;gap:5px}.team-pos,.team-ev{font-size:12px;color:var(--muted);margin-top:4px}.evidence-mini{display:flex;gap:3px;flex-wrap:wrap;margin-top:6px}.badge{display:inline-flex;align-items:center;justify-content:center;min-width:23px;height:23px;padding:0 5px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);font-size:13px}
-    .board-wrap{background:rgba(0,0,0,.18);padding:8px;border-radius:24px;border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow);max-width:620px;margin:0 auto}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;aspect-ratio:1/1;position:relative}.cell{border-radius:16px;padding:5px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;min-width:0;border:2px solid rgba(255,255,255,.18);transition:.18s transform ease,.18s filter ease}.cell::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent 45%);pointer-events:none}.cell.n{background:linear-gradient(145deg,rgba(107,114,128,.72),rgba(31,41,55,.9));box-shadow:0 0 10px rgba(156,163,175,.36)}.cell.label{background:linear-gradient(145deg,rgba(239,68,68,.86),rgba(127,29,29,.9));box-shadow:0 0 13px rgba(255,77,109,.65)}.cell.snack{background:linear-gradient(145deg,rgba(250,204,21,.9),rgba(180,83,9,.92));box-shadow:0 0 13px rgba(255,209,102,.75)}.cell.veg{background:linear-gradient(145deg,rgba(34,197,94,.86),rgba(22,101,52,.92));box-shadow:0 0 13px rgba(56,239,125,.70)}.cell.shop{background:linear-gradient(145deg,rgba(14,165,233,.86),rgba(30,64,175,.92));box-shadow:0 0 13px rgba(69,163,255,.72)}.cell.clue{background:linear-gradient(145deg,rgba(34,211,238,.92),rgba(14,116,144,.96));box-shadow:0 0 20px rgba(35,213,255,.9), inset 0 0 16px rgba(255,255,255,.18)}.cell.pit{background:linear-gradient(145deg,rgba(31,41,55,.95),rgba(88,28,135,.95));box-shadow:0 0 15px rgba(180,92,255,.8)}.cell.sn{background:linear-gradient(145deg,rgba(168,85,247,.88),rgba(76,29,149,.9));box-shadow:0 0 13px rgba(180,92,255,.75)}.cell.ld{background:linear-gradient(145deg,rgba(6,182,212,.82),rgba(8,47,73,.92));box-shadow:0 0 13px rgba(35,213,255,.7)}.cell.win{background:linear-gradient(145deg,rgba(22,163,74,.92),rgba(20,83,45,.95));box-shadow:0 0 22px rgba(56,239,125,.9),inset 0 0 18px rgba(255,255,255,.25);animation:pulseWin 1.25s infinite alternate}@keyframes pulseWin{from{filter:brightness(1)}to{filter:brightness(1.25)}}.cell.current{transform:scale(1.06);z-index:4;filter:saturate(1.28)}.num{font-weight:1000;font-size:13px;text-shadow:0 1px 3px rgba(0,0,0,.5)}.emoji{font-size:clamp(20px,6vw,32px);text-align:center;line-height:1}.cell-label{font-weight:900;font-size:10px;line-height:1.08;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tokens{position:absolute;left:4px;right:4px;bottom:4px;display:flex;gap:2px;justify-content:center;z-index:5}.token{width:16px;height:16px;border-radius:999px;border:2px solid #fff;box-shadow:0 2px 7px rgba(0,0,0,.55);font-size:9px;line-height:12px;text-align:center;font-weight:900}
-    .controls{margin:12px auto 0;display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:center;max-width:620px}.dice{height:88px;border-radius:22px;background:#fff;color:#111827;display:grid;place-items:center;font-size:44px;font-weight:1000;box-shadow:0 12px 30px rgba(0,0,0,.32),0 0 18px rgba(255,255,255,.45);transition:.25s transform ease}.dice.rolling{transform:rotate(12deg) scale(1.05)}.roll-btn{height:88px;border-radius:24px;background:linear-gradient(135deg,#11998e,#38ef7d);color:#07240f;font-size:clamp(22px,6vw,30px);font-weight:1000;box-shadow:0 0 24px rgba(56,239,125,.55),0 14px 28px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.22)}.status{margin:12px auto 0;max-width:620px;padding:12px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);min-height:62px;color:#eaf6ff;font-size:14px;line-height:1.45}
-    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.66);display:none;align-items:center;justify-content:center;padding:16px;z-index:50;backdrop-filter:blur(7px)}.modal-backdrop.show{display:flex}.modal{width:min(100%,540px);max-height:92dvh;overflow:auto;background:linear-gradient(145deg,#172554,#111827);border:1px solid rgba(35,213,255,.32);border-radius:28px;box-shadow:0 25px 70px rgba(0,0,0,.55),0 0 30px rgba(35,213,255,.18);padding:18px}.modal h2{margin:0 0 8px;color:#7eeaff;font-size:24px;text-shadow:0 0 12px rgba(35,213,255,.7)}.modal p{color:#e7eefc;line-height:1.55}.choices{display:grid;gap:9px;margin-top:12px}.choice{padding:13px;border-radius:17px;text-align:left;color:white;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);font-weight:850;line-height:1.35}.choice.selected{outline:2px solid var(--yellow);background:rgba(255,209,102,.2)}.info-card{margin-top:10px;padding:12px;border-radius:18px;background:rgba(255,209,102,.13);border:1px solid rgba(255,209,102,.35);color:#fff7d6;line-height:1.5}.modal-actions{display:flex;gap:9px;margin-top:14px;justify-content:flex-end;flex-wrap:wrap}.primary,.secondary{padding:11px 14px;border-radius:15px;font-weight:950}.primary{background:linear-gradient(135deg,#23d5ff,#45a3ff);color:#03121b}.secondary{background:rgba(255,255,255,.12);color:white;border:1px solid rgba(255,255,255,.16)}.clue-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.clue{min-height:86px;border-radius:18px;padding:12px;background:rgba(35,213,255,.12);border:1px solid rgba(35,213,255,.28);line-height:1.45}.clue.empty{opacity:.45;background:rgba(255,255,255,.08)}table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:10px;font-size:13px}th{text-align:left;color:#aeefff;font-size:12px;padding:0 8px}td{background:rgba(255,255,255,.08);padding:10px 8px;vertical-align:top;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}td:first-child{border-radius:12px 0 0 12px;border-left:1px solid rgba(255,255,255,.1);font-weight:900}td:last-child{border-radius:0 12px 12px 0;border-right:1px solid rgba(255,255,255,.1);font-weight:1000;text-align:center}.rank-list{display:grid;gap:10px;margin-top:16px}.rank-card{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:10px;padding:14px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}.medal{font-size:30px;text-align:center}.rank-name{font-size:18px;font-weight:1000}.rank-sub{font-size:13px;color:var(--muted)}.rank-score{font-size:22px;font-weight:1000;color:var(--yellow)}
-    @media(max-width:640px){
-      .app{padding:8px 8px calc(14px + env(safe-area-inset-bottom));}
-      .topbar{align-items:stretch;margin-bottom:8px}
-      .brand{padding:9px 10px;border-radius:16px}
-      .brand h1{font-size:22px}.brand p{font-size:11px}
-      .scorebox{min-width:86px;padding:8px;border-radius:15px}.scorebox .stars{font-size:16px}.scorebox .turn-mini{font-size:11px}
-      .turn-card{padding:9px;border-radius:16px;margin-bottom:8px;grid-template-columns:1fr auto}.team-dot{width:32px;height:32px}.turn-title{font-size:15px}.turn-sub{font-size:11px}.mini-btn{padding:8px 10px;font-size:12px}
-      .teams{grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:8px}.team-panel{min-height:74px;padding:7px 8px;border-radius:15px}.team-name{font-size:12px}.team-pos,.team-ev{font-size:10px;margin-top:2px}.evidence-mini{gap:2px;margin-top:4px}.badge{min-width:18px;height:18px;font-size:10px}
-      .board-wrap{padding:6px;border-radius:18px;max-width:100%}.board{gap:4px}.cell{border-radius:12px;padding:4px}.cell-label{font-size:8.5px}.num{font-size:12px}.emoji{font-size:clamp(18px,6vw,27px)}
-      .controls{grid-template-columns:78px 1fr;gap:8px;margin-top:8px}.dice,.roll-btn{height:66px;border-radius:18px}.dice{font-size:34px}.roll-btn{font-size:22px}
-      .status{margin-top:8px;border-radius:16px;min-height:50px;font-size:13px;padding:10px}
-      .clue-grid,.legend{grid-template-columns:1fr}
+    /* ── SCREENS ── */
+    .screen{display:none!important;height:100dvh;overflow:hidden}
+    .screen.active{display:flex!important;flex-direction:column}
+
+    /* ── SETUP / WIN ── */
+    #setup.active,#win.active{
+      align-items:center;justify-content:center;
+      padding:16px 12px calc(16px + env(safe-area-inset-bottom));
+      overflow-y:auto;
     }
-    @media(max-width:390px){.teams{grid-template-columns:repeat(2,1fr)}.team-panel{min-height:68px;padding:6px}.board{gap:3px}.cell{border-radius:10px}.cell-label{font-size:8px}.num{font-size:11px}.controls{grid-template-columns:70px 1fr}.dice,.roll-btn{height:60px}.dice{font-size:31px}.roll-btn{font-size:20px}}.board{gap:4px}.cell{border-radius:13px;padding:4px}.cell-label{font-size:9px}.num{font-size:12px}.controls{grid-template-columns:82px 1fr}.dice,.roll-btn{height:78px}.dice{font-size:38px}.teams{gap:6px}.team-panel{padding:8px 6px}.team-name{font-size:12px}.badge{min-width:21px;height:21px;font-size:12px}.clue-grid,.legend{grid-template-columns:1fr}}
-  </style>
-<style id="three-page-display-fix">
-    /* แยกหน้าจอเป็น 3 หน้าแท้จริง: setup / game / win */
-    .screen:not(.active){
-      display:none!important;
-      visibility:hidden!important;
-      height:0!important;
-      min-height:0!important;
-      overflow:hidden!important;
-      margin:0!important;
-      padding:0!important;
-      pointer-events:none!important;
+    .setup-card,.win-card{
+      width:min(100%,560px);padding:22px;border-radius:30px;
+      background:linear-gradient(145deg,rgba(22,33,62,.94),rgba(15,52,96,.82));
+      border:1px solid rgba(35,213,255,.32);
+      box-shadow:0 24px 80px rgba(0,0,0,.45),0 0 32px rgba(35,213,255,.22);
+      flex-shrink:0;
     }
-    .screen.active{
-      display:block!important;
-      visibility:visible!important;
-      height:auto!important;
-      min-height:100svh!important;
-      overflow:visible!important;
-      pointer-events:auto!important;
+    .game-title{margin:0;color:#7eeaff;font-size:clamp(28px,8vw,48px);line-height:1.05;text-align:center;text-shadow:0 0 18px rgba(35,213,255,.85)}
+    .subtitle{margin:8px 0 16px;text-align:center;color:#dcecff;line-height:1.5;font-size:14px}
+    .setup-grid{display:grid;gap:12px;margin:14px 0}
+    .setup-grid label{font-weight:900;color:#eaf6ff;font-size:15px}
+    .setup-grid input,.setup-grid select{
+      width:100%;padding:13px 15px;border-radius:18px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.08);color:white;outline:none;margin-top:6px
     }
-    .screen.hero.active{display:flex!important;align-items:center!important;justify-content:center!important;}
-    #game.active,#win.active{display:block!important;}
-    body.page-setup #game,body.page-setup #win,
-    body.page-game #setup,body.page-game #win,
-    body.page-win #setup,body.page-win #game{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important;}
-    @media(max-width:640px){
-      .screen.active{min-height:100svh!important;}
-      #game.active .app{padding-top:8px!important;}
-      #win.active{padding:16px 14px!important;}
+    .setup-grid option{color:#111827}
+    .big-btn{
+      width:100%;min-height:58px;border-radius:22px;
+      font-size:clamp(20px,5.5vw,28px);font-weight:1000;
+      background:linear-gradient(135deg,#11998e,#38ef7d);color:#07240f;
+      box-shadow:0 0 24px rgba(56,239,125,.55),0 14px 28px rgba(0,0,0,.28);
+      border:2px solid rgba(255,255,255,.22)
     }
+    .small-note{font-size:12px;color:var(--muted);line-height:1.4;margin-top:10px;text-align:center}
+    .legend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+    .legend div{padding:8px;border-radius:14px;font-weight:900;font-size:11px;text-align:center}
+    .lg-red{background:#ef4444}.lg-yellow{background:#d97706}.lg-green{background:#15803d}.lg-blue{background:#0369a1}
+
+    /* ── GAME SCREEN — no-scroll layout ── */
+    #game.active{
+      padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0);
+      overflow:hidden;
+    }
+    .game-inner{
+      display:flex;flex-direction:column;
+      height:100%;padding:6px 8px;gap:5px;overflow:hidden;
+    }
+
+    /* topbar */
+    .topbar{display:flex;align-items:center;gap:8px;flex-shrink:0}
+    .brand{
+      flex:1;padding:8px 12px;border-radius:16px;
+      background:linear-gradient(135deg,rgba(15,52,96,.9),rgba(22,33,62,.78));
+      border:1px solid rgba(35,213,255,.35);
+      box-shadow:0 0 18px rgba(35,213,255,.18);
+      min-width:0;
+    }
+    .brand h1{margin:0;font-size:clamp(16px,4.5vw,22px);line-height:1.1;color:#7eeaff;text-shadow:0 0 12px rgba(35,213,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .brand p{margin:2px 0 0;color:var(--muted);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .scorebox{
+      flex-shrink:0;width:90px;padding:7px 8px;border-radius:14px;
+      background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.12);
+      text-align:center;
+    }
+    .scorebox .stars{font-weight:900;font-size:17px;color:var(--yellow)}
+    .scorebox .turn-mini{font-size:11px;color:#dcecff;margin-top:2px}
+
+    /* turn-card */
+    .turn-card{
+      display:flex;align-items:center;justify-content:space-between;gap:8px;
+      padding:8px 10px;
+      background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;flex-shrink:0;
+    }
+    .team-now{display:flex;gap:8px;align-items:center}
+    .team-dot{width:34px;height:34px;border-radius:999px;display:grid;place-items:center;font-weight:1000;color:white;box-shadow:0 0 14px currentColor;flex-shrink:0}
+    .team-red{background:linear-gradient(135deg,#ff416c,#ff4b2b)}
+    .team-blue{background:linear-gradient(135deg,#2193b0,#6dd5ed)}
+    .team-yellow{background:linear-gradient(135deg,#f7971e,#ffd200);color:#2b2100}
+    .team-green{background:linear-gradient(135deg,#11998e,#38ef7d);color:#052e16}
+    .team-purple{background:linear-gradient(135deg,#8e2de2,#4a00e0)}
+    .team-pink{background:linear-gradient(135deg,#ff758c,#ff7eb3)}
+    .turn-info{min-width:0}
+    .turn-title{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .turn-sub{font-size:11px;color:var(--muted);margin-top:1px}
+    .turn-actions{display:flex;gap:6px;flex-shrink:0}
+    .mini-btn{
+      padding:7px 10px;border-radius:12px;font-size:11px;font-weight:700;
+      background:rgba(255,255,255,.11);color:var(--text);
+      border:1px solid rgba(255,255,255,.12)
+    }
+    .score-btn{
+      padding:7px 10px;border-radius:12px;font-size:11px;font-weight:700;
+      background:rgba(255,209,102,.15);color:var(--yellow);
+      border:1px solid rgba(255,209,102,.3)
+    }
+
+    /* board */
+    .board-wrap{
+      flex:1;min-height:0;
+      background:rgba(0,0,0,.18);padding:5px;
+      border-radius:18px;border:1px solid rgba(255,255,255,.1);
+      box-shadow:var(--shadow);
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+    }
+    .board{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:4px;
+      width:100%;height:100%;
+    }
+    .cell{
+      border-radius:11px;padding:3px 2px;position:relative;overflow:hidden;
+      display:flex;flex-direction:column;justify-content:space-between;
+      border:1.5px solid rgba(255,255,255,.18);
+      transition:.15s transform ease;min-width:0;
+    }
+    .cell::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18),transparent 45%);pointer-events:none}
+    .cell.n{background:linear-gradient(145deg,rgba(107,114,128,.72),rgba(31,41,55,.9));box-shadow:0 0 8px rgba(156,163,175,.3)}
+    .cell.label{background:linear-gradient(145deg,rgba(239,68,68,.86),rgba(127,29,29,.9));box-shadow:0 0 10px rgba(255,77,109,.6)}
+    .cell.snack{background:linear-gradient(145deg,rgba(250,204,21,.9),rgba(180,83,9,.92));box-shadow:0 0 10px rgba(255,209,102,.7)}
+    .cell.veg{background:linear-gradient(145deg,rgba(34,197,94,.86),rgba(22,101,52,.92));box-shadow:0 0 10px rgba(56,239,125,.65)}
+    .cell.shop{background:linear-gradient(145deg,rgba(14,165,233,.86),rgba(30,64,175,.92));box-shadow:0 0 10px rgba(69,163,255,.68)}
+    .cell.clue{background:linear-gradient(145deg,rgba(34,211,238,.92),rgba(14,116,144,.96));box-shadow:0 0 16px rgba(35,213,255,.85),inset 0 0 12px rgba(255,255,255,.15)}
+    .cell.pit{background:linear-gradient(145deg,rgba(31,41,55,.95),rgba(88,28,135,.95));box-shadow:0 0 12px rgba(180,92,255,.75)}
+    .cell.sn{background:linear-gradient(145deg,rgba(168,85,247,.88),rgba(76,29,149,.9));box-shadow:0 0 10px rgba(180,92,255,.7)}
+    .cell.ld{background:linear-gradient(145deg,rgba(6,182,212,.82),rgba(8,47,73,.92));box-shadow:0 0 10px rgba(35,213,255,.65)}
+    .cell.win{background:linear-gradient(145deg,rgba(22,163,74,.92),rgba(20,83,45,.95));box-shadow:0 0 18px rgba(56,239,125,.85),inset 0 0 14px rgba(255,255,255,.2);animation:pulseWin 1.25s infinite alternate}
+    @keyframes pulseWin{from{filter:brightness(1)}to{filter:brightness(1.22)}}
+    .cell.current{transform:scale(1.06);z-index:4;filter:saturate(1.3)}
+    .num{font-weight:1000;font-size:clamp(9px,2.5vw,13px);text-shadow:0 1px 3px rgba(0,0,0,.5);line-height:1}
+    .emoji{font-size:clamp(14px,4.5vw,24px);text-align:center;line-height:1;margin:1px 0}
+    .cell-label{font-weight:900;font-size:clamp(7px,1.8vw,9.5px);line-height:1.1;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .tokens{position:absolute;left:2px;right:2px;bottom:2px;display:flex;gap:1px;justify-content:center;z-index:5;flex-wrap:wrap}
+    .token{width:13px;height:13px;border-radius:999px;border:1.5px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.5);font-size:8px;line-height:10px;text-align:center;font-weight:900}
+
+    /* controls */
+    .controls{
+      display:grid;grid-template-columns:80px 1fr;gap:8px;
+      flex-shrink:0;
+    }
+    .dice{
+      height:70px;border-radius:18px;background:#fff;color:#111827;
+      display:grid;place-items:center;font-size:36px;font-weight:1000;
+      box-shadow:0 10px 24px rgba(0,0,0,.3),0 0 14px rgba(255,255,255,.4);
+      transition:.2s transform ease
+    }
+    .dice.rolling{transform:rotate(10deg) scale(1.04)}
+    .roll-btn{
+      height:70px;border-radius:20px;
+      background:linear-gradient(135deg,#11998e,#38ef7d);color:#07240f;
+      font-size:clamp(18px,5vw,24px);font-weight:1000;
+      box-shadow:0 0 20px rgba(56,239,125,.5),0 12px 22px rgba(0,0,0,.25);
+      border:2px solid rgba(255,255,255,.2)
+    }
+
+    /* status bar */
+    .status{
+      flex-shrink:0;padding:8px 12px;border-radius:14px;
+      background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+      color:#eaf6ff;font-size:13px;line-height:1.4;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+
+    /* ── SCORE PANEL (slide-up overlay) ── */
+    .score-panel{
+      position:fixed;inset:0;z-index:40;
+      display:none;align-items:flex-end;
+      background:rgba(0,0,0,.5);backdrop-filter:blur(6px);
+    }
+    .score-panel.show{display:flex}
+    .score-sheet{
+      width:100%;background:linear-gradient(180deg,#172554,#111827);
+      border-radius:24px 24px 0 0;
+      border-top:1px solid rgba(35,213,255,.3);
+      padding:14px 14px calc(18px + env(safe-area-inset-bottom));
+      max-height:70dvh;overflow-y:auto;
+    }
+    .score-sheet h3{margin:0 0 12px;color:#7eeaff;font-size:18px;text-align:center}
+    .team-panel{
+      border-radius:16px;padding:10px 12px;
+      background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);
+      margin-bottom:8px;
+    }
+    .team-panel.active{outline:2px solid var(--cyan);box-shadow:0 0 18px rgba(35,213,255,.3)}
+    .team-name{font-weight:900;font-size:14px;display:flex;align-items:center;gap:6px}
+    .team-stats{font-size:12px;color:var(--muted);margin-top:4px;display:flex;gap:12px}
+    .evidence-mini{display:flex;gap:3px;flex-wrap:wrap;margin-top:6px}
+    .badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 4px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);font-size:12px}
+    .close-score{width:100%;padding:11px;border-radius:14px;background:rgba(255,255,255,.12);color:white;border:1px solid rgba(255,255,255,.16);font-weight:900;margin-top:4px}
+
+    /* ── MODALS ── */
+    .modal-backdrop{
+      position:fixed;inset:0;background:rgba(0,0,0,.68);
+      display:none;align-items:flex-end;justify-content:center;
+      padding:0;z-index:50;backdrop-filter:blur(7px);
+    }
+    .modal-backdrop.show{display:flex}
+    .modal{
+      width:100%;max-height:88dvh;overflow-y:auto;
+      background:linear-gradient(145deg,#172554,#111827);
+      border:1px solid rgba(35,213,255,.32);
+      border-radius:24px 24px 0 0;
+      box-shadow:0 -8px 40px rgba(0,0,0,.5),0 0 24px rgba(35,213,255,.15);
+      padding:16px 14px calc(16px + env(safe-area-inset-bottom));
+    }
+    /* center modals on tablet+ */
+    @media(min-width:600px){
+      .modal-backdrop{align-items:center;padding:16px}
+      .modal{border-radius:24px;max-width:540px}
+    }
+    .modal h2{margin:0 0 8px;color:#7eeaff;font-size:20px;text-shadow:0 0 10px rgba(35,213,255,.7)}
+    .modal p{color:#e7eefc;line-height:1.5;font-size:14px;margin:6px 0}
+    .choices{display:grid;gap:8px;margin-top:10px}
+    .choice{
+      padding:12px;border-radius:15px;text-align:left;color:white;
+      background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);
+      font-weight:850;line-height:1.35;font-size:14px
+    }
+    .choice.selected{outline:2px solid var(--yellow);background:rgba(255,209,102,.2)}
+    .info-card{margin-top:10px;padding:12px;border-radius:16px;background:rgba(255,209,102,.13);border:1px solid rgba(255,209,102,.35);color:#fff7d6;line-height:1.5;font-size:13px}
+    .modal-actions{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;flex-wrap:wrap}
+    .primary,.secondary{padding:11px 16px;border-radius:14px;font-weight:950;font-size:14px}
+    .primary{background:linear-gradient(135deg,#23d5ff,#45a3ff);color:#03121b}
+    .secondary{background:rgba(255,255,255,.12);color:white;border:1px solid rgba(255,255,255,.16)}
+    .clue-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+    .clue{min-height:72px;border-radius:16px;padding:10px;background:rgba(35,213,255,.12);border:1px solid rgba(35,213,255,.28);line-height:1.45;font-size:13px}
+    .clue.empty{opacity:.4;background:rgba(255,255,255,.08)}
+    table{width:100%;border-collapse:separate;border-spacing:0 6px;margin-top:8px;font-size:12px}
+    th{text-align:left;color:#aeefff;font-size:11px;padding:0 6px}
+    td{background:rgba(255,255,255,.08);padding:8px 6px;vertical-align:top;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}
+    td:first-child{border-radius:10px 0 0 10px;border-left:1px solid rgba(255,255,255,.1);font-weight:900}
+    td:last-child{border-radius:0 10px 10px 0;border-right:1px solid rgba(255,255,255,.1);font-weight:1000;text-align:center}
+    .rank-list{display:grid;gap:8px;margin-top:12px}
+    .rank-card{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:8px;padding:12px;border-radius:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+    .medal{font-size:26px;text-align:center}
+    .rank-name{font-size:16px;font-weight:1000}
+    .rank-sub{font-size:12px;color:var(--muted)}
+    .rank-score{font-size:20px;font-weight:1000;color:var(--yellow)}
   </style>
 </head>
 <body>
-  <section id="setup" class="screen active hero">
+
+  <!-- SETUP -->
+  <section id="setup" class="screen active">
     <div class="setup-card">
-      <h1 class="game-title">ยอดนักสืบจิ๋ว อย.น้อย</h1>
+      <h1 class="game-title">ยอดนักสืบจิ๋ว<br>อย.น้อย</h1>
       <p class="subtitle">เกมบันไดงูสืบคดีอาหารไม่ปลอดภัย<br>เลือกจำนวนผู้เล่น เก็บหลักฐานลับ แล้วทายต้นเหตุที่ช่อง 25</p>
       <div class="setup-grid">
         <div><label>จำนวนผู้เล่น / ทีม 1–4 คน</label><select id="playerCount"><option value="1">1 คน</option><option value="2">2 คน</option><option value="3" selected>3 คน</option><option value="4">4 คน</option></select></div>
         <div id="nameFields"></div>
       </div>
       <button class="big-btn" id="startGameBtn">เริ่มเก็บคำใบ้ 🔍</button>
-      <div class="legend"><div class="lg-red">แดง: อ่านฉลาก 🔎</div><div class="lg-yellow">เหลือง: เลือกอาหาร/ขนม 🔎</div><div class="lg-green">เขียว: เลือกผัก 🔎</div><div class="lg-blue">น้ำเงิน: เลือกร้านอาหาร 🔎</div></div>
-      <div class="small-note">คำถามถูกสุ่มจาก 4 หมวด ตัวร้ายสุ่ม 1 ใน 5 และซ่อนไว้จนกว่าทุกทีมจะโหวตเสร็จ / จุด 🔎 มีเพียง 5 จุด กระจายเท่า ๆ กันช่วงต้น-กลาง-ท้าย: 4, 9, 14, 19, 24</div>
+      <div class="legend">
+        <div class="lg-red">แดง: อ่านฉลาก 🔎</div>
+        <div class="lg-yellow">เหลือง: เลือกอาหาร/ขนม 🔎</div>
+        <div class="lg-green">เขียว: เลือกผัก 🔎</div>
+        <div class="lg-blue">น้ำเงิน: เลือกร้านอาหาร 🔎</div>
+      </div>
+      <div class="small-note">จุด 🔎 มี 5 จุด: ช่อง 4, 9, 14, 19, 24 | ตัวร้ายสุ่ม 1 ใน 5 ซ่อนไว้จนโหวตเสร็จ</div>
     </div>
   </section>
 
+  <!-- GAME -->
   <section id="game" class="screen">
-    <main class="app">
-      <section class="topbar"><div class="brand"><h1>ยอดนักสืบจิ๋ว อย.น้อย</h1><p>หน้าเกม: ทอยลูกเต๋า เดินบนตาราง และเก็บคำใบ้จากช่อง 🔎</p></div><div class="scorebox"><div class="stars">⭐ <span id="scoreNow">0</span></div><div class="turn-mini" id="turnMini">ตาที่ 1</div></div></section>
-      <section class="turn-card"><div class="team-now"><div class="team-dot team-red" id="turnDot">🔴</div><div><div class="turn-title" id="turnTitle">ถึงคิวทีมแดง</div><div class="turn-sub" id="turnSub">กดทอยลูกเต๋าเพื่อเริ่มเดิน</div></div></div><button class="mini-btn" id="resetBtn">เล่นใหม่</button></section>
-      <section class="teams" id="teams"></section>
-      <section class="board-wrap"><div class="board" id="board"></div></section>
-      <section class="controls"><div class="dice" id="dice">⚀</div><button class="roll-btn" id="rollBtn">ทอยลูกเต๋า 🎲</button></section>
-      <section class="status" id="status">พร้อมเริ่มสืบคดี กดทอยลูกเต๋าได้เลย</section>
-    </main>
+    <div class="game-inner">
+      <div class="topbar">
+        <div class="brand">
+          <h1>ยอดนักสืบจิ๋ว อย.น้อย</h1>
+          <p>ทอยลูกเต๋า เดินบนตาราง เก็บคำใบ้จากช่อง 🔎</p>
+        </div>
+        <div class="scorebox">
+          <div class="stars">⭐ <span id="scoreNow">0</span></div>
+          <div class="turn-mini" id="turnMini">ตาที่ 1</div>
+        </div>
+      </div>
+
+      <div class="turn-card">
+        <div class="team-now">
+          <div class="team-dot team-red" id="turnDot">🔴</div>
+          <div class="turn-info">
+            <div class="turn-title" id="turnTitle">ถึงคิวทีมแดง</div>
+            <div class="turn-sub" id="turnSub">กดทอยลูกเต๋าเพื่อเริ่มเดิน</div>
+          </div>
+        </div>
+        <div class="turn-actions">
+          <button class="score-btn" id="showScoreBtn">📊 คะแนน</button>
+          <button class="mini-btn" id="resetBtn">เล่นใหม่</button>
+        </div>
+      </div>
+
+      <div class="board-wrap">
+        <div class="board" id="board"></div>
+      </div>
+
+      <div class="controls">
+        <div class="dice" id="dice">⚀</div>
+        <button class="roll-btn" id="rollBtn">ทอยลูกเต๋า 🎲</button>
+      </div>
+
+      <div class="status" id="status">พร้อมเริ่มสืบคดี กดทอยลูกเต๋าได้เลย</div>
+    </div>
   </section>
 
-  <section id="win" class="screen hero"><div class="win-card"><h1 class="game-title">สรุปคะแนน 🏆</h1><p class="subtitle" id="winSubtitle">จัดอันดับนักสืบจิ๋ว</p><div class="rank-list" id="rankList"></div><div style="margin-top:18px;display:grid;gap:10px"><button class="big-btn" id="playAgainBtn">เล่นใหม่อีกครั้ง</button></div></div></section>
+  <!-- WIN -->
+  <section id="win" class="screen">
+    <div class="win-card" style="width:min(100%,560px);margin:auto">
+      <h1 class="game-title">สรุปคะแนน 🏆</h1>
+      <p class="subtitle" id="winSubtitle">จัดอันดับนักสืบจิ๋ว</p>
+      <div class="rank-list" id="rankList"></div>
+      <div style="margin-top:16px">
+        <button class="big-btn" id="playAgainBtn">เล่นใหม่อีกครั้ง</button>
+      </div>
+    </div>
+  </section>
 
+  <!-- SCORE PANEL -->
+  <div class="score-panel" id="scorePanel">
+    <div class="score-sheet">
+      <h3>📊 คะแนนและหลักฐาน</h3>
+      <div id="scoreTeams"></div>
+      <button class="close-score" id="closeScoreBtn">ปิด</button>
+    </div>
+  </div>
+
+  <!-- MODALS -->
   <div class="modal-backdrop" id="qModal"><div class="modal"><h2 id="qHead">คำถาม</h2><p id="qScenario"></p><p id="qText"></p><div class="choices" id="qChoices"></div><div id="qFeedback"></div></div></div>
   <div class="modal-backdrop" id="eventModal"><div class="modal"><h2 id="eventHead">เหตุการณ์</h2><p id="eventText"></p></div></div>
   <div class="modal-backdrop" id="accuseModal"><div class="modal"><h2 id="accuseHead">เปิดแฟ้มคดี</h2><div id="accuseBody"></div></div></div>
@@ -123,329 +361,60 @@
     let G = null;
     let usedQIds = [];
     const teamTemplates = [
-      {tok:"🔴", cls:"team-red", name:"ผู้เล่น 1", color:"red"},
-      {tok:"🔵", cls:"team-blue", name:"ผู้เล่น 2", color:"blue"},
+      {tok:"🔴", cls:"team-red",    name:"ผู้เล่น 1", color:"red"},
+      {tok:"🔵", cls:"team-blue",   name:"ผู้เล่น 2", color:"blue"},
       {tok:"🟡", cls:"team-yellow", name:"ผู้เล่น 3", color:"yellow"},
-      {tok:"🟢", cls:"team-green", name:"ผู้เล่น 4", color:"green"}
+      {tok:"🟢", cls:"team-green",  name:"ผู้เล่น 4", color:"green"}
     ];
 
     const villainPool = [
-      {
-        id:"mold_bread",
-        emoji:"🟫",
-        name:"ขนมปังขึ้นรา",
-        clues:[
-          "🦠 ภาพเชื้อรา",
-          "🏪 ซื้อจากร้านค้า",
-          "⏳ เก็บไว้นาน",
-          "🏷️ ไม่มีฉลาก"
-        ],
-        explain:"ขนมปังขึ้นราไม่ควรกิน แม้ตัดส่วนที่เห็นราออกแล้ว เพราะเชื้อราอาจกระจายอยู่ในอาหารมากกว่าที่ตาเห็น"
-      },
-      {
-        id:"spoiled_milk",
-        emoji:"🥛",
-        name:"นมบูด",
-        clues:[
-          "📅 หมดอายุ",
-          "🎈 กล่องบวม",
-          "😖 รสหรือกลิ่นเปรี้ยว",
-          "💧 ของเหลวผิดปกติ"
-        ],
-        explain:"นมบูดมักมีกลิ่นเปรี้ยว ภาชนะบวม หรือเนื้อของเหลวผิดปกติ ไม่ควรชิมและควรแจ้งผู้ใหญ่"
-      },
-      {
-        id:"expired_bread",
-        emoji:"🍞",
-        name:"ขนมปังหมดอายุ",
-        clues:[
-          "📅 วันหมดอายุ 12/03/2026",
-          "🌾 แป้ง",
-          "🏪 ซื้อจากร้านค้า",
-          "👃 กลิ่นผิดปกติ"
-        ],
-        explain:"ขนมปังที่หมดอายุหรือมีกลิ่นผิดปกติไม่ควรกิน เพราะอาจบูดเสียหรือมีเชื้อโรคเจริญเติบโต"
-      },
-      {
-        id:"candy_no_fda",
-        emoji:"🍬",
-        name:"ขนมลูกอมสีสดใส",
-        clues:[
-          "🍯 หวาน",
-          "🍚 รูปน้ำตาลทราย",
-          "🌈 ภาพสีรุ้ง",
-          "🪵 ไม้แท่ง"
-        ],
-        explain:"ลูกอมหรือขนมสีสดที่ไม่มีฉลากหรือข้อมูลตรวจสอบได้ควรหลีกเลี่ยง โดยเฉพาะเมื่อสี กลิ่น หรือบรรจุภัณฑ์ผิดปกติ"
-      },
-      {
-        id:"fly_meatball",
-        emoji:"🍢",
-        name:"ลูกชิ้นที่มีแมลงวันตอม",
-        clues:[
-          "🦠 รูปแบคทีเรีย",
-          "🪱 หนอน",
-          "🍳 ทอด",
-          "🍢 ไม้เสียบลูกชิ้น"
-        ],
-        explain:"ลูกชิ้นที่มีแมลงวันตอมหรือวางเปิดโล่งเสี่ยงปนเปื้อนเชื้อโรค ทำให้ปวดท้องหรือท้องเสียได้"
-      }
+      {id:"mold_bread",emoji:"🟫",name:"ขนมปังขึ้นรา",clues:["🦠 ภาพเชื้อรา","🏪 ซื้อจากร้านค้า","⏳ เก็บไว้นาน","🏷️ ไม่มีฉลาก"],explain:"ขนมปังขึ้นราไม่ควรกิน แม้ตัดส่วนที่เห็นราออกแล้ว เพราะเชื้อราอาจกระจายอยู่ในอาหารมากกว่าที่ตาเห็น"},
+      {id:"spoiled_milk",emoji:"🥛",name:"นมบูด",clues:["📅 หมดอายุ","🎈 กล่องบวม","😖 รสหรือกลิ่นเปรี้ยว","💧 ของเหลวผิดปกติ"],explain:"นมบูดมักมีกลิ่นเปรี้ยว ภาชนะบวม หรือเนื้อของเหลวผิดปกติ ไม่ควรชิมและควรแจ้งผู้ใหญ่"},
+      {id:"expired_bread",emoji:"🍞",name:"ขนมปังหมดอายุ",clues:["📅 วันหมดอายุ 12/03/2026","🌾 แป้ง","🏪 ซื้อจากร้านค้า","👃 กลิ่นผิดปกติ"],explain:"ขนมปังที่หมดอายุหรือมีกลิ่นผิดปกติไม่ควรกิน เพราะอาจบูดเสียหรือมีเชื้อโรคเจริญเติบโต"},
+      {id:"candy_no_fda",emoji:"🍬",name:"ขนมลูกอมสีสดใส",clues:["🍯 หวาน","🍚 รูปน้ำตาลทราย","🌈 ภาพสีรุ้ง","🪵 ไม้แท่ง"],explain:"ลูกอมหรือขนมสีสดที่ไม่มีฉลากหรือข้อมูลตรวจสอบได้ควรหลีกเลี่ยง โดยเฉพาะเมื่อสี กลิ่น หรือบรรจุภัณฑ์ผิดปกติ"},
+      {id:"fly_meatball",emoji:"🍢",name:"ลูกชิ้นที่มีแมลงวันตอม",clues:["🦠 รูปแบคทีเรีย","🪱 หนอน","🍳 ทอด","🍢 ไม้เสียบลูกชิ้น"],explain:"ลูกชิ้นที่มีแมลงวันตอมหรือวางเปิดโล่งเสี่ยงปนเปื้อนเชื้อโรค ทำให้ปวดท้องหรือท้องเสียได้"}
     ];
 
     const questions = [
-      // 🏷️ หมวดแดง — อ่านฉลาก
-      {
-        id:"L1", group:"label",
-        scenario:"น้องหยิบขนมมา เห็นเลข 13 หลักบนห่อ",
-        text:"เลข 13 หลักบนขนมหมายความว่าอะไร?",
-        correct:"ผ่านการตรวจสอบความปลอดภัยจาก อย. แล้ว",
-        wrong:["คือราคาสินค้า","คือบาร์โค้ดธรรมดา","คือน้ำหนักสินค้า"],
-        explain:"เลขสารบบอาหาร 13 หลักช่วยให้ตรวจสอบข้อมูลผลิตภัณฑ์อาหารได้ ไม่ใช่ราคา น้ำหนัก หรือบาร์โค้ดธรรมดา"
-      },
-      {
-        id:"L2", group:"label",
-        scenario:"เห็นข้อความ BBE 15/06/67 บนฉลากขนมปัง",
-        text:"BBE บนฉลากคืออะไร?",
-        correct:"วันหมดอายุหรือวันที่ควรบริโภคก่อน ไม่ควรกินหลังวันนี้",
-        wrong:["วันผลิต","วันส่งออก","รหัสโรงงาน"],
-        explain:"BBE หมายถึงช่วงเวลาที่ควรบริโภคก่อนเพื่อคุณภาพและความปลอดภัย ควรตรวจทุกครั้งก่อนกิน"
-      },
-      {
-        id:"L3", group:"label",
-        scenario:"ขนมถุงฉลากตัวหนังสือเลือน อ่านไม่ออก",
-        text:"ควรทำอย่างไรกับขนมนั้น?",
-        correct:"ไม่ซื้อ เพราะตรวจสอบข้อมูลความปลอดภัยไม่ได้",
-        wrong:["ซื้อได้ถ้าสีสวย","ซื้อได้ถ้าราคาถูก","ลองชิมก่อน"],
-        explain:"ถ้าอ่านฉลากไม่ได้ จะตรวจสอบวันหมดอายุ ส่วนประกอบ และผู้ผลิตไม่ได้ จึงควรหลีกเลี่ยง"
-      },
-      {
-        id:"L4", group:"label",
-        scenario:"กล่องนมมีเลข อย. แต่วันหมดอายุเมื่อวาน",
-        text:"ควรดื่มนมกล่องนั้นไหม?",
-        correct:"ไม่ดื่ม เพราะหมดอายุแล้วแม้มีเลข อย.",
-        wrong:["ดื่มได้เพราะมีเลข อย.","ดื่มได้ถ้าแช่เย็น","ดมก่อนถ้าไม่เหม็นดื่มได้"],
-        explain:"เลข อย. ไม่ได้แปลว่ากินได้ตลอด ต้องดูวันหมดอายุร่วมด้วย"
-      },
-      {
-        id:"L5", group:"label",
-        scenario:"ซื้อของฝากตลาดนัด ไม่มีฉลากเลย",
-        text:"อาหารที่ไม่มีฉลากมีความเสี่ยงอย่างไร?",
-        correct:"ไม่รู้ส่วนผสม วันหมดอายุ และตรวจสอบความปลอดภัยไม่ได้",
-        wrong:["ปลอดภัยเพราะทำเอง","อร่อยกว่าของในห้าง","ราคาถูกกว่าเป็นของดี"],
-        explain:"อาหารไม่มีฉลากทำให้ไม่รู้ส่วนประกอบ ผู้ผลิต วันหมดอายุ และตรวจสอบย้อนหลังได้ยาก"
-      },
-      {
-        id:"L6", group:"label",
-        scenario:"ฉลากน้ำดื่มระบุ น้ำ, สารกันบูด, สีผสมอาหาร",
-        text:"น้ำดื่มปลอดภัยที่สุดควรมีส่วนผสมอะไร?",
-        correct:"น้ำบริสุทธิ์เพียงอย่างเดียว ไม่มีสารเคมีเพิ่ม",
-        wrong:["น้ำ + สีผสมอาหาร","น้ำ + สารกันบูด","น้ำ + สารให้ความหวาน"],
-        explain:"น้ำดื่มควรเป็นน้ำสะอาด ไม่มีสี กลิ่น หรือสารเติมแต่งที่ไม่จำเป็น"
-      },
-
-      // 🍬 หมวดเหลือง — เลือกกินอาหาร/ขนม
-      {
-        id:"S1", group:"snack",
-        scenario:"เค้กสีสดใสขายหน้าโรงเรียน ไม่มีเลข อย.",
-        text:"ทำไมไม่ควรซื้อเค้กนั้น?",
-        correct:"สีที่ใช้แต่งอาจไม่ผ่านมาตรฐาน อาจเป็นอันตราย",
-        wrong:["สีสดใสเกินทำให้ตาเจ็บ","เค้กสีสดหวานเกินไป","เพราะไม่มีชื่อร้าน"],
-        explain:"อาหารสีสดผิดปกติและไม่มีข้อมูลตรวจสอบ อาจใช้สีหรือวัตถุเจือปนที่ไม่เหมาะสม"
-      },
-      {
-        id:"S2", group:"snack",
-        scenario:"อาหารกล่องทิ้งนอกตู้เย็น 4 ชั่วโมงแล้ว",
-        text:"ทิ้งในอุณหภูมิห้องเกินกี่ชั่วโมง ถือว่าไม่ปลอดภัย?",
-        correct:"เกิน 2 ชั่วโมง เชื้อโรคอาจเพิ่มขึ้นในระดับอันตราย",
-        wrong:["เกิน 6 ชั่วโมง","เกิน 12 ชั่วโมง","ไม่มีกำหนดถ้าไม่มีกลิ่น"],
-        explain:"อาหารพร้อมกินไม่ควรวางในอุณหภูมิห้องนาน เพราะเชื้อโรคเพิ่มจำนวนได้แม้อาหารยังไม่มีกลิ่น"
-      },
-      {
-        id:"S3", group:"snack",
-        scenario:"ขนมปังในกล่องขึ้นราที่มุมหนึ่ง",
-        text:"ควรทำอย่างไรกับขนมปังนั้น?",
-        correct:"ทิ้งทั้งแผ่น เพราะราหรือสารพิษอาจแพร่ทั่วแม้มองไม่เห็น",
-        wrong:["ตัดส่วนที่ขึ้นราออกแล้วกินส่วนที่เหลือ","ล้างน้ำแล้วกินได้","อุ่นไมโครเวฟฆ่าราได้"],
-        explain:"อาหารขึ้นราไม่ควรกิน เพราะเชื้อราอาจกระจายอยู่ในส่วนที่มองไม่เห็น"
-      },
-      {
-        id:"S4", group:"snack",
-        scenario:"ลูกอมสีแดงสดขายข้างถนน ราคา 1 บาท",
-        text:"สิ่งที่ต้องตรวจก่อนซื้อลูกอมคืออะไร?",
-        correct:"เลข อย. และวันหมดอายุบนบรรจุภัณฑ์",
-        wrong:["ลองชิมก่อน","ดูว่าสีสวยไหม","ถามเพื่อนว่าอร่อยไหม"],
-        explain:"ขนมบรรจุซองควรมีข้อมูลฉลาก เลขสารบบอาหาร และวันหมดอายุที่ชัดเจน"
-      },
-      {
-        id:"S5", group:"snack",
-        scenario:"น้ำผลไม้กล่องในตู้เย็น กล่องบวมเล็กน้อย",
-        text:"กล่องเครื่องดื่มบวมควรทำอย่างไร?",
-        correct:"ทิ้งทันที เพราะกล่องบวมอาจเกิดแก๊สจากเชื้อโรคข้างใน",
-        wrong:["เปิดออกแล้วดื่มได้","แช่เย็นต่อก่อน","ดมก่อนถ้าไม่เหม็นดื่มได้"],
-        explain:"ภาชนะบวมเป็นสัญญาณอาหารหรือเครื่องดื่มอาจเสีย ไม่ควรชิม"
-      },
-      {
-        id:"S6", group:"snack",
-        scenario:"ไก่ทอดวางกลางแดด มีแมลงวันตอม",
-        text:"ควรซื้อไก่ทอดนั้นไหม?",
-        correct:"ไม่ซื้อ เพราะแมลงวันพาเชื้อโรค และวางนานเกินไป",
-        wrong:["ซื้อได้ถ้าเป่าแมลงวันออก","ซื้อได้ถ้าอุ่นใหม่","ซื้อได้เพราะปรุงสุกแล้ว"],
-        explain:"อาหารที่วางกลางแดดและมีแมลงวันตอมเสี่ยงปนเปื้อนเชื้อโรค"
-      },
-
-      // 🥦 หมวดเขียว — เลือกผัก/ผลไม้
-      {
-        id:"V1", group:"veg",
-        scenario:"แม่ซื้อผักมาจากตลาด ก่อนหั่นควรทำอะไรก่อน?",
-        text:"ขั้นตอนที่ถูกต้องก่อนกินหรือปรุงผักสดคืออะไร?",
-        correct:"ล้างด้วยน้ำสะอาดไหลผ่านอย่างน้อย 30 วินาที",
-        wrong:["แช่น้ำเกลือแล้วกินเลย","ล้างแค่ครั้งเดียวเร็ว ๆ","ไม่ต้องล้างถ้าซื้อซูเปอร์มาร์เก็ต"],
-        explain:"ผักสดควรล้างด้วยน้ำสะอาดให้ทั่ว เพื่อลดดิน ฝุ่น และสิ่งปนเปื้อน"
-      },
-      {
-        id:"V2", group:"veg",
-        scenario:"แอปเปิ้ลที่ร้านผิวมันวาวผิดปกติ",
-        text:"ผลไม้ผิวมันวาวผิดปกติอาจมีสาเหตุจากอะไร?",
-        correct:"อาจเคลือบสารเคมีรักษาสภาพ ต้องล้างให้สะอาด",
-        wrong:["แสดงว่าสดและมีคุณภาพสูง","แสดงว่าไม่มียาฆ่าแมลง","เป็นธรรมชาติของผลไม้คุณภาพดีเสมอ"],
-        explain:"ผลไม้ผิวมันวาวผิดปกติควรล้างให้สะอาดก่อนกิน โดยเฉพาะผลไม้ที่กินทั้งเปลือก"
-      },
-      {
-        id:"V3", group:"veg",
-        scenario:"กล้วยที่บ้านมีจุดดำเกิดขึ้นบนผิว",
-        text:"กล้วยมีจุดดำบนผิวแบบนี้ยังกินได้ไหม?",
-        correct:"กินได้ เป็นกระบวนการสุกตามธรรมชาติ ทำให้หวานขึ้น",
-        wrong:["กินไม่ได้ เพราะขึ้นราเสมอ","กินไม่ได้ เพราะมียาฆ่าแมลง","กินได้แต่ต้องตัดจุดดำออกก่อนเสมอ"],
-        explain:"จุดดำบนเปลือกกล้วยมักเกิดจากการสุกตามธรรมชาติ แต่ถ้ามีกลิ่นเสียหรือเน่าเละไม่ควรกิน"
-      },
-      {
-        id:"V4", group:"veg",
-        scenario:"ผักสลัดถุงฉลากว่า ล้างสะอาดพร้อมกิน",
-        text:"ควรทำอย่างไรกับผักสลัดถุงนั้น?",
-        correct:"ล้างน้ำอีกครั้งก่อนกิน เพื่อความปลอดภัยเพิ่มเติม",
-        wrong:["กินเลยได้เพราะฉลากบอกว่าล้างแล้ว","แช่น้ำร้อนก่อนกิน","ใส่น้ำส้มสายชูแช่ 1 ชั่วโมง"],
-        explain:"แม้ฉลากบอกว่าล้างแล้ว การล้างซ้ำอย่างเหมาะสมช่วยเพิ่มความมั่นใจเรื่องความสะอาด"
-      },
-      {
-        id:"V5", group:"veg",
-        scenario:"ข้าวโพดต้มวางกลางแจ้ง มีแมลงวันตอม",
-        text:"ควรซื้อข้าวโพดต้มนั้นไหม?",
-        correct:"ไม่ซื้อ เพราะแมลงวันนำเชื้อโรคมาตอมบนอาหารแล้ว",
-        wrong:["ซื้อได้ถ้าเป่าแมลงวันออก","ซื้อได้เพราะต้มสุกแล้ว","ซื้อได้แล้วอุ่นใหม่"],
-        explain:"อาหารที่มีแมลงวันตอมมีโอกาสปนเปื้อนเชื้อโรค แม้อาหารจะเคยปรุงสุกแล้ว"
-      },
-      {
-        id:"V6", group:"veg",
-        scenario:"ส้มเปลือกมีรอยช้ำดำ",
-        text:"ส้มที่เปลือกมีรอยช้ำควรทำอย่างไร?",
-        correct:"ปอกเปลือกออก ตรวจดูข้างใน ถ้าเนื้อยังดีกินได้",
-        wrong:["ทิ้งทั้งลูกทันทีเสมอ","กินทั้งเปลือกได้เลย","แช่น้ำเกลือแล้วกินทั้งลูก"],
-        explain:"ผลไม้ที่เปลือกช้ำเล็กน้อยอาจยังกินได้ถ้าเนื้อด้านในไม่เสีย แต่ควรตรวจดูให้ดี"
-      },
-
-      // 🏪 หมวดน้ำเงิน — เลือกร้านอาหาร
-      {
-        id:"H1", group:"shop",
-        scenario:"ร้านอาหารหน้าร้านสกปรก พื้นเปียก มีแมลงวัน",
-        text:"สัญญาณว่าร้านอาหารไม่ถูกสุขลักษณะคืออะไร?",
-        correct:"พื้นสกปรก มีแมลงวัน อุปกรณ์ไม่สะอาด",
-        wrong:["ร้านเล็กแสดงว่าไม่ดี","ราคาถูกแสดงว่าไม่สะอาด","เจ้าของไม่ยิ้มแย้ม"],
-        explain:"ควรเลือกร้านที่สะอาด อุปกรณ์สะอาด และมีการป้องกันแมลง"
-      },
-      {
-        id:"H2", group:"shop",
-        scenario:"พ่อครัวไม่ล้างมือหลังจับเนื้อดิบ แล้วหั่นผักต่อเลย",
-        text:"พ่อครัวควรทำอะไรหลังจับเนื้อดิบ?",
-        correct:"ล้างมือด้วยสบู่และน้ำสะอาดทันที",
-        wrong:["เช็ดมือด้วยผ้าได้เลย","ใส่ถุงมือทับได้เลย","รอให้มือแห้งก่อน"],
-        explain:"หลังจับเนื้อดิบต้องล้างมือและอุปกรณ์ให้สะอาด เพื่อป้องกันการปนเปื้อนข้าม"
-      },
-      {
-        id:"H3", group:"shop",
-        scenario:"ช้อนส้อมในร้านมีคราบสีน้ำตาลติดอยู่",
-        text:"ควรทำอย่างไรเมื่อพบอุปกรณ์กินข้าวสกปรก?",
-        correct:"ขอเปลี่ยนชุดใหม่จากร้าน หรือเลือกร้านอื่น",
-        wrong:["ใช้ได้เพราะอาหารร้อนฆ่าเชื้อ","เช็ดด้วยกระดาษทิชชูแล้วใช้","ใช้มือกินแทน"],
-        explain:"อุปกรณ์กินอาหารต้องสะอาด ถ้าพบคราบหรือสิ่งสกปรกควรขอเปลี่ยน"
-      },
-      {
-        id:"H4", group:"shop",
-        scenario:"น้ำแข็งที่ร้านมีสีขุ่นเล็กน้อย",
-        text:"น้ำแข็งที่ปลอดภัยสำหรับกินควรมีลักษณะอย่างไร?",
-        correct:"ใส ไม่มีสี ไม่มีกลิ่น ผลิตจากน้ำดื่มสะอาด",
-        wrong:["สีขุ่นคือน้ำแร่ธรรมชาติ ปลอดภัย","น้ำแข็งทุกชนิดปลอดภัยเพราะแช่แข็ง","ดมก่อนถ้าไม่เหม็น"],
-        explain:"น้ำแข็งสำหรับกินควรใส สะอาด ไม่มีกลิ่น และผลิตจากน้ำที่ปลอดภัย"
-      },
-      {
-        id:"H5", group:"shop",
-        scenario:"ร้านก๋วยเตี๋ยวใส่หมูดิบลงน้ำซุปเย็น",
-        text:"หมูในก๋วยเตี๋ยวปลอดภัยเมื่ออุณหภูมิถึงกี่องศา?",
-        correct:"75 องศาเซลเซียสขึ้นไป เชื้อโรคจึงถูกทำลาย",
-        wrong:["60 องศา เพราะร้อนแล้ว","ไม่ต้องถึงอุณหภูมิใดก็ได้","100 องศาเท่านั้น"],
-        explain:"เนื้อสัตว์ควรสุกทั่วถึง ความร้อนที่เพียงพอช่วยทำลายเชื้อโรค"
-      },
-      {
-        id:"H6", group:"shop",
-        scenario:"ร้านมีป้าย ผ่านมาตรฐาน อย. ที่ประตู",
-        text:"ป้าย อย. หน้าร้านอาหารหมายความว่าอะไร?",
-        correct:"ร้านผ่านการตรวจสอบสุขลักษณะจากหน่วยงานรัฐ",
-        wrong:["อาหารอร่อยกว่าร้านอื่น","ราคาถูกกว่าร้านทั่วไป","เจ้าของจ่ายค่าธรรมเนียมแล้ว"],
-        explain:"ป้ายมาตรฐานสื่อว่าร้านผ่านเกณฑ์ด้านสุขลักษณะ แต่ผู้บริโภคยังควรสังเกตความสะอาดด้วย"
-      }
-
-      // ------------------------------------------------------------
-      // ชุดคำถามเดิมจากไฟล์เกม v11 — นำกลับมาเพิ่มในคลังคำถาม
-      // หมายเหตุ: เติม OLD_ หน้า id เพื่อไม่ให้ชนกับคำถามชุดใหม่ 24 ข้อ
-      // ------------------------------------------------------------
-      // 🧩 คำถามเดิมที่นำกลับมา — หมวดอ่านฉลาก 9 ข้อ
-      {id:"OLD_L1", group:"label", scenario:"ร้านหน้าโรงเรียนมีขนมหลายชนิด", text:"ก่อนซื้ออาหารบรรจุซอง ควรตรวจอะไรก่อน?", correct:"ฉลาก วันหมดอายุ และข้อมูลผู้ผลิต", wrong:["สีซองสวยที่สุด","ของแถมเยอะที่สุด","เพื่อนบอกว่าอร่อย"], explain:"อาหารบรรจุซองควรมีฉลากชัดเจน วันหมดอายุ และข้อมูลที่ตรวจสอบได้"},
-      {id:"OLD_L2", group:"label", scenario:"นักเรียนเห็นคำว่า ควรบริโภคก่อน บนซองขนม", text:"ข้อความนี้บอกอะไร?", correct:"วันที่ควรกินก่อนเพื่อความปลอดภัยและคุณภาพ", wrong:["วันที่ผลิตโรงงาน","ชื่อร้านขายขนม","ราคาอาหาร"], explain:"วันหมดอายุหรือควรบริโภคก่อนเป็นข้อมูลสำคัญก่อนเลือกกิน"},
-      {id:"OLD_L3", group:"label", scenario:"เจอขนมซองไม่มีภาษาไทยและไม่มีชื่อผู้ผลิต", text:"ควรทำอย่างไร?", correct:"ไม่ซื้อและแจ้งผู้ใหญ่", wrong:["ซื้อเพราะดูแปลกใหม่","ชิมก่อนแล้วค่อยตัดสินใจ","ซื้อถ้าราคาถูก"], explain:"อาหารที่ไม่มีฉลากหรือแหล่งผลิตไม่ชัดเจนตรวจสอบความปลอดภัยได้ยาก"},
-      {id:"OLD_L4", group:"label", scenario:"บนฉลากมีส่วนประกอบอาหาร", text:"ทำไมต้องอ่านส่วนประกอบ?", correct:"เพื่อรู้ว่าใส่อะไร และหลีกเลี่ยงสิ่งที่แพ้", wrong:["เพื่อดูสีของซอง","เพื่อดูว่าใครซื้อบ้าง","เพื่อดูว่ากินกี่คำ"], explain:"ส่วนประกอบช่วยให้รู้วัตถุดิบ สารปรุงแต่ง และสิ่งที่อาจแพ้"},
-      {id:"OLD_L5", group:"label", scenario:"ถุงขนมมีเลข อย. แต่หมดอายุแล้ว", text:"ควรกินไหม?", correct:"ไม่ควรกิน", wrong:["กินได้เพราะมีเลข อย.","กินได้ถ้าซองยังสวย","นำไปตากแดดก่อนกิน"], explain:"มีเลข อย. ไม่ได้แปลว่ากินได้ตลอด ต้องดูวันหมดอายุด้วย"},
-      {id:"OLD_L6", group:"label", scenario:"ฉลากวันหมดอายุเลือนจนอ่านไม่ได้", text:"ควรเลือกอย่างไร?", correct:"ไม่ซื้อถ้าตรวจสอบไม่ได้", wrong:["เดาว่ายังไม่หมดอายุ","ซื้อถ้าคนขายบอกว่าดี","ซื้อเพราะลดราคา"], explain:"ถ้าตรวจสอบวันหมดอายุไม่ได้ ควรหลีกเลี่ยง"},
-      {id:"OLD_L7", group:"label", scenario:"บนซองเครื่องดื่มมีคำว่า เก็บในที่เย็น", text:"หลังเปิดแล้วควรทำอย่างไร?", correct:"ทำตามคำแนะนำบนฉลาก", wrong:["วางกลางแดด","เปิดฝาทิ้งไว้","เทรวมกับขวดอื่น"], explain:"คำแนะนำการเก็บรักษาช่วยให้อาหารปลอดภัยและไม่เสียเร็ว"},
-      {id:"OLD_L8", group:"label", scenario:"เด็กแพ้นมกำลังเลือกขนม", text:"ควรดูส่วนใดบนฉลาก?", correct:"ส่วนประกอบและข้อมูลสารก่อภูมิแพ้", wrong:["สีของโลโก้","รูปการ์ตูน","ขนาดตัวอักษรราคา"], explain:"คนแพ้อาหารควรอ่านส่วนประกอบและคำเตือนสารก่อภูมิแพ้ทุกครั้ง"},
-      {id:"OLD_L9", group:"label", scenario:"ซื้ออาหารกระป๋อง", text:"กระป๋องแบบใดไม่ควรเลือก?", correct:"กระป๋องบวม บุบ รั่ว หรือเป็นสนิม", wrong:["กระป๋องมีฉลากครบ","กระป๋องสะอาด","กระป๋องยังไม่หมดอายุ"], explain:"กระป๋องบวม บุบ รั่ว หรือสนิม อาจปนเปื้อนหรือเสียได้"},
-
-      // 🧩 คำถามเดิมที่นำกลับมา — หมวดเลือกกินอาหาร/ขนม 9 ข้อ
-      {id:"OLD_S1", group:"snack", scenario:"มีลูกอมสีสดมากแต่ไม่มีฉลาก", text:"ควรตัดสินใจอย่างไร?", correct:"หลีกเลี่ยงและแจ้งผู้ใหญ่", wrong:["ซื้อเพราะสีสวย","กินก่อนแล้วค่อยดู","ซื้อถ้าราคาถูก"], explain:"อาหารไม่มีฉลากทำให้ตรวจสอบแหล่งผลิต ส่วนประกอบ และวันหมดอายุไม่ได้"},
-      {id:"OLD_S2", group:"snack", scenario:"เจอนมกล่องบวมและมีกลิ่นแปลก", text:"ควรทำอย่างไร?", correct:"ไม่ดื่มและแจ้งครูหรือผู้ใหญ่", wrong:["เขย่าแล้วดื่ม","ชิมนิดเดียว","แบ่งให้เพื่อนลอง"], explain:"ภาชนะบวม กลิ่นผิดปกติ หรือสีเปลี่ยน เป็นสัญญาณว่าอาหารอาจเสีย"},
-      {id:"OLD_S3", group:"snack", scenario:"อาหารวางขายกลางแดดนานหลายชั่วโมง", text:"อาหารลักษณะนี้เสี่ยงอะไร?", correct:"เชื้อโรคเจริญเติบโตและทำให้ป่วย", wrong:["ทำให้อาหารหวานขึ้น","ทำให้อาหารมีประโยชน์มากขึ้น","ไม่มีความเสี่ยง"], explain:"อาหารที่เก็บไม่เหมาะสมอาจมีเชื้อโรคเพิ่มขึ้น โดยเฉพาะอาหารพร้อมกิน"},
-      {id:"OLD_S4", group:"snack", scenario:"ขนมปังมีจุดสีเขียวดำ", text:"สิ่งที่ควรทำคืออะไร?", correct:"ไม่กินทั้งแผ่นและทิ้งอย่างเหมาะสม", wrong:["ตัดส่วนที่มีราออกแล้วกินต่อ","ปิ้งให้ร้อนแล้วกิน","เก็บไว้ให้เพื่อน"], explain:"อาหารขึ้นราไม่ควรกิน เพราะเชื้อราอาจกระจายเกินจุดที่เห็น"},
-      {id:"OLD_S5", group:"snack", scenario:"อาหารมีกลิ่นเปรี้ยวผิดปกติ", text:"ควรทำอย่างไร?", correct:"หยุดกินและแจ้งผู้ใหญ่", wrong:["เติมเครื่องปรุงกลบกลิ่น","กินเร็ว ๆ ให้หมด","แบ่งให้เพื่อนลอง"], explain:"กลิ่น สี รส หรือเนื้อสัมผัสผิดปกติเป็นสัญญาณเตือนอาหารเสีย"},
-      {id:"OLD_S6", group:"snack", scenario:"เพื่อนชวนกินขนมซองที่เปิดทิ้งไว้หลายวัน", text:"ควรตอบอย่างไร?", correct:"ไม่กิน เพราะอาจปนเปื้อนหรือเสีย", wrong:["กินได้ถ้าหิว","เป่าแล้วกินได้","เทรวมกับขนมใหม่"], explain:"อาหารที่เปิดทิ้งไว้นานอาจชื้น เสีย หรือมีสิ่งปนเปื้อน"},
-      {id:"OLD_S7", group:"snack", scenario:"มีน้ำหวานสีจัดมากในขวดไม่มีฉลาก", text:"ควรซื้อไหม?", correct:"ไม่ควรซื้อเพราะตรวจสอบไม่ได้", wrong:["ซื้อถ้าสีสวย","ซื้อถ้าคนขายบอกว่าหวาน","ซื้อถ้าถูกที่สุด"], explain:"เครื่องดื่มไม่มีฉลากหรือแหล่งผลิตไม่ชัดเจนมีความเสี่ยง"},
-      {id:"OLD_S8", group:"snack", scenario:"เด็กอยากกินอาหารทอดซ้ำ ๆ ทุกวัน", text:"ควรแนะนำอย่างไร?", correct:"กินพอดี และเลือกอาหารหลากหลาย", wrong:["กินให้มากที่สุด","กินแทนข้าวทุกมื้อ","กินเฉพาะของทอดเท่านั้น"], explain:"ควรเลือกกินอาหารหลากหลาย ไม่หวาน มัน เค็ม มากเกินไป"},
-      {id:"OLD_S9", group:"snack", scenario:"พบอาหารที่มีแมลงตกอยู่ในถุง", text:"ควรทำอย่างไร?", correct:"ไม่กินและแจ้งผู้ใหญ่", wrong:["หยิบแมลงออกแล้วกินต่อ","แบ่งเพื่อน","เขย่าถุงแล้วกิน"], explain:"สิ่งแปลกปลอมในอาหารเป็นสัญญาณว่าอาหารไม่ปลอดภัย"},
-
-      // 🧩 คำถามเดิมที่นำกลับมา — หมวดเลือกผัก/ผลไม้ 9 ข้อ
-      {id:"OLD_V1", group:"veg", scenario:"กำลังเลือกผักที่ตลาด", text:"ผักแบบใดน่ากินและปลอดภัยกว่า?", correct:"ผักสด ไม่เน่า ไม่มีคราบสกปรกมาก", wrong:["ผักเหี่ยวและมีกลิ่น","ผักมีเมือก","ผักมีแมลงตายติดอยู่"], explain:"ควรเลือกผักสด สะอาด และไม่มีสัญญาณเน่าเสีย"},
-      {id:"OLD_V2", group:"veg", scenario:"ก่อนกินแตงกวาสด", text:"ควรทำอะไรก่อน?", correct:"ล้างด้วยน้ำสะอาดให้ทั่ว", wrong:["กินได้เลย","เช็ดกับเสื้อ","เป่าแรง ๆ ก็พอ"], explain:"ผักสดควรล้างให้สะอาดก่อนกินเพื่อลดดิน ฝุ่น และสิ่งปนเปื้อน"},
-      {id:"OLD_V3", group:"veg", scenario:"เห็นผักมีรอยเน่าและกลิ่นเหม็น", text:"ควรทำอย่างไร?", correct:"ไม่เลือกผักนั้น", wrong:["ซื้อเพราะราคาถูก","ตัดกลิ่นด้วยน้ำปลา","ให้เพื่อนกินก่อน"], explain:"ผักเน่าเสียอาจมีเชื้อโรคและทำให้อาหารปนเปื้อนได้"},
-      {id:"OLD_V4", group:"veg", scenario:"ผลไม้ปอกแล้ววางเปิดโล่ง มีแมลงวันตอม", text:"ควรกินไหม?", correct:"ไม่ควรกิน", wrong:["กินได้ถ้าหวาน","ปัดแมลงวันแล้วกิน","กินเฉพาะส่วนที่ไม่โดนตอม"], explain:"อาหารที่มีแมลงวันตอมเสี่ยงปนเปื้อนเชื้อโรค"},
-      {id:"OLD_V5", group:"veg", scenario:"ผักสดวางปะปนกับเนื้อดิบ", text:"เสี่ยงเรื่องอะไร?", correct:"ปนเปื้อนเชื้อโรคจากเนื้อดิบ", wrong:["ทำให้ผักหวานขึ้น","ทำให้สีผักสวยขึ้น","ไม่มีความเสี่ยง"], explain:"ควรแยกผักสดจากเนื้อดิบเพื่อป้องกันการปนเปื้อนข้าม"},
-      {id:"OLD_V6", group:"veg", scenario:"เด็กเห็นผลไม้มีรอยช้ำและน้ำเยิ้ม", text:"ควรเลือกไหม?", correct:"ไม่ควรเลือก", wrong:["ควรเพราะนิ่ม","ควรเพราะหวานแน่","ควรกินทันทีโดยไม่ล้าง"], explain:"ผลไม้ช้ำ น้ำเยิ้ม หรือมีกลิ่นผิดปกติอาจเริ่มเสีย"},
-      {id:"OLD_V7", group:"veg", scenario:"ซื้อผักมาแล้วจะเก็บในตู้เย็น", text:"ควรทำอย่างไรให้ปลอดภัย?", correct:"แยกเก็บจากเนื้อดิบและอาหารสกปรก", wrong:["วางรวมกับเนื้อดิบ","เปิดถุงทิ้งไว้บนพื้น","ใส่รวมกับขยะ"], explain:"การเก็บแยกช่วยลดการปนเปื้อนและทำให้ผักสดนานขึ้น"},
-      {id:"OLD_V8", group:"veg", scenario:"เด็กจะกินมะเขือเทศสด", text:"ควรล้างตอนไหน?", correct:"ล้างก่อนกินหรือก่อนหั่น", wrong:["ล้างหลังจากกินแล้ว","ไม่ต้องล้างถ้าสีแดง","ล้างเฉพาะถ้าครูเห็น"], explain:"ควรล้างผักผลไม้ก่อนกินหรือก่อนหั่นเพื่อลดสิ่งสกปรก"},
-      {id:"OLD_V9", group:"veg", scenario:"พบผักมีกลิ่นสารเคมีแรงผิดปกติ", text:"ควรทำอย่างไร?", correct:"หลีกเลี่ยงและแจ้งผู้ใหญ่", wrong:["กินทันที","ดมต่อให้นานขึ้น","ซื้อเพราะดูสด"], explain:"กลิ่นสารเคมีแรงผิดปกติเป็นสัญญาณเตือน ควรหลีกเลี่ยง"},
-
-      // 🧩 คำถามเดิมที่นำกลับมา — หมวดเลือกร้านอาหาร 9 ข้อ
-      {id:"OLD_H1", group:"shop", scenario:"เลือกร้านอาหารกลางวัน", text:"ร้านแบบใดน่าเลือก?", correct:"ร้านสะอาด อาหารปิดมิดชิด ผู้ขายแต่งกายสะอาด", wrong:["ร้านมีแมลงวันเยอะ","ร้านวางอาหารบนพื้น","ร้านไม่มีที่ล้างมือ"], explain:"ร้านอาหารที่ดีควรสะอาด ป้องกันแมลง และดูแลสุขอนามัยผู้ขาย"},
-      {id:"OLD_H2", group:"shop", scenario:"ร้านขายลูกชิ้นมีแมลงวันตอมหลายตัว", text:"ควรซื้อไหม?", correct:"ไม่ควรซื้อ", wrong:["ซื้อถ้าลูกชิ้นร้อน","ซื้อถ้าราคาถูก","ซื้อแล้วปัดแมลงวันออก"], explain:"แมลงวันอาจนำเชื้อโรคมาปนเปื้อนอาหาร"},
-      {id:"OLD_H3", group:"shop", scenario:"ผู้ขายใช้มือเปล่าหยิบอาหารพร้อมกิน", text:"ควรทำอย่างไรให้ถูกสุขลักษณะ?", correct:"ใช้ที่คีบ ถุงมือสะอาด หรืออุปกรณ์หยิบอาหาร", wrong:["ใช้มือเปล่าได้เสมอ","เป่ามือก่อนหยิบ","เช็ดมือกับเสื้อ"], explain:"อาหารพร้อมกินควรหยิบด้วยอุปกรณ์สะอาดเพื่อลดการปนเปื้อน"},
-      {id:"OLD_H4", group:"shop", scenario:"ร้านวางอาหารสุกใกล้เนื้อดิบ", text:"เสี่ยงอะไร?", correct:"เชื้อโรคจากเนื้อดิบปนเปื้อนอาหารสุก", wrong:["อาหารสุกจะหวานขึ้น","เนื้อดิบช่วยให้อาหารเย็น","ไม่มีผลอะไร"], explain:"ควรแยกอาหารดิบและอาหารสุกเสมอ"},
-      {id:"OLD_H5", group:"shop", scenario:"ร้านอาหารเปิดฝาทิ้งไว้ตลอดวัน", text:"ปัญหาคืออะไร?", correct:"ฝุ่นและแมลงอาจปนเปื้อนอาหาร", wrong:["ทำให้อาหารราคาถูก","ทำให้อาหารสีสดขึ้น","ไม่มีปัญหา"], explain:"อาหารควรปิดมิดชิดและเก็บในสภาพเหมาะสม"},
-      {id:"OLD_H6", group:"shop", scenario:"ร้านมีที่ล้างมือหรือเจลล้างมือให้ผู้ขาย", text:"สิ่งนี้ดีอย่างไร?", correct:"ช่วยลดการปนเปื้อนเชื้อโรค", wrong:["ทำให้อาหารหวานขึ้น","ทำให้ร้านสีสวย","ทำให้อาหารเผ็ดน้อยลง"], explain:"สุขอนามัยของผู้ขายเป็นส่วนสำคัญของอาหารปลอดภัย"},
-      {id:"OLD_H7", group:"shop", scenario:"น้ำแข็งร้านค้าถูกตักด้วยแก้วที่ลูกค้าใช้ดื่ม", text:"ควรทำอย่างไร?", correct:"ควรใช้ที่ตักน้ำแข็งสะอาดแยกเฉพาะ", wrong:["ใช้แก้วอะไรก็ได้","ใช้มือหยิบเร็วกว่า","วางที่ตักบนพื้น"], explain:"น้ำแข็งกินได้ต้องป้องกันการปนเปื้อนเหมือนอาหาร"},
-      {id:"OLD_H8", group:"shop", scenario:"ร้านทอดอาหารใช้น้ำมันสีดำคล้ำและมีกลิ่นเหม็น", text:"ควรเลือกไหม?", correct:"ไม่ควรเลือก", wrong:["ควรเพราะกรอบกว่า","กินได้ถ้าร้อน","กินได้ถ้าจิ้มซอส"], explain:"น้ำมันเสื่อมสภาพอาจมีสารที่ไม่ดีต่อสุขภาพและทำให้อาหารไม่น่ากิน"},
-      {id:"OLD_H9", group:"shop", scenario:"เด็กหลายคนปวดท้องหลังซื้ออาหารร้านเดียวกัน", text:"ควรทำอย่างไร?", correct:"แจ้งครูหรือผู้ใหญ่และบันทึกอาหารที่สงสัย", wrong:["เก็บเป็นความลับ","กินซ้ำเพื่อพิสูจน์","ทิ้งหลักฐานทั้งหมด"], explain:"ควรรีบแจ้งผู้ใหญ่และเก็บข้อมูลอาหารที่สงสัย เพื่อช่วยป้องกันคนอื่นป่วย"}
+      {id:"L1",group:"label",scenario:"น้องหยิบขนมมา เห็นเลข 13 หลักบนห่อ",text:"เลข 13 หลักบนขนมหมายความว่าอะไร?",correct:"ผ่านการตรวจสอบความปลอดภัยจาก อย. แล้ว",wrong:["คือราคาสินค้า","คือบาร์โค้ดธรรมดา","คือน้ำหนักสินค้า"],explain:"เลขสารบบอาหาร 13 หลักช่วยให้ตรวจสอบข้อมูลผลิตภัณฑ์อาหารได้"},
+      {id:"L2",group:"label",scenario:"เห็นข้อความ BBE 15/06/67 บนฉลากขนมปัง",text:"BBE บนฉลากคืออะไร?",correct:"วันหมดอายุหรือวันที่ควรบริโภคก่อน ไม่ควรกินหลังวันนี้",wrong:["วันผลิต","วันส่งออก","รหัสโรงงาน"],explain:"BBE หมายถึงช่วงเวลาที่ควรบริโภคก่อนเพื่อคุณภาพและความปลอดภัย"},
+      {id:"L3",group:"label",scenario:"ขนมถุงฉลากตัวหนังสือเลือน อ่านไม่ออก",text:"ควรทำอย่างไรกับขนมนั้น?",correct:"ไม่ซื้อ เพราะตรวจสอบข้อมูลความปลอดภัยไม่ได้",wrong:["ซื้อได้ถ้าสีสวย","ซื้อได้ถ้าราคาถูก","ลองชิมก่อน"],explain:"ถ้าอ่านฉลากไม่ได้ จะตรวจสอบวันหมดอายุ ส่วนประกอบ และผู้ผลิตไม่ได้ จึงควรหลีกเลี่ยง"},
+      {id:"L4",group:"label",scenario:"กล่องนมมีเลข อย. แต่วันหมดอายุเมื่อวาน",text:"ควรดื่มนมกล่องนั้นไหม?",correct:"ไม่ดื่ม เพราะหมดอายุแล้วแม้มีเลข อย.",wrong:["ดื่มได้เพราะมีเลข อย.","ดื่มได้ถ้าแช่เย็น","ดมก่อนถ้าไม่เหม็นดื่มได้"],explain:"เลข อย. ไม่ได้แปลว่ากินได้ตลอด ต้องดูวันหมดอายุร่วมด้วย"},
+      {id:"L5",group:"label",scenario:"ซื้อของฝากตลาดนัด ไม่มีฉลากเลย",text:"อาหารที่ไม่มีฉลากมีความเสี่ยงอย่างไร?",correct:"ไม่รู้ส่วนผสม วันหมดอายุ และตรวจสอบความปลอดภัยไม่ได้",wrong:["ปลอดภัยเพราะทำเอง","อร่อยกว่าของในห้าง","ราคาถูกกว่าเป็นของดี"],explain:"อาหารไม่มีฉลากทำให้ไม่รู้ส่วนประกอบ ผู้ผลิต วันหมดอายุ และตรวจสอบย้อนหลังได้ยาก"},
+      {id:"L6",group:"label",scenario:"ฉลากน้ำดื่มระบุ น้ำ, สารกันบูด, สีผสมอาหาร",text:"น้ำดื่มปลอดภัยที่สุดควรมีส่วนผสมอะไร?",correct:"น้ำบริสุทธิ์เพียงอย่างเดียว ไม่มีสารเคมีเพิ่ม",wrong:["น้ำ + สีผสมอาหาร","น้ำ + สารกันบูด","น้ำ + สารให้ความหวาน"],explain:"น้ำดื่มควรเป็นน้ำสะอาด ไม่มีสี กลิ่น หรือสารเติมแต่งที่ไม่จำเป็น"},
+      {id:"S1",group:"snack",scenario:"เค้กสีสดใสขายหน้าโรงเรียน ไม่มีเลข อย.",text:"ทำไมไม่ควรซื้อเค้กนั้น?",correct:"สีที่ใช้แต่งอาจไม่ผ่านมาตรฐาน อาจเป็นอันตราย",wrong:["สีสดใสเกินทำให้ตาเจ็บ","เค้กสีสดหวานเกินไป","เพราะไม่มีชื่อร้าน"],explain:"อาหารสีสดผิดปกติและไม่มีข้อมูลตรวจสอบ อาจใช้สีหรือวัตถุเจือปนที่ไม่เหมาะสม"},
+      {id:"S2",group:"snack",scenario:"อาหารกล่องทิ้งนอกตู้เย็น 4 ชั่วโมงแล้ว",text:"ทิ้งในอุณหภูมิห้องเกินกี่ชั่วโมง ถือว่าไม่ปลอดภัย?",correct:"เกิน 2 ชั่วโมง เชื้อโรคอาจเพิ่มขึ้นในระดับอันตราย",wrong:["เกิน 6 ชั่วโมง","เกิน 12 ชั่วโมง","ไม่มีกำหนดถ้าไม่มีกลิ่น"],explain:"อาหารพร้อมกินไม่ควรวางในอุณหภูมิห้องนาน เพราะเชื้อโรคเพิ่มจำนวนได้แม้อาหารยังไม่มีกลิ่น"},
+      {id:"S3",group:"snack",scenario:"ขนมปังในกล่องขึ้นราที่มุมหนึ่ง",text:"ควรทำอย่างไรกับขนมปังนั้น?",correct:"ทิ้งทั้งแผ่น เพราะราหรือสารพิษอาจแพร่ทั่วแม้มองไม่เห็น",wrong:["ตัดส่วนที่ขึ้นราออกแล้วกินส่วนที่เหลือ","ล้างน้ำแล้วกินได้","อุ่นไมโครเวฟฆ่าราได้"],explain:"อาหารขึ้นราไม่ควรกิน เพราะเชื้อราอาจกระจายอยู่ในส่วนที่มองไม่เห็น"},
+      {id:"S4",group:"snack",scenario:"ลูกอมสีแดงสดขายข้างถนน ราคา 1 บาท",text:"สิ่งที่ต้องตรวจก่อนซื้อลูกอมคืออะไร?",correct:"เลข อย. และวันหมดอายุบนบรรจุภัณฑ์",wrong:["ลองชิมก่อน","ดูว่าสีสวยไหม","ถามเพื่อนว่าอร่อยไหม"],explain:"ขนมบรรจุซองควรมีข้อมูลฉลาก เลขสารบบอาหาร และวันหมดอายุที่ชัดเจน"},
+      {id:"S5",group:"snack",scenario:"น้ำผลไม้กล่องในตู้เย็น กล่องบวมเล็กน้อย",text:"กล่องเครื่องดื่มบวมควรทำอย่างไร?",correct:"ทิ้งทันที เพราะกล่องบวมอาจเกิดแก๊สจากเชื้อโรคข้างใน",wrong:["เปิดออกแล้วดื่มได้","แช่เย็นต่อก่อน","ดมก่อนถ้าไม่เหม็นดื่มได้"],explain:"ภาชนะบวมเป็นสัญญาณอาหารหรือเครื่องดื่มอาจเสีย ไม่ควรชิม"},
+      {id:"S6",group:"snack",scenario:"ไก่ทอดวางกลางแดด มีแมลงวันตอม",text:"ควรซื้อไก่ทอดนั้นไหม?",correct:"ไม่ซื้อ เพราะแมลงวันพาเชื้อโรค และวางนานเกินไป",wrong:["ซื้อได้ถ้าเป่าแมลงวันออก","ซื้อได้ถ้าอุ่นใหม่","ซื้อได้เพราะปรุงสุกแล้ว"],explain:"อาหารที่วางกลางแดดและมีแมลงวันตอมเสี่ยงปนเปื้อนเชื้อโรค"},
+      {id:"V1",group:"veg",scenario:"แม่ซื้อผักมาจากตลาด ก่อนหั่นควรทำอะไรก่อน?",text:"ขั้นตอนที่ถูกต้องก่อนกินหรือปรุงผักสดคืออะไร?",correct:"ล้างด้วยน้ำสะอาดไหลผ่านอย่างน้อย 30 วินาที",wrong:["แช่น้ำเกลือแล้วกินเลย","ล้างแค่ครั้งเดียวเร็ว ๆ","ไม่ต้องล้างถ้าซื้อซูเปอร์มาร์เก็ต"],explain:"ผักสดควรล้างด้วยน้ำสะอาดให้ทั่ว เพื่อลดดิน ฝุ่น และสิ่งปนเปื้อน"},
+      {id:"V2",group:"veg",scenario:"แอปเปิ้ลที่ร้านผิวมันวาวผิดปกติ",text:"ผลไม้ผิวมันวาวผิดปกติอาจมีสาเหตุจากอะไร?",correct:"อาจเคลือบสารเคมีรักษาสภาพ ต้องล้างให้สะอาด",wrong:["แสดงว่าสดและมีคุณภาพสูง","แสดงว่าไม่มียาฆ่าแมลง","เป็นธรรมชาติของผลไม้คุณภาพดีเสมอ"],explain:"ผลไม้ผิวมันวาวผิดปกติควรล้างให้สะอาดก่อนกิน"},
+      {id:"V3",group:"veg",scenario:"กล้วยที่บ้านมีจุดดำเกิดขึ้นบนผิว",text:"กล้วยมีจุดดำบนผิวแบบนี้ยังกินได้ไหม?",correct:"กินได้ เป็นกระบวนการสุกตามธรรมชาติ ทำให้หวานขึ้น",wrong:["กินไม่ได้ เพราะขึ้นราเสมอ","กินไม่ได้ เพราะมียาฆ่าแมลง","กินได้แต่ต้องตัดจุดดำออกก่อนเสมอ"],explain:"จุดดำบนเปลือกกล้วยมักเกิดจากการสุกตามธรรมชาติ แต่ถ้ามีกลิ่นเสียหรือเน่าเละไม่ควรกิน"},
+      {id:"V4",group:"veg",scenario:"ผักสลัดถุงฉลากว่า ล้างสะอาดพร้อมกิน",text:"ควรทำอย่างไรกับผักสลัดถุงนั้น?",correct:"ล้างน้ำอีกครั้งก่อนกิน เพื่อความปลอดภัยเพิ่มเติม",wrong:["กินเลยได้เพราะฉลากบอกว่าล้างแล้ว","แช่น้ำร้อนก่อนกิน","ใส่น้ำส้มสายชูแช่ 1 ชั่วโมง"],explain:"แม้ฉลากบอกว่าล้างแล้ว การล้างซ้ำอย่างเหมาะสมช่วยเพิ่มความมั่นใจเรื่องความสะอาด"},
+      {id:"V5",group:"veg",scenario:"ข้าวโพดต้มวางกลางแจ้ง มีแมลงวันตอม",text:"ควรซื้อข้าวโพดต้มนั้นไหม?",correct:"ไม่ซื้อ เพราะแมลงวันนำเชื้อโรคมาตอมบนอาหารแล้ว",wrong:["ซื้อได้ถ้าเป่าแมลงวันออก","ซื้อได้เพราะต้มสุกแล้ว","ซื้อได้แล้วอุ่นใหม่"],explain:"อาหารที่มีแมลงวันตอมมีโอกาสปนเปื้อนเชื้อโรค แม้อาหารจะเคยปรุงสุกแล้ว"},
+      {id:"V6",group:"veg",scenario:"ส้มเปลือกมีรอยช้ำดำ",text:"ส้มที่เปลือกมีรอยช้ำควรทำอย่างไร?",correct:"ปอกเปลือกออก ตรวจดูข้างใน ถ้าเนื้อยังดีกินได้",wrong:["ทิ้งทั้งลูกทันทีเสมอ","กินทั้งเปลือกได้เลย","แช่น้ำเกลือแล้วกินทั้งลูก"],explain:"ผลไม้ที่เปลือกช้ำเล็กน้อยอาจยังกินได้ถ้าเนื้อด้านในไม่เสีย แต่ควรตรวจดูให้ดี"},
+      {id:"H1",group:"shop",scenario:"ร้านอาหารหน้าร้านสกปรก พื้นเปียก มีแมลงวัน",text:"สัญญาณว่าร้านอาหารไม่ถูกสุขลักษณะคืออะไร?",correct:"พื้นสกปรก มีแมลงวัน อุปกรณ์ไม่สะอาด",wrong:["ร้านเล็กแสดงว่าไม่ดี","ราคาถูกแสดงว่าไม่สะอาด","เจ้าของไม่ยิ้มแย้ม"],explain:"ควรเลือกร้านที่สะอาด อุปกรณ์สะอาด และมีการป้องกันแมลง"},
+      {id:"H2",group:"shop",scenario:"พ่อครัวไม่ล้างมือหลังจับเนื้อดิบ แล้วหั่นผักต่อเลย",text:"พ่อครัวควรทำอะไรหลังจับเนื้อดิบ?",correct:"ล้างมือด้วยสบู่และน้ำสะอาดทันที",wrong:["เช็ดมือด้วยผ้าได้เลย","ใส่ถุงมือทับได้เลย","รอให้มือแห้งก่อน"],explain:"หลังจับเนื้อดิบต้องล้างมือและอุปกรณ์ให้สะอาด เพื่อป้องกันการปนเปื้อนข้าม"},
+      {id:"H3",group:"shop",scenario:"ช้อนส้อมในร้านมีคราบสีน้ำตาลติดอยู่",text:"ควรทำอย่างไรเมื่อพบอุปกรณ์กินข้าวสกปรก?",correct:"ขอเปลี่ยนชุดใหม่จากร้าน หรือเลือกร้านอื่น",wrong:["ใช้ได้เพราะอาหารร้อนฆ่าเชื้อ","เช็ดด้วยกระดาษทิชชูแล้วใช้","ใช้มือกินแทน"],explain:"อุปกรณ์กินอาหารต้องสะอาด ถ้าพบคราบหรือสิ่งสกปรกควรขอเปลี่ยน"},
+      {id:"H4",group:"shop",scenario:"น้ำแข็งที่ร้านมีสีขุ่นเล็กน้อย",text:"น้ำแข็งที่ปลอดภัยสำหรับกินควรมีลักษณะอย่างไร?",correct:"ใส ไม่มีสี ไม่มีกลิ่น ผลิตจากน้ำดื่มสะอาด",wrong:["สีขุ่นคือน้ำแร่ธรรมชาติ ปลอดภัย","น้ำแข็งทุกชนิดปลอดภัยเพราะแช่แข็ง","ดมก่อนถ้าไม่เหม็น"],explain:"น้ำแข็งสำหรับกินควรใส สะอาด ไม่มีกลิ่น และผลิตจากน้ำที่ปลอดภัย"},
+      {id:"H5",group:"shop",scenario:"ร้านก๋วยเตี๋ยวใส่หมูดิบลงน้ำซุปเย็น",text:"หมูในก๋วยเตี๋ยวปลอดภัยเมื่ออุณหภูมิถึงกี่องศา?",correct:"75 องศาเซลเซียสขึ้นไป เชื้อโรคจึงถูกทำลาย",wrong:["60 องศา เพราะร้อนแล้ว","ไม่ต้องถึงอุณหภูมิใดก็ได้","100 องศาเท่านั้น"],explain:"เนื้อสัตว์ควรสุกทั่วถึง ความร้อนที่เพียงพอช่วยทำลายเชื้อโรค"},
+      {id:"H6",group:"shop",scenario:"ร้านมีป้าย ผ่านมาตรฐาน อย. ที่ประตู",text:"ป้าย อย. หน้าร้านอาหารหมายความว่าอะไร?",correct:"ร้านผ่านการตรวจสอบสุขลักษณะจากหน่วยงานรัฐ",wrong:["อาหารอร่อยกว่าร้านอื่น","ราคาถูกกว่าร้านทั่วไป","เจ้าของจ่ายค่าธรรมเนียมแล้ว"],explain:"ป้ายมาตรฐานสื่อว่าร้านผ่านเกณฑ์ด้านสุขลักษณะ แต่ผู้บริโภคยังควรสังเกตความสะอาดด้วย"},
+      {id:"OLD_L1",group:"label",scenario:"ร้านหน้าโรงเรียนมีขนมหลายชนิด",text:"ก่อนซื้ออาหารบรรจุซอง ควรตรวจอะไรก่อน?",correct:"ฉลาก วันหมดอายุ และข้อมูลผู้ผลิต",wrong:["สีซองสวยที่สุด","ของแถมเยอะที่สุด","เพื่อนบอกว่าอร่อย"],explain:"อาหารบรรจุซองควรมีฉลากชัดเจน วันหมดอายุ และข้อมูลที่ตรวจสอบได้"},
+      {id:"OLD_L2",group:"label",scenario:"นักเรียนเห็นคำว่า ควรบริโภคก่อน บนซองขนม",text:"ข้อความนี้บอกอะไร?",correct:"วันที่ควรกินก่อนเพื่อความปลอดภัยและคุณภาพ",wrong:["วันที่ผลิตโรงงาน","ชื่อร้านขายขนม","ราคาอาหาร"],explain:"วันหมดอายุหรือควรบริโภคก่อนเป็นข้อมูลสำคัญก่อนเลือกกิน"},
+      {id:"OLD_L3",group:"label",scenario:"เจอขนมซองไม่มีภาษาไทยและไม่มีชื่อผู้ผลิต",text:"ควรทำอย่างไร?",correct:"ไม่ซื้อและแจ้งผู้ใหญ่",wrong:["ซื้อเพราะดูแปลกใหม่","ชิมก่อนแล้วค่อยตัดสินใจ","ซื้อถ้าราคาถูก"],explain:"อาหารที่ไม่มีฉลากหรือแหล่งผลิตไม่ชัดเจนตรวจสอบความปลอดภัยได้ยาก"},
+      {id:"OLD_S1",group:"snack",scenario:"มีลูกอมสีสดมากแต่ไม่มีฉลาก",text:"ควรตัดสินใจอย่างไร?",correct:"หลีกเลี่ยงและแจ้งผู้ใหญ่",wrong:["ซื้อเพราะสีสวย","กินก่อนแล้วค่อยดู","ซื้อถ้าราคาถูก"],explain:"อาหารไม่มีฉลากทำให้ตรวจสอบแหล่งผลิต ส่วนประกอบ และวันหมดอายุไม่ได้"},
+      {id:"OLD_S2",group:"snack",scenario:"เจอนมกล่องบวมและมีกลิ่นแปลก",text:"ควรทำอย่างไร?",correct:"ไม่ดื่มและแจ้งครูหรือผู้ใหญ่",wrong:["เขย่าแล้วดื่ม","ชิมนิดเดียว","แบ่งให้เพื่อนลอง"],explain:"ภาชนะบวม กลิ่นผิดปกติ หรือสีเปลี่ยน เป็นสัญญาณว่าอาหารอาจเสีย"},
+      {id:"OLD_V1",group:"veg",scenario:"กำลังเลือกผักที่ตลาด",text:"ผักแบบใดน่ากินและปลอดภัยกว่า?",correct:"ผักสด ไม่เน่า ไม่มีคราบสกปรกมาก",wrong:["ผักเหี่ยวและมีกลิ่น","ผักมีเมือก","ผักมีแมลงตายติดอยู่"],explain:"ควรเลือกผักสด สะอาด และไม่มีสัญญาณเน่าเสีย"},
+      {id:"OLD_V2",group:"veg",scenario:"ก่อนกินแตงกวาสด",text:"ควรทำอะไรก่อน?",correct:"ล้างด้วยน้ำสะอาดให้ทั่ว",wrong:["กินได้เลย","เช็ดกับเสื้อ","เป่าแรง ๆ ก็พอ"],explain:"ผักสดควรล้างให้สะอาดก่อนกินเพื่อลดดิน ฝุ่น และสิ่งปนเปื้อน"},
+      {id:"OLD_H1",group:"shop",scenario:"เลือกร้านอาหารกลางวัน",text:"ร้านแบบใดน่าเลือก?",correct:"ร้านสะอาด อาหารปิดมิดชิด ผู้ขายแต่งกายสะอาด",wrong:["ร้านมีแมลงวันเยอะ","ร้านวางอาหารบนพื้น","ร้านไม่มีที่ล้างมือ"],explain:"ร้านอาหารที่ดีควรสะอาด ป้องกันแมลง และดูแลสุขอนามัยผู้ขาย"},
+      {id:"OLD_H2",group:"shop",scenario:"ร้านขายลูกชิ้นมีแมลงวันตอมหลายตัว",text:"ควรซื้อไหม?",correct:"ไม่ควรซื้อ",wrong:["ซื้อถ้าลูกชิ้นร้อน","ซื้อถ้าราคาถูก","ซื้อแล้วปัดแมลงวันออก"],explain:"แมลงวันอาจนำเชื้อโรคมาปนเปื้อนอาหาร"}
     ];
 
     const board = {
       1:{n:1,type:"n",emoji:"🔍",label:"เริ่ม"},
       2:{n:2,type:"label",emoji:"🏷️",label:"อ่านฉลาก"},
-      3:{n:3,type:"ld",emoji:"🪜",label:"บันได 7",to:7},
+      3:{n:3,type:"ld",emoji:"🪜",label:"บันได→7",to:7},
       4:{n:4,type:"clue",group:"snack",emoji:"🔎",label:"คำใบ้"},
       5:{n:5,type:"veg",emoji:"🥦",label:"เลือกผัก"},
       6:{n:6,type:"shop",emoji:"🏪",label:"เลือกร้าน"},
@@ -455,40 +424,33 @@
       10:{n:10,type:"n",emoji:"🕵️",label:"พัก"},
       11:{n:11,type:"shop",emoji:"🍽️",label:"ร้านสะอาด"},
       12:{n:12,type:"label",emoji:"🏷️",label:"ดูฉลาก"},
-      13:{n:13,type:"ld",emoji:"🪜",label:"บันได 18",to:18},
+      13:{n:13,type:"ld",emoji:"🪜",label:"บันได→18",to:18},
       14:{n:14,type:"clue",group:"snack",emoji:"🔎",label:"คำใบ้"},
-      15:{n:15,type:"pit",emoji:"🕳️",label:"หลุม 10",to:10},
+      15:{n:15,type:"pit",emoji:"🕳️",label:"หลุม→10",to:10},
       16:{n:16,type:"veg",emoji:"🍅",label:"ล้างผัก"},
       17:{n:17,type:"shop",emoji:"🏪",label:"เลือกร้าน"},
       18:{n:18,type:"label",emoji:"📦",label:"บรรจุภัณฑ์"},
       19:{n:19,type:"clue",group:"shop",emoji:"🔎",label:"คำใบ้"},
-      20:{n:20,type:"pit",emoji:"🕳️",label:"หลุม 14",to:14},
+      20:{n:20,type:"pit",emoji:"🕳️",label:"หลุม→14",to:14},
       21:{n:21,type:"veg",emoji:"🥬",label:"เลือกผัก"},
-      22:{n:22,type:"ld",emoji:"🪜",label:"บันได 25",to:25},
+      22:{n:22,type:"ld",emoji:"🪜",label:"บันได→25",to:25},
       23:{n:23,type:"shop",emoji:"🍽️",label:"ร้านอาหาร"},
       24:{n:24,type:"clue",group:"label",emoji:"🔎",label:"คำใบ้"},
       25:{n:25,type:"win",emoji:"🏁",label:"เฉลย"}
     };
     const boardOrder = [25,24,23,22,21,20,19,18,17,16,11,12,13,14,15,10,9,8,7,6,1,2,3,4,5];
-    const questionTypes = ["label","snack","veg","shop","clue"]; const clueSpotNums = [4,9,14,19,24];
-    const groupNames = {label:"อ่านฉลาก", snack:"เลือกกินอาหาร/ขนม", veg:"เลือกผัก", shop:"เลือกร้านอาหาร"};
+    const questionTypes = ["label","snack","veg","shop","clue"];
+    const groupNames = {label:"อ่านฉลาก",snack:"เลือกกินอาหาร/ขนม",veg:"เลือกผัก",shop:"เลือกร้านอาหาร"};
     const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
 
     function showScreen(id){
-      document.querySelectorAll('.screen').forEach(s=>{
-        s.classList.remove('active');
-        s.setAttribute('aria-hidden','true');
-      });
-      const target = $(id);
-      if(!target) return;
-      target.classList.add('active');
-      target.setAttribute('aria-hidden','false');
-      document.body.classList.remove('page-setup','page-game','page-win');
-      document.body.classList.add('page-'+id);
-      setTimeout(()=>window.scrollTo({top:0,left:0,behavior:'auto'}),0);
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      $(id).classList.add('active');
+      window.scrollTo(0,0);
     }
+
     function renderNameFields(){
-      const count = Math.min(4, Math.max(1, Number($("playerCount").value || 3)));
+      const count = Math.min(4, Math.max(1, Number($("playerCount").value||3)));
       const box = $("nameFields"); box.innerHTML = "";
       for(let i=0;i<count;i++){
         const t = teamTemplates[i];
@@ -497,100 +459,128 @@
         box.appendChild(div);
       }
     }
-    $("playerCount").addEventListener("change", renderNameFields); renderNameFields();
+    $("playerCount").addEventListener("change", renderNameFields);
+    renderNameFields();
 
     function initState(){
-      const count = Math.min(4, Math.max(1, Number($("playerCount").value || 3)));
+      const count = Math.min(4, Math.max(1, Number($("playerCount").value||3)));
       const teams = [];
       for(let i=0;i<count;i++){
         const temp = teamTemplates[i];
         teams.push({id:i,name:$("teamName"+i).value.trim()||temp.name,color:temp.color,tok:temp.tok,cls:temp.cls,pos:0,clues:[],visited:{},score:0});
       }
-      G = {teams, turn:0, turnCount:1, villain:villainPool[Math.floor(Math.random()*villainPool.length)], rolling:false, busy:false, votes:{}, voteOrder:[], voteIdx:0, winnerId:null, currentQ:null, selectedVote:null};
+      G = {teams,turn:0,turnCount:1,villain:villainPool[Math.floor(Math.random()*villainPool.length)],rolling:false,busy:false,votes:{},voteOrder:[],voteIdx:0,winnerId:null,currentQ:null,selectedVote:null};
       usedQIds = [];
     }
-    function setStatus(msg){ $("status").innerHTML = msg; }
+
+    function setStatus(msg){ $("status").textContent = msg; }
+
     function renderBoard(){
-      const el = $("board");
-      el.innerHTML = "";
+      const el = $("board"); el.innerHTML = "";
       boardOrder.forEach(n=>{
-        const c=board[n];
-        const cell=document.createElement("div");
-        cell.className=`cell ${c.type}`;
-        cell.dataset.cell=n;
-        const displayEmoji = c.type === "clue" ? "🔎" : c.emoji;
-        cell.innerHTML=`<div class="num">${n}</div><div class="emoji">${displayEmoji}</div><div class="cell-label">${c.label}</div><div class="tokens" id="tokens-${n}"></div>`;
+        const c = board[n];
+        const cell = document.createElement("div");
+        cell.className = `cell ${c.type}`;
+        cell.dataset.cell = n;
+        const displayEmoji = c.type==="clue" ? "🔎" : c.emoji;
+        cell.innerHTML = `<div class="num">${n}</div><div class="emoji">${displayEmoji}</div><div class="cell-label">${c.label}</div><div class="tokens" id="tokens-${n}"></div>`;
         el.appendChild(cell);
       });
       renderTokens();
     }
 
     function renderTokens(){
-      document.querySelectorAll(".tokens").forEach(x=>x.innerHTML=""); document.querySelectorAll(".cell").forEach(x=>x.classList.remove("current"));
-      G.teams.forEach(t=>{ const pos=Math.max(1,t.pos||1); const box=$(`tokens-${pos}`); if(box){ const token=document.createElement("div"); token.className=`token ${t.cls}`; token.textContent=t.id+1; box.appendChild(token); }});
-      const active=G.teams[G.turn]; const activeCell=document.querySelector(`.cell[data-cell='${Math.max(1,active.pos||1)}']`); if(activeCell) activeCell.classList.add("current");
+      document.querySelectorAll(".tokens").forEach(x=>x.innerHTML="");
+      document.querySelectorAll(".cell").forEach(x=>x.classList.remove("current"));
+      G.teams.forEach(t=>{
+        const pos = Math.max(1,t.pos||1);
+        const box = $(`tokens-${pos}`);
+        if(box){ const token=document.createElement("div"); token.className=`token ${t.cls}`; token.textContent=t.id+1; box.appendChild(token); }
+      });
+      const active = G.teams[G.turn];
+      const activeCell = document.querySelector(`.cell[data-cell='${Math.max(1,active.pos||1)}']`);
+      if(activeCell) activeCell.classList.add("current");
     }
+
     function renderHUD(){
-      const t=G.teams[G.turn]; $("turnDot").className="team-dot "+t.cls; $("turnDot").textContent=t.tok; $("turnTitle").textContent=`ถึงคิว ${t.name}`; $("turnSub").textContent=`ตำแหน่งช่อง ${t.pos||0} | หลักฐานลับ ${t.clues.length}/4`; $("scoreNow").textContent=G.teams.reduce((s,x)=>s+x.score,0); $("turnMini").textContent=`ตาที่ ${G.turnCount}`;
-      const wrap=$("teams"); wrap.innerHTML=""; G.teams.forEach((team,i)=>{ const panel=document.createElement("div"); panel.className="team-panel"+(i===G.turn?" active":""); panel.innerHTML=`<div class="team-name"><span>${team.tok}</span><span>${team.name}</span></div><div class="team-pos">ช่อง: ${team.pos}/25</div><div class="team-ev">หลักฐานลับ: ${team.clues.length}/4</div><div class="team-ev">คะแนน: ${team.score}</div><div class="evidence-mini">${[0,1,2,3].map(i=>`<span class="badge">${team.clues[i]?'🔒':'-'}</span>`).join('')}</div>`; wrap.appendChild(panel); });
-      renderTokens(); $("rollBtn").disabled=!!(G.rolling||G.busy);
+      const t = G.teams[G.turn];
+      $("turnDot").className = "team-dot "+t.cls;
+      $("turnDot").textContent = t.tok;
+      $("turnTitle").textContent = `ถึงคิว ${t.name}`;
+      $("turnSub").textContent = `ช่อง ${t.pos||0} | หลักฐาน ${t.clues.length}/4 | ${t.score}pt`;
+      $("scoreNow").textContent = G.teams.reduce((s,x)=>s+x.score,0);
+      $("turnMini").textContent = `ตาที่ ${G.turnCount}`;
+      renderTokens();
+      $("rollBtn").disabled = !!(G.rolling||G.busy);
     }
+
+    function renderScorePanel(){
+      const wrap = $("scoreTeams"); wrap.innerHTML = "";
+      G.teams.forEach((team,i)=>{
+        const panel = document.createElement("div");
+        panel.className = "team-panel"+(i===G.turn?" active":"");
+        panel.innerHTML = `
+          <div class="team-name"><span>${team.tok}</span><span>${team.name}</span></div>
+          <div class="team-stats"><span>ช่อง: ${team.pos}/25</span><span>หลักฐาน: ${team.clues.length}/4</span><span>คะแนน: ${team.score}</span></div>
+          <div class="evidence-mini">${[0,1,2,3].map(i=>`<span class="badge">${team.clues[i]?'🔒':'-'}</span>`).join('')}</div>
+        `;
+        wrap.appendChild(panel);
+      });
+    }
+
+    $("showScoreBtn").onclick = () => { renderScorePanel(); $("scorePanel").classList.add("show"); };
+    $("closeScoreBtn").onclick = () => $("scorePanel").classList.remove("show");
+    $("scorePanel").addEventListener("click", e => { if(e.target===$("scorePanel")) $("scorePanel").classList.remove("show"); });
+
     function startGame(){
-      initState();
-      renderBoard();
-      renderHUD();
+      initState(); renderBoard(); renderHUD();
       setStatus(`เริ่มเก็บคำใบ้! ถึงคิว ${G.teams[G.turn].tok} ${G.teams[G.turn].name}`);
       showScreen("game");
     }
-    function rollDice(){ if(G.rolling||G.busy)return; G.rolling=true; renderHUD(); const dice=$("dice"); dice.classList.add("rolling"); let count=0; const timer=setInterval(()=>{ dice.textContent=diceFaces[Math.floor(Math.random()*6)]; count++; if(count>=10){ clearInterval(timer); const roll=Math.floor(Math.random()*6)+1; dice.textContent=diceFaces[roll-1]; dice.classList.remove("rolling"); setStatus(`${G.teams[G.turn].tok} ${G.teams[G.turn].name} ทอยได้ ${roll}`); moveTeam(G.turn,roll); } },70); }
+
+    function rollDice(){
+      if(G.rolling||G.busy) return;
+      G.rolling = true; renderHUD();
+      const dice = $("dice"); dice.classList.add("rolling");
+      let count = 0;
+      const timer = setInterval(()=>{
+        dice.textContent = diceFaces[Math.floor(Math.random()*6)]; count++;
+        if(count>=10){
+          clearInterval(timer);
+          const roll = Math.floor(Math.random()*6)+1;
+          dice.textContent = diceFaces[roll-1]; dice.classList.remove("rolling");
+          setStatus(`${G.teams[G.turn].tok} ${G.teams[G.turn].name} ทอยได้ ${roll}`);
+          moveTeam(G.turn, roll);
+        }
+      }, 70);
+    }
+
     function moveTeam(tid,roll){ const team=G.teams[tid]; const start=team.pos; const dest=Math.min(start+roll,25); const steps=[]; for(let p=start+1;p<=dest;p++)steps.push(p); animSteps(tid,steps,()=>afterLand(tid,dest)); }
-    function animSteps(tid,steps,done){ if(!steps.length){done();return;} const team=G.teams[tid]; let i=0; const WALK_DELAY = 260; const AFTER_WALK_DELAY = 320; const timer=setInterval(()=>{ team.pos=steps[i]; renderHUD(); i++; if(i>=steps.length){ clearInterval(timer); setTimeout(done,AFTER_WALK_DELAY); } },WALK_DELAY); }
+    function animSteps(tid,steps,done){ if(!steps.length){done();return;} const team=G.teams[tid]; let i=0; const timer=setInterval(()=>{ team.pos=steps[i]; renderHUD(); i++; if(i>=steps.length){ clearInterval(timer); setTimeout(done,300); } },260); }
     function afterLand(tid,cellNum){ const cell=board[cellNum]; if(cellNum===25){ G.busy=true; G.winnerId=tid; renderHUD(); openAccusation(); return; } if(cell.type==="ld"){ showEvent("ladder",`${G.teams[tid].tok} เจอบันได! ขึ้นจากช่อง ${cellNum} ไปช่อง ${cell.to}`,()=>{ const path=[]; for(let p=cellNum+1;p<=cell.to;p++)path.push(p); animSteps(tid,path,()=>{ if(cell.to===25){G.busy=true;G.winnerId=tid;openAccusation();} else checkClue(tid,cell.to); }); }); return; } if(cell.type==="pit"){ showEvent("pit",`${G.teams[tid].tok} ตกหลุม! ย้อนกลับจากช่อง ${cellNum} ไปช่อง ${cell.to}`,()=>{ const path=[]; for(let p=cellNum-1;p>=cell.to;p--)path.push(p); animSteps(tid,path,()=>endTurn()); }); return; } checkClue(tid,cellNum); }
-    function checkClue(tid,cellNum){ const team=G.teams[tid]; const cell=board[cellNum]; if(!questionTypes.includes(cell.type)){ setStatus(`${team.tok} ${team.name} เหยียบช่อง ${cellNum} ไม่มีคำถาม`); endTurn(); return; } if(team.visited[cellNum]===true){ setStatus(`${team.tok} ${team.name} เคยตอบถูกช่อง ${cellNum} แล้ว ✅ ไม่ถามซ้ำ ไม่ได้คำใบ้ซ้ำ`); endTurn(); return; } showQ(tid,cell); }
-    function getQ(group){ let pool=questions.filter(q=>q.group===group && !usedQIds.includes(q.id)); if(pool.length===0){ usedQIds=usedQIds.filter(id=>!questions.some(q=>q.group===group && q.id===id)); pool=questions.filter(q=>q.group===group); } const q=pool[Math.floor(Math.random()*pool.length)]; usedQIds.push(q.id); const correctIdx=Math.floor(Math.random()*4); const wrongs=shuffle(q.wrong).slice(0,3); const choices=[...wrongs]; choices.splice(correctIdx,0,q.correct); return {scenario:q.scenario,text:q.text,choices,correctIdx,explain:q.explain,group:q.group}; }
-    function showQ(tid,cell){ G.busy=true; const q=getQ(cell.group || cell.type); G.currentQ={tid,cell,q}; $("qHead").textContent=`${G.teams[tid].tok} คำถามช่อง ${cell.n}: ${cell.type === "clue" ? "จุดคำใบ้ 🔎" : groupNames[cell.type]}`; $("qScenario").textContent=`สถานการณ์: ${q.scenario}`; $("qText").textContent=q.text; $("qFeedback").innerHTML=""; const wrap=$("qChoices"); wrap.innerHTML=""; q.choices.forEach((choice,idx)=>{ const btn=document.createElement("button"); btn.className="choice"; btn.textContent=`${["ก","ข","ค","ง"][idx]}. ${choice}`; btn.onclick=()=>answerQ(idx); wrap.appendChild(btn); }); $("qModal").classList.add("show"); renderHUD(); }
-    function answerQ(idx){ const {tid,cell,q}=G.currentQ; const team=G.teams[tid]; const correct=idx===q.correctIdx; Array.from($("qChoices").children).forEach(b=>b.disabled=true); if(correct){ team.visited[cell.n]=true; const isClueSpot = cell.type === "clue"; let clueMsg = "ช่องนี้เป็นคำถามฝึกทักษะ ยังไม่ได้หลักฐานลับ"; if(isClueSpot && team.clues.length<4){ team.clues.push(G.villain.clues[team.clues.length]); clueMsg = `🔒 เก็บหลักฐานลับแล้ว ${team.clues.length}/4`; } else if(isClueSpot){ clueMsg = "🔒 หลักฐานครบ 4 ชิ้นแล้ว"; } team.score+=10; $("qFeedback").innerHTML=`<div class="info-card">✅ ตอบถูก! +10 คะแนน<br>${clueMsg}<br><br><b>เรียนรู้:</b> ${q.explain}</div><div class="modal-actions"><button class="primary" id="qContinue">ต่อไป</button></div>`; } else { $("qFeedback").innerHTML=`<div class="info-card" style="background:rgba(255,77,109,.13);border-color:rgba(255,77,109,.38)">❌ ยังไม่ถูก ไม่ได้คำใบ้ในช่องนี้<br>คำตอบที่ถูกคือ <b>${q.choices[q.correctIdx]}</b><br><br><b>เรียนรู้:</b> ${q.explain}</div><div class="modal-actions"><button class="primary" id="qContinue">ต่อไป</button></div>`; } renderHUD(); $("qContinue").onclick=()=>{ $("qModal").classList.remove("show"); G.currentQ=null; endTurn(); }; }
+    function checkClue(tid,cellNum){ const team=G.teams[tid]; const cell=board[cellNum]; if(!questionTypes.includes(cell.type)){ setStatus(`${team.tok} ${team.name} เหยียบช่อง ${cellNum}`); endTurn(); return; } if(team.visited[cellNum]===true){ setStatus(`${team.tok} ${team.name} เคยตอบถูกช่อง ${cellNum} แล้ว ✅`); endTurn(); return; } showQ(tid,cell); }
+    function getQ(group){ let pool=questions.filter(q=>q.group===group&&!usedQIds.includes(q.id)); if(pool.length===0){ usedQIds=usedQIds.filter(id=>!questions.some(q=>q.group===group&&q.id===id)); pool=questions.filter(q=>q.group===group); } const q=pool[Math.floor(Math.random()*pool.length)]; usedQIds.push(q.id); const correctIdx=Math.floor(Math.random()*4); const wrongs=shuffle(q.wrong).slice(0,3); const choices=[...wrongs]; choices.splice(correctIdx,0,q.correct); return{scenario:q.scenario,text:q.text,choices,correctIdx,explain:q.explain,group:q.group}; }
+    function showQ(tid,cell){ G.busy=true; const q=getQ(cell.group||cell.type); G.currentQ={tid,cell,q}; $("qHead").textContent=`${G.teams[tid].tok} ช่อง ${cell.n}: ${cell.type==="clue"?"จุดคำใบ้ 🔎":groupNames[cell.type]}`; $("qScenario").textContent=`สถานการณ์: ${q.scenario}`; $("qText").textContent=q.text; $("qFeedback").innerHTML=""; const wrap=$("qChoices"); wrap.innerHTML=""; q.choices.forEach((choice,idx)=>{ const btn=document.createElement("button"); btn.className="choice"; btn.textContent=`${["ก","ข","ค","ง"][idx]}. ${choice}`; btn.onclick=()=>answerQ(idx); wrap.appendChild(btn); }); $("qModal").classList.add("show"); renderHUD(); }
+    function answerQ(idx){ const{tid,cell,q}=G.currentQ; const team=G.teams[tid]; const correct=idx===q.correctIdx; Array.from($("qChoices").children).forEach(b=>b.disabled=true); if(correct){ team.visited[cell.n]=true; const isClueSpot=cell.type==="clue"; let clueMsg="ช่องนี้เป็นคำถามฝึกทักษะ ยังไม่ได้หลักฐานลับ"; if(isClueSpot&&team.clues.length<4){ team.clues.push(G.villain.clues[team.clues.length]); clueMsg=`🔒 เก็บหลักฐานลับแล้ว ${team.clues.length}/4`; } else if(isClueSpot){ clueMsg="🔒 หลักฐานครบ 4 ชิ้นแล้ว"; } team.score+=10; $("qFeedback").innerHTML=`<div class="info-card">✅ ตอบถูก! +10 คะแนน<br>${clueMsg}<br><br><b>เรียนรู้:</b> ${q.explain}</div><div class="modal-actions"><button class="primary" id="qContinue">ต่อไป</button></div>`; } else { $("qFeedback").innerHTML=`<div class="info-card" style="background:rgba(255,77,109,.13);border-color:rgba(255,77,109,.38)">❌ ยังไม่ถูก<br>คำตอบที่ถูกคือ <b>${q.choices[q.correctIdx]}</b><br><br><b>เรียนรู้:</b> ${q.explain}</div><div class="modal-actions"><button class="primary" id="qContinue">ต่อไป</button></div>`; } renderHUD(); $("qContinue").onclick=()=>{ $("qModal").classList.remove("show"); G.currentQ=null; endTurn(); }; }
     function showEvent(kind,text,next){ G.busy=true; $("eventHead").textContent=kind==="ladder"?"🪜 เจอบันได":"🕳️ ตกหลุม"; $("eventText").textContent=text; $("eventModal").classList.add("show"); renderHUD(); setTimeout(()=>{ $("eventModal").classList.remove("show"); next(); },900); }
     function endTurn(){ G.rolling=false; G.busy=false; G.turn=(G.turn+1)%G.teams.length; G.turnCount++; renderHUD(); setStatus(`ถึงคิว ${G.teams[G.turn].tok} ${G.teams[G.turn].name}!`); }
-    function giveAutoWinClue(winnerId){
-      const team = G.teams[winnerId];
-      if(!team || !G.villain || team.clues.length >= 4) return false;
-      const nextClue = G.villain.clues[team.clues.length];
-      if(!nextClue) return false;
-      team.clues.push(nextClue);
-      team.score += 10;
-      team.autoWinClue = true;
-      renderHUD();
-      return true;
-    }
 
-    function openAccusation(){
-      G.busy=true;
-      G.autoWinClueGiven = giveAutoWinClue(G.winnerId);
-      G.voteOrder=G.teams.length===1 ? [G.winnerId] : G.teams.map(t=>t.id).filter(id=>id!==G.winnerId).concat([G.winnerId]);
-      G.voteIdx=0;
-      G.votes={};
-      G.selectedVote=null;
-      stepClues();
-    }
-    function stepClues(){
-      const winner=G.teams[G.winnerId];
-      const cluesHtml=[0,1,2,3].map(i=>`<div class="clue ${winner.clues[i]?'':'empty'}"><b>หลักฐาน ${i+1}</b><br>${winner.clues[i]||'ไม่มีหลักฐานในช่องนี้'}</div>`).join('');
-      $("accuseHead").textContent=`🔍 ${winner.name} ถึงช่อง 25`;
-      const bonusMsg = G.autoWinClueGiven ? `<div class="info-card">🎁 โบนัสเส้นชัย: ได้คำใบ้เพิ่มอัตโนมัติ 1 ใบ และ +10 คะแนน</div>` : ``;
-      $("accuseBody").innerHTML=`${bonusMsg}<p>เปิดคำใบ้ทั้งหมดของผู้เล่น/ทีมที่ถึงเส้นชัยก่อน แล้วให้ทุกทีมโหวตหาตัวร้าย</p><div class="clue-grid">${cluesHtml}</div><div class="modal-actions"><button class="primary" id="startVoteBtn">เริ่มโหวต</button></div>`;
-      $("accuseModal").classList.add("show");
-      $("startVoteBtn").onclick=stepVote;
-    }
-    function stepVote(){ const tid=G.voteOrder[G.voteIdx]; const team=G.teams[tid]; G.selectedVote=null; const options=shuffle(villainPool); $("accuseHead").textContent=`🗳️ โหวตตัวร้าย: ${team.tok} ${team.name}`; $("accuseBody").innerHTML=`<p>เลือกต้นเหตุที่คิดว่าทำให้เด็กปวดท้องจากหลักฐาน ผู้เล่น/ทีมที่ถึงเส้นชัยจะโหวตสุดท้ายเสมอ</p><div class="choices" id="voteChoices"></div><div class="modal-actions"><button class="primary" id="confirmVoteBtn" disabled>ยืนยันคำตอบ</button></div>`; const wrap=$("voteChoices"); options.forEach(v=>{ const b=document.createElement("button"); b.className="choice"; b.textContent=`${v.emoji} ${v.name}`; b.onclick=()=>{ G.selectedVote=v.id; Array.from(wrap.children).forEach(x=>x.classList.remove("selected")); b.classList.add("selected"); $("confirmVoteBtn").disabled=false; }; wrap.appendChild(b); }); $("confirmVoteBtn").onclick=()=>{ G.votes[tid]=G.selectedVote; G.voteIdx++; if(G.voteIdx>=G.voteOrder.length)showReveal(); else stepVote(); }; }
+    function giveAutoWinClue(winnerId){ const team=G.teams[winnerId]; if(!team||!G.villain||team.clues.length>=4)return false; const nextClue=G.villain.clues[team.clues.length]; if(!nextClue)return false; team.clues.push(nextClue); team.score+=10; team.autoWinClue=true; renderHUD(); return true; }
+
+    function openAccusation(){ G.busy=true; G.autoWinClueGiven=giveAutoWinClue(G.winnerId); G.voteOrder=G.teams.length===1?[G.winnerId]:G.teams.map(t=>t.id).filter(id=>id!==G.winnerId).concat([G.winnerId]); G.voteIdx=0; G.votes={}; G.selectedVote=null; stepClues(); }
+    function stepClues(){ const winner=G.teams[G.winnerId]; const cluesHtml=[0,1,2,3].map(i=>`<div class="clue ${winner.clues[i]?'':'empty'}"><b>หลักฐาน ${i+1}</b><br>${winner.clues[i]||'ไม่มีหลักฐาน'}</div>`).join(''); $("accuseHead").textContent=`🔍 ${winner.name} ถึงช่อง 25`; const bonusMsg=G.autoWinClueGiven?`<div class="info-card">🎁 โบนัสเส้นชัย: ได้คำใบ้เพิ่ม 1 ใบ +10 คะแนน</div>`:``; $("accuseBody").innerHTML=`${bonusMsg}<p>เปิดคำใบ้แล้วให้ทุกทีมโหวตหาตัวร้าย</p><div class="clue-grid">${cluesHtml}</div><div class="modal-actions"><button class="primary" id="startVoteBtn">เริ่มโหวต</button></div>`; $("accuseModal").classList.add("show"); $("startVoteBtn").onclick=stepVote; }
+    function stepVote(){ const tid=G.voteOrder[G.voteIdx]; const team=G.teams[tid]; G.selectedVote=null; const options=shuffle(villainPool); $("accuseHead").textContent=`🗳️ โหวต: ${team.tok} ${team.name}`; $("accuseBody").innerHTML=`<p>เลือกต้นเหตุที่คิดว่าทำให้เด็กปวดท้อง</p><div class="choices" id="voteChoices"></div><div class="modal-actions"><button class="primary" id="confirmVoteBtn" disabled>ยืนยัน</button></div>`; const wrap=$("voteChoices"); options.forEach(v=>{ const b=document.createElement("button"); b.className="choice"; b.textContent=`${v.emoji} ${v.name}`; b.onclick=()=>{ G.selectedVote=v.id; Array.from(wrap.children).forEach(x=>x.classList.remove("selected")); b.classList.add("selected"); $("confirmVoteBtn").disabled=false; }; wrap.appendChild(b); }); $("confirmVoteBtn").onclick=()=>{ G.votes[tid]=G.selectedVote; G.voteIdx++; if(G.voteIdx>=G.voteOrder.length)showReveal(); else stepVote(); }; }
     function villainName(id){ const v=villainPool.find(x=>x.id===id); return v?`${v.emoji} ${v.name}`:"-"; }
-    function showReveal(){
-      G.teams.forEach(t=>{ if(G.votes[t.id]===G.villain.id)t.score+=30; });
-      const topScore = Math.max(...G.teams.map(t=>t.score));
-      const rows=G.teams.map(t=>{ const ok=G.votes[t.id]===G.villain.id; const isWinner = ok && t.score===topScore; return `<tr><td>${t.tok} ${t.name}</td><td>${villainName(G.votes[t.id])}</td><td>${t.clues.length}/4</td><td>${ok?'✅ +30':'❌'} ${isWinner?'🏆':''}</td></tr>`; }).join(''); $("accuseHead").textContent="🎯 เปิดเฉลยตัวร้าย"; $("accuseBody").innerHTML=`<div class="info-card">ตัวร้ายจริงคือ <b>${G.villain.emoji} ${G.villain.name}</b><br>${G.villain.explain}</div><table><thead><tr><th>ทีม</th><th>คำตอบที่เลือก</th><th>คำใบ้</th><th>ผล</th></tr></thead><tbody>${rows}</tbody></table><div class="modal-actions"><button class="primary" id="goWinBtn">ดูผลสรุป</button></div>`; renderHUD(); $("goWinBtn").onclick=goWin; }
-    function goWin(){ $("accuseModal").classList.remove("show"); G.busy=false; G.rolling=false; const ranked=[...G.teams].sort((a,b)=>b.score-a.score); const correctWinners=ranked.filter(t=>G.votes[t.id]===G.villain.id && t.score===ranked[0].score); $("winSubtitle").textContent=`เฉลย: ${G.villain.emoji} ${G.villain.name} | ผู้ชนะคือคนที่ทายถูกและมีคะแนนสูงสุด${correctWinners.length? ' : '+correctWinners.map(t=>t.name).join(', ') : ''}`; $("rankList").innerHTML=ranked.map((t,i)=>`<div class="rank-card"><div class="medal">${["🥇","🥈","🥉","🏅","🎖️","⭐"][i]||"⭐"}</div><div><div class="rank-name">${t.tok} ${t.name}</div><div class="rank-sub">หลักฐาน ${t.clues.length}/4 | ช่องสุดท้าย ${t.pos}</div></div><div class="rank-score">${t.score}</div></div>`).join(''); showScreen("win"); }
+    function showReveal(){ G.teams.forEach(t=>{ if(G.votes[t.id]===G.villain.id)t.score+=30; }); const topScore=Math.max(...G.teams.map(t=>t.score)); const rows=G.teams.map(t=>{ const ok=G.votes[t.id]===G.villain.id; const isWinner=ok&&t.score===topScore; return `<tr><td>${t.tok} ${t.name}</td><td>${villainName(G.votes[t.id])}</td><td>${ok?'✅ +30':'❌'} ${isWinner?'🏆':''}</td></tr>`; }).join(''); $("accuseHead").textContent="🎯 เปิดเฉลย"; $("accuseBody").innerHTML=`<div class="info-card">ตัวร้ายจริงคือ <b>${G.villain.emoji} ${G.villain.name}</b><br>${G.villain.explain}</div><table><thead><tr><th>ทีม</th><th>คำตอบ</th><th>ผล</th></tr></thead><tbody>${rows}</tbody></table><div class="modal-actions"><button class="primary" id="goWinBtn">ดูผลสรุป</button></div>`; renderHUD(); $("goWinBtn").onclick=goWin; }
+    function goWin(){ $("accuseModal").classList.remove("show"); G.busy=false; G.rolling=false; const ranked=[...G.teams].sort((a,b)=>b.score-a.score); const correctWinners=ranked.filter(t=>G.votes[t.id]===G.villain.id&&t.score===ranked[0].score); $("winSubtitle").textContent=`เฉลย: ${G.villain.emoji} ${G.villain.name}${correctWinners.length?' | ผู้ชนะ: '+correctWinners.map(t=>t.name).join(', '):''}`;
+      $("rankList").innerHTML=ranked.map((t,i)=>`<div class="rank-card"><div class="medal">${["🥇","🥈","🥉","🏅"][i]||"⭐"}</div><div><div class="rank-name">${t.tok} ${t.name}</div><div class="rank-sub">หลักฐาน ${t.clues.length}/4 | ช่อง ${t.pos}</div></div><div class="rank-score">${t.score}</div></div>`).join('');
+      showScreen("win");
+    }
 
-    $("startGameBtn").addEventListener("click",startGame); $("rollBtn").addEventListener("click",rollDice); $("resetBtn").addEventListener("click",()=>showScreen("setup")); $("playAgainBtn").addEventListener("click",()=>showScreen("setup"));
+    $("startGameBtn").addEventListener("click", startGame);
+    $("rollBtn").addEventListener("click", rollDice);
+    $("resetBtn").addEventListener("click", ()=>showScreen("setup"));
+    $("playAgainBtn").addEventListener("click", ()=>showScreen("setup"));
   </script>
 </body>
 </html>
